@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
@@ -67,6 +68,7 @@ public class Boleta extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public Boleta() {
+		setTitle("GENERAR BOLETA");
 		setModal(true);
 		setBounds(100, 100, 522, 272);
 		getContentPane().setLayout(new BorderLayout());
@@ -90,7 +92,9 @@ public class Boleta extends JDialog implements ActionListener {
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
-			sCantidad = new JSpinner();
+			SpinnerNumberModel model = new SpinnerNumberModel(0,0,100,1 );
+			
+			sCantidad = new JSpinner(model);
 			sCantidad.setBounds(293, 8, 36, 20);
 			contentPanel.add(sCantidad);
 		}
@@ -108,7 +112,7 @@ public class Boleta extends JDialog implements ActionListener {
 			txtPrecio.setColumns(10);
 		}
 		{
-			btnAgregar = new JButton("AGREGAR");
+			btnAgregar = new JButton("AÑADIR");
 			btnAgregar.addActionListener(this);
 			btnAgregar.setBounds(402, 53, 89, 23);
 			contentPanel.add(btnAgregar);

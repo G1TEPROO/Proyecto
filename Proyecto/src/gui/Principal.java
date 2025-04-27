@@ -61,11 +61,15 @@ public class Principal extends JFrame implements ActionListener {
 		}
 		{
 			btnAdministrarStock = new JButton("ADMINISTRAR PRODUCTOS");
+			btnAdministrarStock.addActionListener(this);
 			btnAdministrarStock.setBounds(10, 149, 249, 28);
 			contentPane.add(btnAdministrarStock);
 		}
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnAdministrarStock) {
+			do_btnAdministrarStock_actionPerformed(e);
+		}
 		if (e.getSource() == btnBoleta) {
 			do_btnBoleta_actionPerformed(e);
 		}
@@ -73,5 +77,7 @@ public class Principal extends JFrame implements ActionListener {
 	protected void do_btnBoleta_actionPerformed(ActionEvent e) {
 		Boleta b1 = new Boleta();
 		b1.setVisible(true);
+	}
+	protected void do_btnAdministrarStock_actionPerformed(ActionEvent e) {
 	}
 }
