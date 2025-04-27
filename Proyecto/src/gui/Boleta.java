@@ -109,7 +109,7 @@ public class Boleta extends JDialog implements ActionListener {
 			txtPrecio.setColumns(10);
 		}
 		{
-			btnAgregar = new JButton("AGREGAR");
+			btnAgregar = new JButton("AÑADIR");
 			btnAgregar.addActionListener(this);
 			btnAgregar.setBounds(402, 53, 89, 23);
 			contentPanel.add(btnAgregar);
