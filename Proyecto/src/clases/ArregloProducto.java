@@ -1,0 +1,28 @@
+package clases;
+
+import java.util.ArrayList;
+
+public class ArregloProducto {
+	
+	private ArrayList<Producto> pro;
+
+	public ArregloProducto() {
+		pro= new ArrayList<Producto>();
+	}
+	
+	public void Adicionar (String producto ,int cantidad , double  precioTotal) {
+	   	
+		Producto p1 = new Producto(producto ,cantidad, precioTotal);
+		pro.add(p1);
+		
+	}
+	public Producto obtener(int x) {
+		return pro.get(x);
+		
+		
+	}
+	public int Tamaño() {
+		if (pro.size()>0) return pro.size();
+		else return 0;
+	}
+}
