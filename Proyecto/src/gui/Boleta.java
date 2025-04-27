@@ -114,7 +114,11 @@ public class Boleta extends JDialog implements ActionListener {
 			contentPanel.add(btnAgregar);
 		}
 		{
-			btnQuitar = new JButton("QUITAR");
+			btnQuitar = new JButton("ELIMINAR");
+			btnQuitar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
 			btnQuitar.setBounds(402, 87, 89, 23);
 			contentPanel.add(btnQuitar);
 		}
