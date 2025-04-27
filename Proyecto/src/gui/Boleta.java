@@ -67,6 +67,7 @@ public class Boleta extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public Boleta() {
+		setTitle("GENERAR BOLETA");
 		setModal(true);
 		setBounds(100, 100, 522, 272);
 		getContentPane().setLayout(new BorderLayout());
