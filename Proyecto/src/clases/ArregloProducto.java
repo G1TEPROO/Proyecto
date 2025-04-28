@@ -13,8 +13,11 @@ public class ArregloProducto {
 	public void Adicionar (String producto ,int cantidad , double  precioTotal) {
 	   	
 		Producto p1 = new Producto(producto ,cantidad, precioTotal);
-		pro.add(p1);
+		Adicionar(p1);
 		
+	}
+	private void Adicionar(Producto p1) {
+		pro.add(p1);
 	}
 	public Producto obtener(int x) {
 		return pro.get(x);

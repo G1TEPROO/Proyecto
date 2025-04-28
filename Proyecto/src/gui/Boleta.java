@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSpinner;
+import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JScrollPane;
@@ -33,6 +34,7 @@ public class Boleta extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JComboBox cbProducto;
+	private JComboBox cbProducto_1;
 	private JLabel lblNewLabel_1;
 	private JSpinner sCantidad;
 	private JLabel lblPrecio;
@@ -81,10 +83,11 @@ public class Boleta extends JDialog implements ActionListener {
 			contentPanel.add(lblNewLabel);
 		}
 		{
-			cbProducto = new JComboBox();
-			cbProducto.setModel(new DefaultComboBoxModel(new String[] {"Pan Frances", "Pan Chabata", "Pan Yema"}));
-			cbProducto.setBounds(81, 7, 124, 22);
-			contentPanel.add(cbProducto);
+			cbProducto_1 = new JComboBox();
+			cbProducto_1.addActionListener(this);
+			cbProducto_1.setModel(new DefaultComboBoxModel(new String[] {"Pan Frances", "Pan Chabata", "Pan Yema"}));
+			cbProducto_1.setBounds(81, 7, 124, 22);
+			contentPanel.add(cbProducto_1);
 		}
 		{
 			lblNewLabel_1 = new JLabel("CANTIDAD");
@@ -95,6 +98,14 @@ public class Boleta extends JDialog implements ActionListener {
 			SpinnerNumberModel model = new SpinnerNumberModel(0,0,100,1 );
 			
 			sCantidad = new JSpinner(model);
+			DefaultEditor editor=(DefaultEditor) sCantidad.getEditor();
+			JTextField textField=editor.getTextField();
+			textField.setEditable(false);
+			sCantidad.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent e) {
+				CalcularPrecio();
+				}
+			});
 			sCantidad.setBounds(293, 8, 36, 20);
 			contentPanel.add(sCantidad);
 		}
@@ -175,18 +186,19 @@ public class Boleta extends JDialog implements ActionListener {
 		}
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == cbProducto_1) {
+			do_cbProducto_1_actionPerformed(e);
+		}
 		if (e.getSource() == btnAgregar) {
 			do_btnAgregar_actionPerformed(e);
 		}
 	}
+	
 	protected void do_btnAgregar_actionPerformed(ActionEvent e) {
 		
-		String nombreProducto = cbProducto.getSelectedItem().toString();
+		String nombreProducto = cbProducto_1.getSelectedItem().toString();
 		int cantidadProducto = Integer.parseInt(sCantidad.getValue().toString());
-		double precioProducto;
-		if (cbProducto.getSelectedIndex() == 0) precioProducto = cantidadProducto * 1;
-		else if (cbProducto.getSelectedIndex() == 1) precioProducto = cantidadProducto * 1.5;
-		else precioProducto = cantidadProducto * 2;		
+		double precioProducto = Double.parseDouble(txtPrecio.getText());
 		
 		try {
 			if(cantidadProducto > 0) ap1.Adicionar(nombreProducto, cantidadProducto, precioProducto);
@@ -196,7 +208,7 @@ public class Boleta extends JDialog implements ActionListener {
 		catch(Exception er) {
 			JOptionPane.showMessageDialog(null, er);	
 		}
-		cbProducto.setSelectedIndex(0);
+		cbProducto_1.setSelectedIndex(0);
 		sCantidad.setValue(0);
 	}
 	
@@ -214,5 +226,19 @@ public class Boleta extends JDialog implements ActionListener {
 			txtS2.append(ap1.obtener(i).getCantidad()+"\n");
 			txtS3.append(ap1.obtener(i).getPrecio()+"\n");
 		}
+	}
+	
+	public void CalcularPrecio() {
+		
+		double precioProducto;
+		double cantidadProducto = Double.parseDouble(sCantidad.getValue().toString());
+		if (cbProducto_1.getSelectedIndex() == 0) precioProducto = cantidadProducto * 1;
+		else if (cbProducto_1.getSelectedIndex() == 1) precioProducto = cantidadProducto * 1.5;
+		else precioProducto = cantidadProducto * 2;		
+		txtPrecio.setText("" + precioProducto);
+		
+	};
+	protected void do_cbProducto_1_actionPerformed(ActionEvent e) {
+		CalcularPrecio();
 	}
 }
