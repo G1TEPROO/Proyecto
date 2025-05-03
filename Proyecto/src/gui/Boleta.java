@@ -42,7 +42,7 @@ public class Boleta extends JDialog implements ActionListener {
 	private JButton btnAgregar;
 	private JButton btnQuitar;
 	private JScrollPane scrollPane;
-	private JButton btnBoleta;
+	private JButton btnGenerar;
 	ArregloProducto ap1 = new ArregloProducto();
 	private JScrollPane scrollPane_1;
 	private JScrollPane scrollPane_2;
@@ -52,6 +52,7 @@ public class Boleta extends JDialog implements ActionListener {
 	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
 	private JTextArea txtS1;
+	private JButton btnCerrar;
 
 	/**
 	 * Launch the application.
@@ -123,13 +124,13 @@ public class Boleta extends JDialog implements ActionListener {
 			txtPrecio.setColumns(10);
 		}
 		{
-			btnAgregar = new JButton("AÑADIR");
+			btnAgregar = new JButton("AGREGAR");
 			btnAgregar.addActionListener(this);
 			btnAgregar.setBounds(402, 53, 89, 23);
 			contentPanel.add(btnAgregar);
 		}
 		{
-			btnQuitar = new JButton("ELIMINAR");
+			btnQuitar = new JButton("QUITAR");
 			btnQuitar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 				}
@@ -147,9 +148,9 @@ public class Boleta extends JDialog implements ActionListener {
 			}
 		}
 		{
-			btnBoleta = new JButton("GENERAR");
-			btnBoleta.setBounds(402, 199, 89, 23);
-			contentPanel.add(btnBoleta);
+			btnGenerar = new JButton("GENERAR");
+			btnGenerar.setBounds(402, 165, 89, 23);
+			contentPanel.add(btnGenerar);
 		}
 		{
 			scrollPane_1 = new JScrollPane();
@@ -183,6 +184,11 @@ public class Boleta extends JDialog implements ActionListener {
 			lblNewLabel_4 = new JLabel("Precio");
 			lblNewLabel_4.setBounds(268, 57, 66, 14);
 			contentPanel.add(lblNewLabel_4);
+		}
+		{
+			btnCerrar = new JButton("CERRAR");
+			btnCerrar.setBounds(402, 199, 89, 23);
+			contentPanel.add(btnCerrar);
 		}
 	}
 	public void actionPerformed(ActionEvent e) {

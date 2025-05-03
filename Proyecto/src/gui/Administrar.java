@@ -7,11 +7,23 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Administrar extends JDialog {
+public class Administrar extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+	private JTextField txtNProducto;
+	private JTextArea txtS;
+	private JButton btnAnadir;
+	private JButton btnEliminar;
+	private JButton btnCerrar;
+	private JButton btnBuscar;
 
 	/**
 	 * Launch the application.
@@ -30,11 +42,75 @@ public class Administrar extends JDialog {
 	 * Create the dialog.
 	 */
 	public Administrar() {
-		setBounds(100, 100, 450, 300);
+		setModal(true);
+		setBounds(100, 100, 377, 300);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Nombre Producto:");
+		lblNewLabel.setBounds(10, 11, 93, 14);
+		contentPanel.add(lblNewLabel);
+		
+		txtNProducto = new JTextField();
+		txtNProducto.setBounds(113, 8, 137, 20);
+		contentPanel.add(txtNProducto);
+		txtNProducto.setColumns(10);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 36, 239, 214);
+		contentPanel.add(scrollPane);
+		{
+			txtS = new JTextArea();
+			scrollPane.setViewportView(txtS);
+		}
+		{
+			btnAnadir = new JButton("AÑADIR");
+			btnAnadir.addActionListener(this);
+			btnAnadir.setBounds(260, 7, 89, 23);
+			contentPanel.add(btnAnadir);
+		}
+		{
+			btnEliminar = new JButton("ELIMINAR");
+			btnEliminar.addActionListener(this);
+			btnEliminar.setBounds(259, 38, 89, 23);
+			contentPanel.add(btnEliminar);
+		}
+		{
+			btnCerrar = new JButton("CERRAR");
+			btnCerrar.addActionListener(this);
+			btnCerrar.setBounds(259, 227, 89, 23);
+			contentPanel.add(btnCerrar);
+		}
+		{
+			btnBuscar = new JButton("BUSCAR");
+			btnBuscar.addActionListener(this);
+			btnBuscar.setBounds(259, 72, 89, 23);
+			contentPanel.add(btnBuscar);
+		}
 	}
-
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnCerrar) {
+			do_btnCerrar_actionPerformed(e);
+		}
+		if (e.getSource() == btnBuscar) {
+			do_btnBuscar_actionPerformed(e);
+		}
+		if (e.getSource() == btnEliminar) {
+			do_btnEliminar_actionPerformed(e);
+		}
+		if (e.getSource() == btnAnadir) {
+			do_btnAnadir_actionPerformed(e);
+		}
+	}
+	protected void do_btnAnadir_actionPerformed(ActionEvent e) {
+	}
+	protected void do_btnEliminar_actionPerformed(ActionEvent e) {
+	}
+	protected void do_btnBuscar_actionPerformed(ActionEvent e) {
+	}
+	protected void do_btnCerrar_actionPerformed(ActionEvent e) {
+		dispose();
+	}
 }
