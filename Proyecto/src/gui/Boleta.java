@@ -207,7 +207,7 @@ public class Boleta extends JDialog implements ActionListener {
 		double precioProducto = Double.parseDouble(txtPrecio.getText());
 		
 		try {
-			if(cantidadProducto > 0) ap1.Adicionar(nombreProducto, cantidadProducto, precioProducto);
+			if(cantidadProducto > 0) ap1.Adicionar(nombreProducto, precioProducto);
 			else JOptionPane.showMessageDialog(null, "CANTIDAD DE PRODUCTOS NO VALIDA");
 			Listar(txtS1);
 		}
@@ -229,7 +229,7 @@ public class Boleta extends JDialog implements ActionListener {
 		Limpieza_S();
 		for( int i = 0; i < ap1.Tamaño(); i++) {
 			txtS1.append(ap1.obtener(i).getProducto()+"\n");
-			txtS2.append(ap1.obtener(i).getCantidad()+"\n");
+			txtS2.append(sCantidad.getValue()+"\n");
 			txtS3.append(ap1.obtener(i).getPrecio()+"\n");
 		}
 	}

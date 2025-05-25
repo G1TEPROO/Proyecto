@@ -18,12 +18,15 @@ public class Administrar extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtNProducto;
+	private JTextField txtNombre;
 	private JTextArea txtS;
 	private JButton btnAnadir;
 	private JButton btnEliminar;
 	private JButton btnCerrar;
 	private JButton btnBuscar;
+	private JButton btnModificar;
+	private JLabel lblNewLabel_1;
+	private JTextField txtPrecio;
 
 	/**
 	 * Launch the application.
@@ -43,23 +46,23 @@ public class Administrar extends JDialog implements ActionListener {
 	 */
 	public Administrar() {
 		setModal(true);
-		setBounds(100, 100, 377, 300);
+		setBounds(100, 100, 391, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Nombre Producto:");
-		lblNewLabel.setBounds(10, 11, 93, 14);
+		lblNewLabel.setBounds(10, 11, 105, 14);
 		contentPanel.add(lblNewLabel);
 		
-		txtNProducto = new JTextField();
-		txtNProducto.setBounds(113, 8, 137, 20);
-		contentPanel.add(txtNProducto);
-		txtNProducto.setColumns(10);
+		txtNombre = new JTextField();
+		txtNombre.setBounds(120, 8, 130, 20);
+		contentPanel.add(txtNombre);
+		txtNombre.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 36, 239, 214);
+		scrollPane.setBounds(10, 61, 239, 189);
 		contentPanel.add(scrollPane);
 		{
 			txtS = new JTextArea();
@@ -68,26 +71,42 @@ public class Administrar extends JDialog implements ActionListener {
 		{
 			btnAnadir = new JButton("AÑADIR");
 			btnAnadir.addActionListener(this);
-			btnAnadir.setBounds(260, 7, 89, 23);
+			btnAnadir.setBounds(260, 7, 105, 23);
 			contentPanel.add(btnAnadir);
 		}
 		{
 			btnEliminar = new JButton("ELIMINAR");
 			btnEliminar.addActionListener(this);
-			btnEliminar.setBounds(259, 38, 89, 23);
+			btnEliminar.setBounds(259, 72, 106, 23);
 			contentPanel.add(btnEliminar);
 		}
 		{
 			btnCerrar = new JButton("CERRAR");
 			btnCerrar.addActionListener(this);
-			btnCerrar.setBounds(259, 227, 89, 23);
+			btnCerrar.setBounds(259, 227, 106, 23);
 			contentPanel.add(btnCerrar);
 		}
 		{
 			btnBuscar = new JButton("BUSCAR");
 			btnBuscar.addActionListener(this);
-			btnBuscar.setBounds(259, 72, 89, 23);
+			btnBuscar.setBounds(259, 106, 106, 23);
 			contentPanel.add(btnBuscar);
+		}
+		{
+			btnModificar = new JButton("MODIFICAR");
+			btnModificar.setBounds(259, 38, 106, 23);
+			contentPanel.add(btnModificar);
+		}
+		{
+			lblNewLabel_1 = new JLabel("Precio Producto:");
+			lblNewLabel_1.setBounds(10, 36, 105, 14);
+			contentPanel.add(lblNewLabel_1);
+		}
+		{
+			txtPrecio = new JTextField();
+			txtPrecio.setColumns(10);
+			txtPrecio.setBounds(120, 33, 130, 20);
+			contentPanel.add(txtPrecio);
 		}
 	}
 	public void actionPerformed(ActionEvent e) {

@@ -10,9 +10,9 @@ public class ArregloProducto {
 		pro= new ArrayList<Producto>();
 	}
 	
-	public void Adicionar (String producto ,int cantidad , double  precioTotal) {
+	public void Adicionar (String producto, double  precio) {
 	   	
-		Producto p1 = new Producto(producto ,cantidad, precioTotal);
+		Producto p1 = new Producto(producto, precio);
 		Adicionar(p1);
 		
 	}
@@ -28,4 +28,5 @@ public class ArregloProducto {
 		if (pro.size()>0) return pro.size();
 		else return 0;
 	}
+
 }
