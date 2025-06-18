@@ -18,11 +18,11 @@ public class AdministrarEmpleado extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JLabel lblNewLabel;
-	private JTextField txtCod;
+	private JTextField txtCodigo;
 	private JLabel lblNewLabel_1;
 	private JTextField txtdni;
 	private JLabel lblNewLabel_2;
-	private JTextField txtNom;
+	private JTextField txtNombre;
 	private JLabel lblNewLabel_3;
 	private JTextField txtApellido;
 	private JLabel lblNewLabel_4;
@@ -65,10 +65,10 @@ public class AdministrarEmpleado extends JDialog {
 			contentPanel.add(lblNewLabel);
 		}
 		{
-			txtCod = new JTextField();
-			txtCod.setBounds(98, 21, 86, 20);
-			contentPanel.add(txtCod);
-			txtCod.setColumns(10);
+			txtCodigo = new JTextField();
+			txtCodigo.setBounds(98, 21, 86, 20);
+			contentPanel.add(txtCodigo);
+			txtCodigo.setColumns(10);
 		}
 		{
 			lblNewLabel_1 = new JLabel("DNI:");
@@ -87,10 +87,10 @@ public class AdministrarEmpleado extends JDialog {
 			contentPanel.add(lblNewLabel_2);
 		}
 		{
-			txtNom = new JTextField();
-			txtNom.setBounds(98, 92, 86, 20);
-			contentPanel.add(txtNom);
-			txtNom.setColumns(10);
+			txtNombre = new JTextField();
+			txtNombre.setBounds(98, 92, 86, 20);
+			contentPanel.add(txtNombre);
+			txtNombre.setColumns(10);
 		}
 		{
 			lblNewLabel_3 = new JLabel("Apellido");
