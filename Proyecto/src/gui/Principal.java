@@ -19,6 +19,8 @@ public class Principal extends JFrame implements ActionListener {
 	private JLabel lblNewLabel;
 	private JButton btnBoleta;
 	private JButton btnAdministrarStock;
+	private JButton btnEmpleados;
+	private JButton btnListarBoletas;
 
 	/**
 	 * Launch the application.
@@ -41,7 +43,7 @@ public class Principal extends JFrame implements ActionListener {
 	 */
 	public Principal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 285, 290);
+		setBounds(100, 100, 285, 343);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -49,28 +51,37 @@ public class Principal extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 		{
 			lblNewLabel = new JLabel("PANADERIA LUCHO'S");
-			lblNewLabel.setFont(new Font("Yu Gothic Medium", Font.BOLD, 22));
 			lblNewLabel.setBounds(10, 32, 249, 59);
+			lblNewLabel.setFont(new Font("Yu Gothic Medium", Font.BOLD, 22));
 			contentPane.add(lblNewLabel);
 		}
 		{
 			btnBoleta = new JButton("GENERAR BOLETA");
-			btnBoleta.addActionListener(this);
 			btnBoleta.setBounds(10, 110, 249, 28);
+			btnBoleta.addActionListener(this);
 			contentPane.add(btnBoleta);
 		}
 		{
 			btnAdministrarStock = new JButton("ADMINISTRAR PRODUCTOS");
-			btnAdministrarStock.addActionListener(this);
 			btnAdministrarStock.setBounds(10, 149, 249, 28);
+			btnAdministrarStock.addActionListener(this);
 			contentPane.add(btnAdministrarStock);
 		}
 		
-		JButton btnEmpleados = new JButton("ADMINISTRAR EMPLEADOS");
+		btnEmpleados = new JButton("ADMINISTRAR EMPLEADOS");
 		btnEmpleados.setBounds(10, 188, 249, 28);
+		btnEmpleados.addActionListener(this);
 		contentPane.add(btnEmpleados);
+		{
+			btnListarBoletas = new JButton("LISTAR BOLETAS");
+			btnListarBoletas.setBounds(10, 227, 249, 28);
+			contentPane.add(btnListarBoletas);
+		}
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnEmpleados) {
+			do_btnEmpleados_actionPerformed(e);
+		}
 		if (e.getSource() == btnAdministrarStock) {
 			do_btnAdministrarStock_actionPerformed(e);
 		}
@@ -85,5 +96,7 @@ public class Principal extends JFrame implements ActionListener {
 	protected void do_btnAdministrarStock_actionPerformed(ActionEvent e) {
 		Administrar a1 = new Administrar();
 		a1.setVisible(true);
+	}
+	protected void do_btnEmpleados_actionPerformed(ActionEvent e) {
 	}
 }
