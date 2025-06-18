@@ -2,12 +2,12 @@ package clases;
 
 import java.util.ArrayList;
 
-
 public class ArregloEmpleado {
-	private ArrayList<Empleado> lista;
+    private ArrayList<Empleado> lista;
 
     public ArregloEmpleado() {
         lista = new ArrayList<>();
+        
     }
 
     public void agregar(Empleado e) {
