@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Administrar extends JDialog implements ActionListener {
+public class AdministrarStock extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -31,7 +31,7 @@ public class Administrar extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			Administrar dialog = new Administrar();
+			AdministrarStock dialog = new AdministrarStock();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -42,7 +42,7 @@ public class Administrar extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public Administrar() {
+	public AdministrarStock() {
 		setModal(true);
 		setBounds(100, 100, 377, 300);
 		getContentPane().setLayout(new BorderLayout());

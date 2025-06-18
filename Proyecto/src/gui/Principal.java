@@ -94,7 +94,7 @@ public class Principal extends JFrame implements ActionListener {
 		b1.setVisible(true);
 	}
 	protected void do_btnAdministrarStock_actionPerformed(ActionEvent e) {
-		Administrar a1 = new Administrar();
+		AdministrarStock a1 = new AdministrarStock();
 		a1.setVisible(true);
 	}
 	protected void do_btnEmpleados_actionPerformed(ActionEvent e) {
