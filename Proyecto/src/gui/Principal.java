@@ -41,7 +41,7 @@ public class Principal extends JFrame implements ActionListener {
 	 */
 	public Principal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 285, 278);
+		setBounds(100, 100, 285, 290);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -65,6 +65,10 @@ public class Principal extends JFrame implements ActionListener {
 			btnAdministrarStock.setBounds(10, 149, 249, 28);
 			contentPane.add(btnAdministrarStock);
 		}
+		
+		JButton btnEmpleados = new JButton("ADMINISTRAR EMPLEADOS");
+		btnEmpleados.setBounds(10, 188, 249, 28);
+		contentPane.add(btnEmpleados);
 	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnAdministrarStock) {
