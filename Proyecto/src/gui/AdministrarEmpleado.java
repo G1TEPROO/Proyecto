@@ -122,6 +122,11 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 
 		txtS = new TextArea();
 		scrollPane.setViewportView(txtS);
+		
+		lista.agregar(new Empleado("E001", "Renzo", "Alvarez", "12345678", "Jefe", 3200.0));
+	    lista.agregar(new Empleado("E002", "Ariana", "Perez", "87654321", "Asistente", 2500.0));
+	    lista.agregar(new Empleado("E003", "Diego", "Canevaro", "11112222", "Analista", 3000.0));
+	    txtS.setText("Empleados de ejemplo cargados.\nPrueba BUSCAR con: E001, E002 o E003.");
 	}
 
 	public void actionPerformed(ActionEvent e) {
