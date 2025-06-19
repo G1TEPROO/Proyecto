@@ -27,6 +27,9 @@ public class AdministrarStock extends JDialog implements ActionListener {
 	private JButton btnBuscar;
 	private JTextField txtPrecio;
 	private JTable tS;
+	private JLabel lblCantidad;
+	private JTextField txtCantidad;
+	private JButton btnModificar;
 
 	/**
 	 * Launch the application.
@@ -46,7 +49,7 @@ public class AdministrarStock extends JDialog implements ActionListener {
 	 */
 	public AdministrarStock() {
 		setModal(true);
-		setBounds(100, 100, 460, 300);
+		setBounds(100, 100, 514, 360);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -62,7 +65,7 @@ public class AdministrarStock extends JDialog implements ActionListener {
 		txtProducto.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 61, 324, 189);
+		scrollPane.setBounds(10, 99, 359, 211);
 		contentPanel.add(scrollPane);
 		{
 			tS = new JTable();
@@ -70,11 +73,11 @@ public class AdministrarStock extends JDialog implements ActionListener {
 				new Object[][] {
 				},
 				new String[] {
-					"Codigo", "Nombre", "Precio"
+					"Codigo", "Nombre", "Precio", "Stock"
 				}
 			) {
 				Class[] columnTypes = new Class[] {
-					Integer.class, Object.class, Object.class
+					Integer.class, Object.class, Object.class, Object.class
 				};
 				public Class getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
@@ -87,36 +90,52 @@ public class AdministrarStock extends JDialog implements ActionListener {
 		{
 			btnAnadir = new JButton("AÑADIR");
 			btnAnadir.addActionListener(this);
-			btnAnadir.setBounds(345, 7, 89, 23);
+			btnAnadir.setBounds(380, 11, 108, 23);
 			contentPanel.add(btnAnadir);
 		}
 		{
 			btnEliminar = new JButton("ELIMINAR");
 			btnEliminar.addActionListener(this);
-			btnEliminar.setBounds(344, 38, 89, 23);
+			btnEliminar.setBounds(379, 42, 109, 23);
 			contentPanel.add(btnEliminar);
 		}
 		{
 			btnCerrar = new JButton("CERRAR");
 			btnCerrar.addActionListener(this);
-			btnCerrar.setBounds(344, 227, 89, 23);
+			btnCerrar.setBounds(380, 287, 108, 23);
 			contentPanel.add(btnCerrar);
 		}
 		{
 			btnBuscar = new JButton("BUSCAR");
 			btnBuscar.addActionListener(this);
-			btnBuscar.setBounds(344, 72, 89, 23);
+			btnBuscar.setBounds(380, 110, 108, 23);
 			contentPanel.add(btnBuscar);
 		}
 		
 		txtPrecio = new JTextField();
 		txtPrecio.setColumns(10);
-		txtPrecio.setBounds(127, 33, 119, 20);
+		txtPrecio.setBounds(215, 33, 119, 20);
 		contentPanel.add(txtPrecio);
 		
 		JLabel lblNewLabel_1 = new JLabel("Precio Unitario:");
 		lblNewLabel_1.setBounds(10, 36, 93, 14);
 		contentPanel.add(lblNewLabel_1);
+		{
+			lblCantidad = new JLabel("Cantidad:");
+			lblCantidad.setBounds(10, 61, 107, 14);
+			contentPanel.add(lblCantidad);
+		}
+		{
+			txtCantidad = new JTextField();
+			txtCantidad.setColumns(10);
+			txtCantidad.setBounds(215, 58, 119, 20);
+			contentPanel.add(txtCantidad);
+		}
+		{
+			btnModificar = new JButton("MODIFICAR");
+			btnModificar.setBounds(380, 76, 108, 23);
+			contentPanel.add(btnModificar);
+		}
 	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCerrar) {
