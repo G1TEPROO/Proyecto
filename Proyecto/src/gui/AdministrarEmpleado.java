@@ -12,7 +12,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtCodigo;
-	private JTextField txtdni;
+	private JTextField txtDNI;
 	private JTextField txtNombre;
 	private JTextField txtApellido;
 	private JTextField txtCargo;
@@ -37,7 +37,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 
 	public AdministrarEmpleado() {
 		setTitle("ADMINISTRAR EMPLEADO");
-		setBounds(100, 100, 450, 375);
+		setBounds(100, 100, 476, 375);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(null);
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -47,77 +47,77 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		contentPanel.add(lblNewLabel);
 
 		txtCodigo = new JTextField();
-		txtCodigo.setBounds(98, 21, 86, 20);
+		txtCodigo.setBounds(126, 21, 101, 20);
 		contentPanel.add(txtCodigo);
 		txtCodigo.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("DNI:");
-		lblNewLabel_1.setBounds(27, 59, 46, 14);
+		lblNewLabel_1.setBounds(241, 24, 46, 14);
 		contentPanel.add(lblNewLabel_1);
 
-		txtdni = new JTextField();
-		txtdni.setBounds(98, 56, 86, 20);
-		contentPanel.add(txtdni);
-		txtdni.setColumns(10);
+		txtDNI = new JTextField();
+		txtDNI.setBounds(328, 21, 101, 20);
+		contentPanel.add(txtDNI);
+		txtDNI.setColumns(10);
 
 		JLabel lblNewLabel_2 = new JLabel("Nombre:");
-		lblNewLabel_2.setBounds(27, 95, 46, 14);
+		lblNewLabel_2.setBounds(27, 59, 46, 14);
 		contentPanel.add(lblNewLabel_2);
 
 		txtNombre = new JTextField();
-		txtNombre.setBounds(98, 92, 86, 20);
+		txtNombre.setBounds(126, 56, 101, 20);
 		contentPanel.add(txtNombre);
 		txtNombre.setColumns(10);
 
 		JLabel lblNewLabel_3 = new JLabel("Apellido:");
-		lblNewLabel_3.setBounds(241, 95, 60, 14);
+		lblNewLabel_3.setBounds(241, 59, 60, 14);
 		contentPanel.add(lblNewLabel_3);
 
 		txtApellido = new JTextField();
-		txtApellido.setBounds(314, 92, 86, 20);
+		txtApellido.setBounds(328, 56, 101, 20);
 		contentPanel.add(txtApellido);
 		txtApellido.setColumns(10);
 
 		JLabel lblNewLabel_4 = new JLabel("Cargo:");
-		lblNewLabel_4.setBounds(241, 24, 46, 14);
+		lblNewLabel_4.setBounds(27, 95, 46, 14);
 		contentPanel.add(lblNewLabel_4);
 
 		txtCargo = new JTextField();
-		txtCargo.setBounds(314, 21, 86, 20);
+		txtCargo.setBounds(126, 92, 101, 20);
 		contentPanel.add(txtCargo);
 		txtCargo.setColumns(10);
 
 		JLabel lblNewLabel_5 = new JLabel("Sueldo:");
-		lblNewLabel_5.setBounds(241, 59, 46, 14);
+		lblNewLabel_5.setBounds(241, 95, 46, 14);
 		contentPanel.add(lblNewLabel_5);
 
 		txtSueldo = new JTextField();
-		txtSueldo.setBounds(314, 56, 86, 20);
+		txtSueldo.setBounds(328, 92, 101, 20);
 		contentPanel.add(txtSueldo);
 		txtSueldo.setColumns(10);
 
 		btnBuscar = new JButton("BUSCAR");
-		btnBuscar.setBounds(10, 120, 89, 23);
+		btnBuscar.setBounds(340, 120, 89, 23);
 		btnBuscar.addActionListener(this);
 		contentPanel.add(btnBuscar);
 
 		btnModificar = new JButton("MODIFICAR");
-		btnModificar.setBounds(108, 120, 101, 23);
+		btnModificar.setBounds(229, 120, 101, 23);
 		btnModificar.addActionListener(this);
 		contentPanel.add(btnModificar);
 
 		btnEliminar = new JButton("ELIMINAR");
-		btnEliminar.setBounds(219, 120, 89, 23);
+		btnEliminar.setBounds(126, 120, 89, 23);
 		btnEliminar.addActionListener(this);
 		contentPanel.add(btnEliminar);
 
 		btnAgregar = new JButton("AGREGAR");
-		btnAgregar.setBounds(324, 120, 89, 23);
+		btnAgregar.setBounds(27, 120, 89, 23);
 		btnAgregar.addActionListener(this);
 		contentPanel.add(btnAgregar);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(27, 154, 383, 171);
+		scrollPane.setBounds(27, 154, 402, 171);
 		contentPanel.add(scrollPane);
 
 		txtS = new TextArea();
@@ -148,7 +148,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		if (emp != null) {
 			txtNombre.setText(emp.getNombre());
 			txtApellido.setText(emp.getApellido());
-			txtdni.setText(emp.getDni());
+			txtDNI.setText(emp.getDni());
 			txtCargo.setText(emp.getCargo());
 			txtSueldo.setText(String.valueOf(emp.getSueldo()));
 			txtS.setText("Empleado encontrado:\n" + emp.toString());
@@ -161,7 +161,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		String codigo = txtCodigo.getText().trim();
 		String nombre = txtNombre.getText().trim();
 		String apellido = txtApellido.getText().trim();
-		String dni = txtdni.getText().trim();
+		String dni = txtDNI.getText().trim();
 		String cargo = txtCargo.getText().trim();
 		double sueldo;
 
@@ -185,7 +185,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		if (emp != null) {
 			emp.setNombre(txtNombre.getText().trim());
 			emp.setApellido(txtApellido.getText().trim());
-			emp.setDni(txtdni.getText().trim());
+			emp.setDni(txtDNI.getText().trim());
 			emp.setCargo(txtCargo.getText().trim());
 
 			try {
@@ -215,7 +215,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		txtCodigo.setText("");
 		txtNombre.setText("");
 		txtApellido.setText("");
-		txtdni.setText("");
+		txtDNI.setText("");
 		txtCargo.setText("");
 		txtSueldo.setText("");
 	}
