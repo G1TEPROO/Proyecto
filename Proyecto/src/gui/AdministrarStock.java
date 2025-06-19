@@ -7,14 +7,21 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import clases.ArregloProducto;
+import clases.Producto;
 
 public class AdministrarStock extends JDialog implements ActionListener {
 
@@ -30,24 +37,10 @@ public class AdministrarStock extends JDialog implements ActionListener {
 	private JLabel lblCantidad;
 	private JTextField txtCantidad;
 	private JButton btnModificar;
+	private ArregloProducto ap;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			AdministrarStock dialog = new AdministrarStock();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
-	public AdministrarStock() {
+	public AdministrarStock(ArregloProducto ap) {
+		this.ap = ap;
 		setModal(true);
 		setBounds(100, 100, 514, 360);
 		getContentPane().setLayout(new BorderLayout());
@@ -86,6 +79,29 @@ public class AdministrarStock extends JDialog implements ActionListener {
 			tS.getColumnModel().getColumn(1).setPreferredWidth(195);
 			tS.getColumnModel().getColumn(2).setPreferredWidth(90);
 			scrollPane.setViewportView(tS);
+			
+			tS.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			tS.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				public void valueChanged(ListSelectionEvent e) {
+					if (!e.getValueIsAdjusting() && tS.getSelectedRow() != -1) {
+						int fila = tS.getSelectedRow();
+						DefaultTableModel modelo = (DefaultTableModel) tS.getModel();
+
+						txtProducto.setText(modelo.getValueAt(fila, 1).toString());
+						txtPrecio.setText(modelo.getValueAt(fila, 2).toString());
+						txtCantidad.setText(modelo.getValueAt(fila, 3).toString());
+						btnModificar.setEnabled(true);
+		                btnEliminar.setEnabled(true);
+		            } else {
+		                Limpiar();
+		                btnModificar.setEnabled(false);
+		                btnEliminar.setEnabled(false);
+		            }
+				}
+			});
+			tS.setRowSelectionAllowed(true);
+			tS.setColumnSelectionAllowed(false);
+			tS.setCellSelectionEnabled(false);
 		}
 		{
 			btnAnadir = new JButton("AÑADIR");
@@ -133,11 +149,18 @@ public class AdministrarStock extends JDialog implements ActionListener {
 		}
 		{
 			btnModificar = new JButton("MODIFICAR");
+			btnModificar.addActionListener(this);
 			btnModificar.setBounds(380, 76, 108, 23);
 			contentPanel.add(btnModificar);
 		}
+		btnModificar.setEnabled(false);
+		btnEliminar.setEnabled(false);
+		ActualizarTabla();
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnModificar) {
+			do_btnModificar_actionPerformed(e);
+		}
 		if (e.getSource() == btnCerrar) {
 			do_btnCerrar_actionPerformed(e);
 		}
@@ -152,12 +175,102 @@ public class AdministrarStock extends JDialog implements ActionListener {
 		}
 	}
 	protected void do_btnAnadir_actionPerformed(ActionEvent e) {
+		try {
+			String nombre = txtProducto.getText().trim();
+			double precio = Double.parseDouble(txtPrecio.getText().trim());
+			int stock = Integer.parseInt(txtCantidad.getText().trim());
+			int codigo = ap.ActualizarCodigo();
+			ap.Agregar(new Producto(codigo, nombre, precio, stock));
+			ActualizarTabla();
+			Limpiar();
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(this, "Datos inválidos");
+		}
 	}
 	protected void do_btnEliminar_actionPerformed(ActionEvent e) {
+		int filaSeleccionada = tS.getSelectedRow();
+
+		if (filaSeleccionada == -1) {
+			JOptionPane.showMessageDialog(this, "Selecciona una fila para eliminar");
+			return;
+		}
+
+		DefaultTableModel modelo = (DefaultTableModel) tS.getModel();
+		int codigo = (int) modelo.getValueAt(filaSeleccionada, 0); 
+
+		if (ap.Eliminar(codigo)) {
+			modelo.removeRow(filaSeleccionada);
+			JOptionPane.showMessageDialog(this, "Producto eliminado correctamente");
+			Limpiar();
+		} else {
+			JOptionPane.showMessageDialog(this, "No se pudo eliminar el producto");
+		}
 	}
 	protected void do_btnBuscar_actionPerformed(ActionEvent e) {
+		String nombre = txtProducto.getText().trim();
+		for (int i = 0; i < ap.Tamano(); i++) {
+			Producto p = ap.Obtener(i);
+			if (p.getProducto().equalsIgnoreCase(nombre)) {
+				txtPrecio.setText(String.valueOf(p.getPrecio()));
+				txtCantidad.setText(String.valueOf(p.getStock()));
+
+				JOptionPane.showMessageDialog(this, "Producto encontrado:\nPrecio: " + p.getPrecio() + "\nStock: " + p.getStock(), "Éxito", 
+					JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+		}
+		JOptionPane.showMessageDialog(this, "Producto no encontrado", "Aviso", JOptionPane.WARNING_MESSAGE);
+	}
+	protected void do_btnModificar_actionPerformed(ActionEvent e) {
+		int filaSeleccionada = tS.getSelectedRow();
+
+		if (filaSeleccionada == -1) {
+			JOptionPane.showMessageDialog(this, "Selecciona una fila para modificar");
+			return;
+		}
+
+		try {
+			String nuevoNombre = txtProducto.getText().trim();
+			double nuevoPrecio = Double.parseDouble(txtPrecio.getText().trim());
+			int nuevoStock = Integer.parseInt(txtCantidad.getText().trim());
+
+			DefaultTableModel modelo = (DefaultTableModel) tS.getModel();
+			int codigo = (int) modelo.getValueAt(filaSeleccionada, 0);
+
+			Producto p = ap.Buscar(codigo);
+			if (p != null) {
+				p.setProducto(nuevoNombre);
+				p.setPrecio(nuevoPrecio);
+				p.setStock(nuevoStock);
+
+				modelo.setValueAt(nuevoNombre, filaSeleccionada, 1);
+				modelo.setValueAt(nuevoPrecio, filaSeleccionada, 2);
+				modelo.setValueAt(nuevoStock, filaSeleccionada, 3);
+
+				JOptionPane.showMessageDialog(this, "Producto modificado correctamente");
+				Limpiar();
+			} else {
+				JOptionPane.showMessageDialog(this, "No se encontró el producto");
+			}
+		} catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(this, "Datos inválidos. Verifica precio y cantidad");
+		}
 	}
 	protected void do_btnCerrar_actionPerformed(ActionEvent e) {
 		dispose();
+	}
+	private void ActualizarTabla() {
+		DefaultTableModel modelo = (DefaultTableModel) tS.getModel();
+		modelo.setRowCount(0);
+		for (int i = 0; i < ap.Tamano(); i++) {
+			Producto p = ap.Obtener(i);
+			modelo.addRow(new Object[] {p.getCodigoProducto(), p.getProducto(), p.getPrecio(), p.getStock()});
+		}
+	}
+	private void Limpiar() {
+		txtProducto.setText("");
+		txtPrecio.setText("");
+		txtCantidad.setText("");
+		tS.clearSelection();
 	}
 }

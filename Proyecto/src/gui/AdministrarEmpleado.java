@@ -61,7 +61,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		txtDNI.setColumns(10);
 
 		JLabel lblNewLabel_2 = new JLabel("Nombre:");
-		lblNewLabel_2.setBounds(27, 59, 46, 14);
+		lblNewLabel_2.setBounds(27, 59, 72, 14);
 		contentPanel.add(lblNewLabel_2);
 
 		txtNombre = new JTextField();
@@ -126,7 +126,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		lista.agregar(new Empleado("E001", "Renzo", "Alvarez", "12345678", "Jefe", 3200.0));
 	    lista.agregar(new Empleado("E002", "Ariana", "Perez", "87654321", "Asistente", 2500.0));
 	    lista.agregar(new Empleado("E003", "Diego", "Canevaro", "11112222", "Analista", 3000.0));
-	    txtS.setText("Empleados de ejemplo cargados.\nPrueba BUSCAR con: E001, E002 o E003.");
+	    txtS.setText("");
 	}
 
 	public void actionPerformed(ActionEvent e) {

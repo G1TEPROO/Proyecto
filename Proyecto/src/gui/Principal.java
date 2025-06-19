@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import clases.ArregloProducto;
+import clases.Producto;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -21,6 +25,7 @@ public class Principal extends JFrame implements ActionListener {
 	private JButton btnAdministrarStock;
 	private JButton btnEmpleados;
 	private JButton btnListarBoletas;
+	private ArregloProducto ap = new ArregloProducto();
 
 	/**
 	 * Launch the application.
@@ -41,7 +46,9 @@ public class Principal extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
+	
 	public Principal() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 285, 343);
 		contentPane = new JPanel();
@@ -90,13 +97,15 @@ public class Principal extends JFrame implements ActionListener {
 		}
 	}
 	protected void do_btnBoleta_actionPerformed(ActionEvent e) {
-		Boleta b1 = new Boleta();
-		b1.setVisible(true);
+		Boleta b = new Boleta(ap);
+		b.setVisible(true);
 	}
 	protected void do_btnAdministrarStock_actionPerformed(ActionEvent e) {
-		AdministrarStock a1 = new AdministrarStock();
-		a1.setVisible(true);
+		AdministrarStock as = new AdministrarStock(ap);
+		as.setVisible(true);
 	}
 	protected void do_btnEmpleados_actionPerformed(ActionEvent e) {
+		AdministrarEmpleado ae = new AdministrarEmpleado();
+		ae.setVisible(true);
 	}
 }

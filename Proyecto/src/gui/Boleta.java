@@ -41,30 +41,15 @@ public class Boleta extends JDialog implements ActionListener {
 	private JTextField txtPrecio;
 	private JButton btnAgregar;
 	private JButton btnGenerar;
-	ArregloProducto ap1 = new ArregloProducto();
 	private JButton btnCerrar;
 	private JButton btnModificar;
 	private JScrollPane scrollPane;
 	private JTable tS;
 	private JButton btnQuitar;
+	private ArregloProducto ap;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			Boleta dialog = new Boleta();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
-	public Boleta() {
+	public Boleta(ArregloProducto ap) {
+		this.ap = ap;
 		setTitle("GENERAR BOLETA");
 		setModal(true);
 		setBounds(100, 100, 522, 272);
@@ -78,7 +63,7 @@ public class Boleta extends JDialog implements ActionListener {
 			contentPanel.add(lblNewLabel);
 		}
 		{
-			ArregloProducto pro = new ArregloProducto();
+			ArregloProducto pro = ap;
 			cbProducto = new JComboBox();
 			cbProducto.addActionListener(this);
 			DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
@@ -171,6 +156,7 @@ public class Boleta extends JDialog implements ActionListener {
 			btnQuitar.setBounds(387, 121, 104, 23);
 			contentPanel.add(btnQuitar);
 		}
+		Actualizar();
 	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCerrar) {
@@ -296,9 +282,22 @@ public class Boleta extends JDialog implements ActionListener {
 	    boleta.append(String.format("Total: %.2f", total));
 
 	    JOptionPane.showMessageDialog(this, boleta.toString(), "Boleta de Compras", JOptionPane.INFORMATION_MESSAGE);
-
-	    model.setRowCount(0);
 	    
+	    for (int i = 0; i < model.getRowCount(); i++) {
+	    	String nombre = model.getValueAt(i, 0).toString();
+	    	int cantidadVendida = Integer.parseInt(model.getValueAt(i, 1).toString());
+
+	    	for (int j = 0; j < ap.Tamano(); j++) {
+	    		Producto p = ap.Obtener(j);
+	    		if (p.getProducto().equals(nombre)) {
+	    			int nuevoStock = p.getStock() - cantidadVendida;
+	    			if (nuevoStock < 0) nuevoStock = 0;
+	    			p.setStock(nuevoStock);
+	    		}
+	    	}
+	    }
+	    
+	    model.setRowCount(0);
 	    RestaurarPosicion();
 	}
 	
@@ -307,7 +306,7 @@ public class Boleta extends JDialog implements ActionListener {
 	}
 	
 	public Producto PosicionProducto() {
-		ArregloProducto pro = new ArregloProducto();
+		ArregloProducto pro = ap;
 		return pro.Obtener(cbProducto.getSelectedIndex());
 	}
 	
@@ -316,7 +315,7 @@ public class Boleta extends JDialog implements ActionListener {
 	}
 	
 	public void CalcularPrecio(int x) {
-		ArregloProducto pro = new ArregloProducto();
+		ArregloProducto pro = ap;
 		int cantidadProducto = Integer.parseInt(sCantidad.getValue().toString());
 		double total = cantidadProducto * pro.Obtener(x).getPrecio();
 		txtPrecio.setText(String.format("%.2f", total));
@@ -329,5 +328,11 @@ public class Boleta extends JDialog implements ActionListener {
 	public void RestaurarPosicion() {
 		cbProducto.setSelectedIndex(0);
 	    sCantidad.setValue(1);
+	}
+	public void Actualizar() {
+		cbProducto.removeAllItems();
+		for (int i = 0; i < ap.Tamano(); i++) {
+			cbProducto.addItem(ap.Obtener(i).getProducto());
+		}
 	}
 }
