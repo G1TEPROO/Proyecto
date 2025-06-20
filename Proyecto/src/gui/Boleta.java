@@ -320,9 +320,13 @@ public class Boleta extends JDialog implements ActionListener {
 		double total = cantidadProducto * pro.Obtener(x).getPrecio();
 		txtPrecio.setText(String.format("%.2f", total));
 	}
-	
 	public void CalcularPrecio() {
-		CalcularPrecio(cbProducto.getSelectedIndex());
+		int index = cbProducto.getSelectedIndex();
+		if (index >= 0 && index < ap.Tamano()) {
+			CalcularPrecio(index);
+		} else {
+			txtPrecio.setText("0.00");
+		}
 	}
 	
 	public void RestaurarPosicion() {

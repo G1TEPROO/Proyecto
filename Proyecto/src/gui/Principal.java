@@ -49,6 +49,10 @@ public class Principal extends JFrame implements ActionListener {
 	
 	public Principal() {
 		
+		ap.Agregar(new Producto(ap.ActualizarCodigo(), "Pan francés", 0.20, 100));
+		ap.Agregar(new Producto(ap.ActualizarCodigo(), "Pan integral", 0.35, 50));
+		ap.Agregar(new Producto(ap.ActualizarCodigo(), "Pan con queso", 0.50, 30));
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 285, 343);
 		contentPane = new JPanel();
