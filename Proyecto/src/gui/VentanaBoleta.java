@@ -30,7 +30,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
-public class Boleta extends JDialog implements ActionListener {
+public class VentanaBoleta extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -48,7 +48,7 @@ public class Boleta extends JDialog implements ActionListener {
 	private JButton btnQuitar;
 	private ArregloProducto ap;
 
-	public Boleta(ArregloProducto ap) {
+	public VentanaBoleta(ArregloProducto ap) {
 		this.ap = ap;
 		setTitle("GENERAR BOLETA");
 		setModal(true);

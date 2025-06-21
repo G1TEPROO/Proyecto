@@ -49,9 +49,9 @@ public class Principal extends JFrame implements ActionListener {
 	
 	public Principal() {
 		
-		ap.Agregar(new Producto(ap.ActualizarCodigo(), "Pan francés", 0.20, 100));
-		ap.Agregar(new Producto(ap.ActualizarCodigo(), "Pan integral", 0.35, 50));
-		ap.Agregar(new Producto(ap.ActualizarCodigo(), "Pan con queso", 0.50, 30));
+		ap.Agregar(new Producto(ap.ActualizarCodigo(), "Pan Francés", 0.20, 100));
+		ap.Agregar(new Producto(ap.ActualizarCodigo(), "Pan Yema", 0.35, 50));
+		ap.Agregar(new Producto(ap.ActualizarCodigo(), "Pan Integral", 0.50, 30));
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 285, 343);
@@ -101,7 +101,7 @@ public class Principal extends JFrame implements ActionListener {
 		}
 	}
 	protected void do_btnBoleta_actionPerformed(ActionEvent e) {
-		Boleta b = new Boleta(ap);
+		VentanaBoleta b = new VentanaBoleta(ap);
 		b.setVisible(true);
 	}
 	protected void do_btnAdministrarStock_actionPerformed(ActionEvent e) {
