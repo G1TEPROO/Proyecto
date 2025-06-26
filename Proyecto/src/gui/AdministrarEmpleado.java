@@ -5,25 +5,18 @@ import javax.swing.*;
 import java.awt.event.*;
 import clases.Empleado;
 import clases.ArregloEmpleado;
-import java.awt.TextArea;
+import javax.swing.table.DefaultTableModel;
 
 public class AdministrarEmpleado extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtCodigo;
-	private JTextField txtDNI;
-	private JTextField txtNombre;
-	private JTextField txtApellido;
-	private JTextField txtCargo;
-	private JTextField txtSueldo;
-	private JButton btnBuscar;
-	private JButton btnModificar;
-	private JButton btnEliminar;
-	private JButton btnAgregar;
-	private TextArea txtS;
+	private JTextField txtCodigo, txtDNI, txtNombre, txtApellido, txtCargo, txtSueldo;
+	private JButton btnBuscar, btnModificar, btnEliminar, btnAgregar;
 
 	private ArregloEmpleado lista = new ArregloEmpleado();
+	private JTable table;
+	private DefaultTableModel model;
 
 	public static void main(String[] args) {
 		try {
@@ -37,7 +30,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 
 	public AdministrarEmpleado() {
 		setTitle("ADMINISTRAR EMPLEADO");
-		setBounds(100, 100, 476, 375);
+		setBounds(100, 100, 650, 400);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(null);
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -47,16 +40,16 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		contentPanel.add(lblNewLabel);
 
 		txtCodigo = new JTextField();
-		txtCodigo.setBounds(126, 21, 101, 20);
+		txtCodigo.setBounds(85, 21, 101, 20);
 		contentPanel.add(txtCodigo);
 		txtCodigo.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("DNI:");
-		lblNewLabel_1.setBounds(241, 24, 46, 14);
+		lblNewLabel_1.setBounds(196, 24, 46, 14);
 		contentPanel.add(lblNewLabel_1);
 
 		txtDNI = new JTextField();
-		txtDNI.setBounds(328, 21, 101, 20);
+		txtDNI.setBounds(230, 21, 101, 20);
 		contentPanel.add(txtDNI);
 		txtDNI.setColumns(10);
 
@@ -65,68 +58,69 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		contentPanel.add(lblNewLabel_2);
 
 		txtNombre = new JTextField();
-		txtNombre.setBounds(126, 56, 101, 20);
+		txtNombre.setBounds(85, 56, 101, 20);
 		contentPanel.add(txtNombre);
 		txtNombre.setColumns(10);
 
 		JLabel lblNewLabel_3 = new JLabel("Apellido:");
-		lblNewLabel_3.setBounds(241, 59, 60, 14);
+		lblNewLabel_3.setBounds(196, 59, 60, 14);
 		contentPanel.add(lblNewLabel_3);
 
 		txtApellido = new JTextField();
-		txtApellido.setBounds(328, 56, 101, 20);
+		txtApellido.setBounds(230, 56, 101, 20);
 		contentPanel.add(txtApellido);
 		txtApellido.setColumns(10);
 
 		JLabel lblNewLabel_4 = new JLabel("Cargo:");
-		lblNewLabel_4.setBounds(27, 95, 46, 14);
+		lblNewLabel_4.setBounds(350, 24, 46, 14);
 		contentPanel.add(lblNewLabel_4);
 
 		txtCargo = new JTextField();
-		txtCargo.setBounds(126, 92, 101, 20);
+		txtCargo.setBounds(395, 21, 101, 20);
 		contentPanel.add(txtCargo);
 		txtCargo.setColumns(10);
 
 		JLabel lblNewLabel_5 = new JLabel("Sueldo:");
-		lblNewLabel_5.setBounds(241, 95, 46, 14);
+		lblNewLabel_5.setBounds(350, 59, 46, 14);
 		contentPanel.add(lblNewLabel_5);
 
 		txtSueldo = new JTextField();
-		txtSueldo.setBounds(328, 92, 101, 20);
+		txtSueldo.setBounds(395, 56, 101, 20);
 		contentPanel.add(txtSueldo);
 		txtSueldo.setColumns(10);
 
-		btnBuscar = new JButton("BUSCAR");
-		btnBuscar.setBounds(340, 120, 89, 23);
-		btnBuscar.addActionListener(this);
-		contentPanel.add(btnBuscar);
-
-		btnModificar = new JButton("MODIFICAR");
-		btnModificar.setBounds(229, 120, 101, 23);
-		btnModificar.addActionListener(this);
-		contentPanel.add(btnModificar);
-
-		btnEliminar = new JButton("ELIMINAR");
-		btnEliminar.setBounds(126, 120, 89, 23);
-		btnEliminar.addActionListener(this);
-		contentPanel.add(btnEliminar);
-
 		btnAgregar = new JButton("AGREGAR");
-		btnAgregar.setBounds(27, 120, 89, 23);
+		btnAgregar.setBounds(27, 90, 100, 23);
 		btnAgregar.addActionListener(this);
 		contentPanel.add(btnAgregar);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(27, 154, 402, 171);
+		btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.setBounds(137, 90, 100, 23);
+		btnEliminar.addActionListener(this);
+		contentPanel.add(btnEliminar);
+
+		btnModificar = new JButton("MODIFICAR");
+		btnModificar.setBounds(247, 90, 110, 23);
+		btnModificar.addActionListener(this);
+		contentPanel.add(btnModificar);
+
+		btnBuscar = new JButton("BUSCAR");
+		btnBuscar.setBounds(367, 90, 100, 23);
+		btnBuscar.addActionListener(this);
+		contentPanel.add(btnBuscar);
+
+		String[] columnas = { "Código", "Nombre", "Apellido", "DNI", "Cargo", "Sueldo" };
+		model = new DefaultTableModel(columnas, 0);
+		table = new JTable(model);
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(27, 130, 569, 200);
 		contentPanel.add(scrollPane);
 
-		txtS = new TextArea();
-		scrollPane.setViewportView(txtS);
-		
+		// Datos iniciales
 		lista.agregar(new Empleado("E001", "Renzo", "Alvarez", "12345678", "Jefe", 3200.0));
-	    lista.agregar(new Empleado("E002", "Ariana", "Perez", "87654321", "Asistente", 2500.0));
-	    lista.agregar(new Empleado("E003", "Diego", "Canevaro", "11112222", "Analista", 3000.0));
-	    txtS.setText("");
+		lista.agregar(new Empleado("E002", "Ariana", "Perez", "87654321", "Asistente", 2500.0));
+		lista.agregar(new Empleado("E003", "Diego", "Canevaro", "11112222", "Analista", 3000.0));
+		actualizarTabla();
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -141,73 +135,82 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		}
 	}
 
-	protected void do_btnBuscar_actionPerformed(ActionEvent e) {
+	private void do_btnAgregar_actionPerformed(ActionEvent e) {
+		try {
+			Empleado emp = new Empleado(
+				txtCodigo.getText().trim(),
+				txtNombre.getText().trim(),
+				txtApellido.getText().trim(),
+				txtDNI.getText().trim(),
+				txtCargo.getText().trim(),
+				Double.parseDouble(txtSueldo.getText().trim())
+			);
+			lista.agregar(emp);
+			actualizarTabla();
+			limpiarCampos();
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(this, "Datos inválidos.");
+		}
+	}
+
+	private void do_btnEliminar_actionPerformed(ActionEvent e) {
+		String codigo = txtCodigo.getText().trim();
+		if (lista.eliminar(codigo)) {
+			actualizarTabla();
+			limpiarCampos();
+			JOptionPane.showMessageDialog(this, "Empleado eliminado.");
+		} else {
+			JOptionPane.showMessageDialog(this, "No se encontró el empleado.");
+		}
+	}
+
+	private void do_btnModificar_actionPerformed(ActionEvent e) {
 		String codigo = txtCodigo.getText().trim();
 		Empleado emp = lista.buscar(codigo);
+		if (emp != null) {
+			try {
+				emp.setNombre(txtNombre.getText().trim());
+				emp.setApellido(txtApellido.getText().trim());
+				emp.setDni(txtDNI.getText().trim());
+				emp.setCargo(txtCargo.getText().trim());
+				emp.setSueldo(Double.parseDouble(txtSueldo.getText().trim()));
+				actualizarTabla();
+				JOptionPane.showMessageDialog(this, "Empleado modificado.");
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(this, "Sueldo inválido.");
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "Empleado no encontrado.");
+		}
+	}
 
+	private void do_btnBuscar_actionPerformed(ActionEvent e) {
+		String codigo = txtCodigo.getText().trim();
+		Empleado emp = lista.buscar(codigo);
 		if (emp != null) {
 			txtNombre.setText(emp.getNombre());
 			txtApellido.setText(emp.getApellido());
 			txtDNI.setText(emp.getDni());
 			txtCargo.setText(emp.getCargo());
 			txtSueldo.setText(String.valueOf(emp.getSueldo()));
-			txtS.setText("Empleado encontrado:\n" + emp.toString());
 		} else {
-			txtS.setText("Empleado no encontrado.");
+			JOptionPane.showMessageDialog(this, "Empleado no encontrado.");
 		}
 	}
 
-	protected void do_btnAgregar_actionPerformed(ActionEvent e) {
-		String codigo = txtCodigo.getText().trim();
-		String nombre = txtNombre.getText().trim();
-		String apellido = txtApellido.getText().trim();
-		String dni = txtDNI.getText().trim();
-		String cargo = txtCargo.getText().trim();
-		double sueldo;
-
-		try {
-			sueldo = Double.parseDouble(txtSueldo.getText().trim());
-		} catch (NumberFormatException ex) {
-			txtS.setText("Error: Sueldo inválido.");
-			return;
-		}
-
-		Empleado emp = new Empleado(codigo, nombre, apellido, dni, cargo, sueldo);
-		lista.agregar(emp);
-		txtS.setText("Empleado agregado:\n" + emp.toString());
-		limpiarCampos();
-	}
-
-	protected void do_btnModificar_actionPerformed(ActionEvent e) {
-		String codigo = txtCodigo.getText().trim();
-		Empleado emp = lista.buscar(codigo);
-
-		if (emp != null) {
-			emp.setNombre(txtNombre.getText().trim());
-			emp.setApellido(txtApellido.getText().trim());
-			emp.setDni(txtDNI.getText().trim());
-			emp.setCargo(txtCargo.getText().trim());
-
-			try {
-				emp.setSueldo(Double.parseDouble(txtSueldo.getText().trim()));
-				txtS.setText("Empleado modificado:\n" + emp.toString());
-			} catch (NumberFormatException ex) {
-				txtS.setText("Error: Sueldo inválido.");
-			}
-		} else {
-			txtS.setText("Empleado no encontrado.");
-		}
-	}
-
-	protected void do_btnEliminar_actionPerformed(ActionEvent e) {
-		String codigo = txtCodigo.getText().trim();
-		boolean eliminado = lista.eliminar(codigo);
-
-		if (eliminado) {
-			txtS.setText("Empleado eliminado correctamente.");
-			limpiarCampos();
-		} else {
-			txtS.setText("Empleado no encontrado.");
+	private void actualizarTabla() {
+		model.setRowCount(0);
+		for (int i = 0; i < lista.tamaño(); i++) {
+			Empleado emp = lista.obtener(i);
+			Object[] fila = {
+				emp.getCodigo(),
+				emp.getNombre(),
+				emp.getApellido(),
+				emp.getDni(),
+				emp.getCargo(),
+				emp.getSueldo()
+			};
+			model.addRow(fila);
 		}
 	}
 
