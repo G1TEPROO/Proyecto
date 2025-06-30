@@ -49,7 +49,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		contentPanel.add(lblNewLabel_1);
 
 		txtDNI = new JTextField();
-		txtDNI.setBounds(230, 21, 101, 20);
+		txtDNI.setBounds(257, 21, 101, 20);
 		contentPanel.add(txtDNI);
 		txtDNI.setColumns(10);
 
@@ -67,25 +67,25 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		contentPanel.add(lblNewLabel_3);
 
 		txtApellido = new JTextField();
-		txtApellido.setBounds(230, 56, 101, 20);
+		txtApellido.setBounds(257, 56, 101, 20);
 		contentPanel.add(txtApellido);
 		txtApellido.setColumns(10);
 
 		JLabel lblNewLabel_4 = new JLabel("Cargo:");
-		lblNewLabel_4.setBounds(350, 24, 46, 14);
+		lblNewLabel_4.setBounds(388, 24, 46, 14);
 		contentPanel.add(lblNewLabel_4);
 
 		txtCargo = new JTextField();
-		txtCargo.setBounds(395, 21, 101, 20);
+		txtCargo.setBounds(434, 21, 101, 20);
 		contentPanel.add(txtCargo);
 		txtCargo.setColumns(10);
 
 		JLabel lblNewLabel_5 = new JLabel("Sueldo:");
-		lblNewLabel_5.setBounds(350, 59, 46, 14);
+		lblNewLabel_5.setBounds(388, 59, 46, 14);
 		contentPanel.add(lblNewLabel_5);
 
 		txtSueldo = new JTextField();
-		txtSueldo.setBounds(395, 56, 101, 20);
+		txtSueldo.setBounds(434, 56, 101, 20);
 		contentPanel.add(txtSueldo);
 		txtSueldo.setColumns(10);
 
