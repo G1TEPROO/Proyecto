@@ -1,4 +1,5 @@
 package clases;
+
 import java.util.ArrayList;
 
 public class ArregloBoleta {

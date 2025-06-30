@@ -22,13 +22,17 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import clases.ArregloBoleta;
 import clases.ArregloProducto;
+import clases.Boleta;
 import clases.Producto;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
+
 import java.util.Iterator;
+
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
@@ -49,9 +53,11 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 	private JTable tS;
 	private JButton btnQuitar;
 	private ArregloProducto ap;
+	private ArrayList<ArregloBoleta> lb = new ArrayList<>();
 
-	public VentanaBoleta(ArregloProducto ap) {
+	public VentanaBoleta(ArregloProducto ap, ArrayList<ArregloBoleta> lb) {
 		this.ap = ap;
+		this.lb = lb;
 		setTitle("GENERAR BOLETA");
 		setModal(true);
 		setBounds(100, 100, 522, 272);
@@ -260,25 +266,37 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 	
 	protected void do_btnGenerar_actionPerformed(ActionEvent e) {
 		DefaultTableModel model = (DefaultTableModel) tS.getModel();
-	    StringBuilder boleta = new StringBuilder();
-	    double total = 0;
+	    StringBuilder boletaTexto = new StringBuilder();
+	    ArregloBoleta boleta = new ArregloBoleta();
 
-	    boleta.append("Boleta de Compras\n");
-	    boleta.append("--------------------\n");
+	    boletaTexto.append("Boleta ").append(boleta.getCodigo()).append("\n");
+	    boletaTexto.append("--------------------\n");
 
 	    for (int i = 0; i < model.getRowCount(); i++) {
 	        String producto = model.getValueAt(i, 0).toString();
 	        int cantidad = Integer.parseInt(model.getValueAt(i, 1).toString());
-	        double precio = Double.parseDouble(model.getValueAt(i, 2).toString());
-	        total += precio;
 
-	        boleta.append(String.format("%s - Cantidad: %d - Precio: %.2f\n", producto, cantidad, precio));
+	        double precioUnitario = 0;
+	        for (int j = 0; j < ap.Tamano(); j++) {
+	            if (ap.Obtener(j).getProducto().equals(producto)) {
+	                precioUnitario = ap.Obtener(j).getPrecio();
+	                break;
+	            }
+	        }
+
+	        double precioTotalItem = precioUnitario * cantidad;
+
+	        Boleta item = new Boleta(producto, cantidad, precioTotalItem);
+	        boleta.AgregarItem(item); 
+	        boletaTexto.append(String.format("%s - Cantidad: %d - Precio: %.2f\n", producto, cantidad, precioTotalItem));
 	    }
 
-	    boleta.append("--------------------\n");
-	    boleta.append(String.format("Total: %.2f", total));
+	    boletaTexto.append("--------------------\n");
+	    boletaTexto.append(String.format("Total: %.2f", boleta.getTotal()));
 
-	    JOptionPane.showMessageDialog(this, boleta.toString(), "Boleta de Compras", JOptionPane.INFORMATION_MESSAGE);
+	    lb.add(boleta);
+
+	    JOptionPane.showMessageDialog(this, boletaTexto.toString(), "Boleta" + boleta.getCodigo(), JOptionPane.INFORMATION_MESSAGE);
 	    
 	    for (int i = 0; i < model.getRowCount(); i++) {
 	    	String nombre = model.getValueAt(i, 0).toString();

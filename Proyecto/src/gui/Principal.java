@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import clases.ArregloBoleta;
 import clases.ArregloProducto;
 import clases.Producto;
 
@@ -14,6 +15,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class Principal extends JFrame implements ActionListener {
@@ -26,6 +28,7 @@ public class Principal extends JFrame implements ActionListener {
 	private JButton btnEmpleados;
 	private JButton btnListarBoletas;
 	private ArregloProducto ap = new ArregloProducto();
+	private ArrayList<ArregloBoleta> lb = new ArrayList<>();
 
 	/**
 	 * Launch the application.
@@ -81,11 +84,15 @@ public class Principal extends JFrame implements ActionListener {
 		contentPane.add(btnEmpleados);
 		{
 			btnListarBoletas = new JButton("LISTAR BOLETAS");
+			btnListarBoletas.addActionListener(this);
 			btnListarBoletas.setBounds(10, 227, 249, 28);
 			contentPane.add(btnListarBoletas);
 		}
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnListarBoletas) {
+			do_btnListarBoletas_actionPerformed(e);
+		}
 		if (e.getSource() == btnEmpleados) {
 			do_btnEmpleados_actionPerformed(e);
 		}
@@ -97,7 +104,7 @@ public class Principal extends JFrame implements ActionListener {
 		}
 	}
 	protected void do_btnBoleta_actionPerformed(ActionEvent e) {
-		VentanaBoleta b = new VentanaBoleta(ap);
+		VentanaBoleta b = new VentanaBoleta(ap, lb);
 		b.setVisible(true);
 	}
 	protected void do_btnAdministrarStock_actionPerformed(ActionEvent e) {
@@ -107,5 +114,9 @@ public class Principal extends JFrame implements ActionListener {
 	protected void do_btnEmpleados_actionPerformed(ActionEvent e) {
 		AdministrarEmpleado ae = new AdministrarEmpleado();
 		ae.setVisible(true);
+	}
+	protected void do_btnListarBoletas_actionPerformed(ActionEvent e) {
+		ListaBoletas l = new ListaBoletas(lb);
+		l.setVisible(true);
 	}
 }
