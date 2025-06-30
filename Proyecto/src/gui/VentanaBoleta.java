@@ -27,6 +27,8 @@ import clases.Producto;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
@@ -66,11 +68,6 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 			ArregloProducto pro = ap;
 			cbProducto = new JComboBox();
 			cbProducto.addActionListener(this);
-			DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
-			for (int i = 0; i < pro.Tamano(); i++) {
-				modelo.addElement(pro.Obtener(i).getProducto());
-			}
-			cbProducto.setModel(modelo);
 			
 			cbProducto.setBounds(81, 7, 138, 22);
 			contentPanel.add(cbProducto);
@@ -322,7 +319,7 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 	}
 	public void CalcularPrecio() {
 		int index = cbProducto.getSelectedIndex();
-		if (index >= 0 && index < ap.Tamano()) {
+		if (index >= 0 && index <1000) {
 			CalcularPrecio(index);
 		} else {
 			txtPrecio.setText("0.00");
@@ -335,8 +332,17 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 	}
 	public void Actualizar() {
 		cbProducto.removeAllItems();
-		for (int i = 0; i < ap.Tamano(); i++) {
-			cbProducto.addItem(ap.Obtener(i).getProducto());
+		ArrayList<Producto> lista = new ArrayList<Producto>();
+		ArregloProducto PRO=new ArregloProducto();
+		lista =PRO.listarPro();
+		Iterator it=lista.iterator();
+		int i =0;
+		while(it.hasNext()) {
+			Object obj=it.next();
+			Producto p= (Producto)obj;
+			cbProducto.addItem(p.getProducto());
+i++;
+			
 		}
 	}
 }

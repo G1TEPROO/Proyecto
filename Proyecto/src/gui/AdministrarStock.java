@@ -16,6 +16,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -158,20 +161,22 @@ public class AdministrarStock extends JDialog implements ActionListener {
 		ActualizarTabla();
 	}
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnModificar) {
+		/*if (e.getSource() == btnModificar) {
 			do_btnModificar_actionPerformed(e);
 		}
-		if (e.getSource() == btnCerrar) {
-			do_btnCerrar_actionPerformed(e);
-		}
+		
 		if (e.getSource() == btnBuscar) {
 			do_btnBuscar_actionPerformed(e);
 		}
 		if (e.getSource() == btnEliminar) {
 			do_btnEliminar_actionPerformed(e);
-		}
+		}*/
 		if (e.getSource() == btnAnadir) {
 			do_btnAnadir_actionPerformed(e);
+		
+		}
+		if (e.getSource() == btnCerrar) {
+			do_btnCerrar_actionPerformed(e);
 		}
 	}
 	protected void do_btnAnadir_actionPerformed(ActionEvent e) {
@@ -179,15 +184,18 @@ public class AdministrarStock extends JDialog implements ActionListener {
 			String nombre = txtProducto.getText().trim();
 			double precio = Double.parseDouble(txtPrecio.getText().trim());
 			int stock = Integer.parseInt(txtCantidad.getText().trim());
-			int codigo = ap.ActualizarCodigo();
-			ap.Agregar(new Producto(codigo, nombre, precio, stock));
+			int codigo = 00;
+			Producto pro= new Producto(codigo, nombre, precio, stock);
+			ArregloProducto M= new ArregloProducto();
+		 M.Agregar(pro);
+			
 			ActualizarTabla();
 			Limpiar();
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(this, "Datos inválidos");
 		}
 	}
-	protected void do_btnEliminar_actionPerformed(ActionEvent e) {
+	/*protected void do_btnEliminar_actionPerformed(ActionEvent e) {
 		int filaSeleccionada = tS.getSelectedRow();
 
 		if (filaSeleccionada == -1) {
@@ -256,16 +264,26 @@ public class AdministrarStock extends JDialog implements ActionListener {
 			JOptionPane.showMessageDialog(this, "Datos inválidos. Verifica precio y cantidad");
 		}
 	}
-	protected void do_btnCerrar_actionPerformed(ActionEvent e) {
-		dispose();
-	}
-	private void ActualizarTabla() {
+	
+	
+	*/private void ActualizarTabla() {
+		ArrayList<Producto>lista =new ArrayList<Producto>();
 		DefaultTableModel modelo = (DefaultTableModel) tS.getModel();
 		modelo.setRowCount(0);
-		for (int i = 0; i < ap.Tamano(); i++) {
-			Producto p = ap.Obtener(i);
+		ArregloProducto Pro=new ArregloProducto();
+		lista= Pro.listarPro();
+		Iterator it=lista.iterator();
+		int i =0;
+		while(it.hasNext()) {
+			Object obj=it.next();
+			Producto p= (Producto)obj;
 			modelo.addRow(new Object[] {p.getCodigoProducto(), p.getProducto(), p.getPrecio(), p.getStock()});
+
+			
 		}
+		}
+	protected void do_btnCerrar_actionPerformed(ActionEvent e) {
+		dispose();
 	}
 	private void Limpiar() {
 		txtProducto.setText("");

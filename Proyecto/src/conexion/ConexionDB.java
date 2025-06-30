@@ -1,11 +1,10 @@
 package conexion;
 
-/*import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;*/
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class ConexionDB {
-	/*public static Connection getConexión() {
+	public static Connection getConexión() {
 		Connection cnx=null;
 		try {
 			//Adjuntar driver
@@ -13,7 +12,7 @@ public class ConexionDB {
 			System.out.println("Driver correcto");
 			//conexión BD
 			cnx=DriverManager.getConnection
-					("jdbc:mysql://localhost:3306/PANADERIA","root","mysql");
+					("jdbc:mysql://localhost:3306/Panaderia","root","root");
 			System.out.println("conexión correcta");
 		} catch (Exception e) {
 			System.out.println("Error: "+e);
@@ -24,5 +23,5 @@ public class ConexionDB {
 	public static void main(String[] args) {
 	getConexión();	
 
-	}*/
+	}
 }
