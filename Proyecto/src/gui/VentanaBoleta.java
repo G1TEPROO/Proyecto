@@ -22,8 +22,8 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import clases.ArregloBoleta;
-import clases.ArregloProducto;
+import Arrays.ArregloBoleta;
+import Arrays.ArregloProducto;
 import clases.Boleta;
 import clases.Producto;
 

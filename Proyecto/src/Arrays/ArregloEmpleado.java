@@ -1,6 +1,8 @@
-package clases;
+package Arrays;
 
 import java.util.ArrayList;
+
+import clases.Empleado;
 
 public class ArregloEmpleado {
     private ArrayList<Empleado> lista;

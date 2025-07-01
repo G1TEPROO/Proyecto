@@ -12,7 +12,7 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import clases.ArregloBoleta;
+import Arrays.ArregloBoleta;
 import clases.Boleta;
 
 public class ListaBoletas extends JDialog {

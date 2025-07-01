@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 import java.awt.event.*;
 import clases.Empleado;
-import clases.ArregloEmpleado;
+
 import javax.swing.table.DefaultTableModel;
+
+import Arrays.ArregloEmpleado;
 
 public class AdministrarEmpleado extends JDialog implements ActionListener {
 

@@ -7,8 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import clases.ArregloBoleta;
-import clases.ArregloProducto;
+import Arrays.ArregloBoleta;
+import Arrays.ArregloProducto;
 import clases.Producto;
 
 import javax.swing.JLabel;
@@ -106,10 +106,13 @@ public class Principal extends JFrame implements ActionListener {
 	protected void do_btnBoleta_actionPerformed(ActionEvent e) {
 		VentanaBoleta b = new VentanaBoleta(ap, lb);
 		b.setVisible(true);
+		
 	}
 	protected void do_btnAdministrarStock_actionPerformed(ActionEvent e) {
-		AdministrarStock as = new AdministrarStock(ap);
+		AdministrarStock as = new AdministrarStock();
 		as.setVisible(true);
+		dispose();
+		
 	}
 	protected void do_btnEmpleados_actionPerformed(ActionEvent e) {
 		AdministrarEmpleado ae = new AdministrarEmpleado();

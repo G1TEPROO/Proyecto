@@ -1,6 +1,8 @@
-package clases;
+package Arrays;
 
 import java.util.ArrayList;
+
+import clases.Boleta;
 
 public class ArregloBoleta {
 	private static int contador = 1;
