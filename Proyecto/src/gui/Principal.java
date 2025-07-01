@@ -7,8 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Arrays.ArregloBoleta;
-import Arrays.ArregloProducto;
+import arrays.ArregloBoleta;
+import arrays.ArregloProducto;
 import clases.Producto;
 
 import javax.swing.JLabel;

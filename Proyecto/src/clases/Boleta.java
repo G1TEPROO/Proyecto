@@ -5,6 +5,9 @@ public class Boleta {
     private int cantidad;
     private double precio;
   
+    public Boleta() {
+	}
+    
     public Boleta(String producto, int cantidad, double precio) {
 		this.producto = producto;
 		this.cantidad = cantidad;

@@ -23,7 +23,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import Arrays.ArregloProducto;
+import arrays.ArregloProducto;
 import clases.Producto;
 
 public class AdministrarStock extends JDialog implements ActionListener {

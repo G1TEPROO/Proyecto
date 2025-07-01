@@ -7,7 +7,7 @@ import clases.Empleado;
 
 import javax.swing.table.DefaultTableModel;
 
-import Arrays.ArregloEmpleado;
+import arrays.ArregloEmpleado;
 
 public class AdministrarEmpleado extends JDialog implements ActionListener {
 

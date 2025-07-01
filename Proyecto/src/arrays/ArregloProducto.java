@@ -1,4 +1,4 @@
-package Arrays;
+package arrays;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -140,11 +140,7 @@ try {
 			
 		}
 		return lista;
-	}
-	
-	
-	
-	
+	}		
 }
 	
 	
