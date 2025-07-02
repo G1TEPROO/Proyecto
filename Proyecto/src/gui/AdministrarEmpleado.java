@@ -238,3 +238,5 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		txtSueldo.setText("");
 	}
 }
+
+
