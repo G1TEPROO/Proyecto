@@ -1,47 +1,42 @@
 package arrays;
 
+import clases.Empleado;
 import java.util.ArrayList;
 
-import clases.Empleado;
-
 public class ArregloEmpleado {
-    private ArrayList<Empleado> lista;
+	private ArrayList<Empleado> empleados;
 
-    public ArregloEmpleado() {
-        lista = new ArrayList<>();
-    }
+	public ArregloEmpleado() {
+		empleados = new ArrayList<>();
+	}
 
-    public void agregar(Empleado emp) {
-        lista.add(emp);
-    }
+	public void agregar(Empleado e) {
+		empleados.add(e);
+	}
 
-    public boolean eliminar(String codigo) {
-        for (Empleado emp : lista) {
-            if (emp.getCodigo().equalsIgnoreCase(codigo)) {
-                lista.remove(emp);
-                return true;
-            }
-        }
-        return false;
-    }
+	public Empleado buscar(String codigo) {
+		for (Empleado e : empleados) {
+			if (e.getCodigo().equalsIgnoreCase(codigo)) {
+				return e;
+			}
+		}
+		return null;
+	}
 
-    public Empleado buscar(String codigo) {
-        for (Empleado emp : lista) {
-            if (emp.getCodigo().equalsIgnoreCase(codigo)) {
-                return emp;
-            }
-        }
-        return null;
-    }
+	public boolean eliminar(String codigo) {
+		Empleado e = buscar(codigo);
+		if (e != null) {
+			empleados.remove(e);
+			return true;
+		}
+		return false;
+	}
 
-    public int tamaño() {
-        return lista.size();
-    }
+	public int tamaño() {
+		return empleados.size();
+	}
 
-    public Empleado obtener(int index) {
-        if (index >= 0 && index < lista.size()) {
-            return lista.get(index);
-        }
-        return null;
-    }
+	public Empleado obtener(int i) {
+		return empleados.get(i);
+	}
 }

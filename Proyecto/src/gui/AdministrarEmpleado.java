@@ -4,9 +4,7 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 import java.awt.event.*;
 import clases.Empleado;
-
 import javax.swing.table.DefaultTableModel;
-
 import arrays.ArregloEmpleado;
 
 public class AdministrarEmpleado extends JDialog implements ActionListener {
@@ -47,7 +45,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		txtCodigo.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("DNI:");
-		lblNewLabel_1.setBounds(196, 24, 46, 14);
+		lblNewLabel_1.setBounds(201, 24, 46, 14);
 		contentPanel.add(lblNewLabel_1);
 
 		txtDNI = new JTextField();
@@ -92,22 +90,22 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		txtSueldo.setColumns(10);
 
 		btnAgregar = new JButton("AGREGAR");
-		btnAgregar.setBounds(27, 90, 100, 23);
+		btnAgregar.setBounds(27, 306, 100, 23);
 		btnAgregar.addActionListener(this);
 		contentPanel.add(btnAgregar);
 
 		btnEliminar = new JButton("ELIMINAR");
-		btnEliminar.setBounds(137, 90, 100, 23);
+		btnEliminar.setBounds(257, 306, 100, 23);
 		btnEliminar.addActionListener(this);
 		contentPanel.add(btnEliminar);
 
 		btnModificar = new JButton("MODIFICAR");
-		btnModificar.setBounds(247, 90, 110, 23);
+		btnModificar.setBounds(383, 306, 110, 23);
 		btnModificar.addActionListener(this);
 		contentPanel.add(btnModificar);
 
 		btnBuscar = new JButton("BUSCAR");
-		btnBuscar.setBounds(367, 90, 100, 23);
+		btnBuscar.setBounds(137, 306, 100, 23);
 		btnBuscar.addActionListener(this);
 		contentPanel.add(btnBuscar);
 
@@ -115,8 +113,23 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		model = new DefaultTableModel(columnas, 0);
 		table = new JTable(model);
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(27, 130, 569, 200);
+		scrollPane.setBounds(20, 84, 569, 200);
 		contentPanel.add(scrollPane);
+
+		// Evento de selección de fila en tabla
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				int fila = table.getSelectedRow();
+				if (fila != -1) {
+					txtCodigo.setText(model.getValueAt(fila, 0).toString());
+					txtNombre.setText(model.getValueAt(fila, 1).toString());
+					txtApellido.setText(model.getValueAt(fila, 2).toString());
+					txtDNI.setText(model.getValueAt(fila, 3).toString());
+					txtCargo.setText(model.getValueAt(fila, 4).toString());
+					txtSueldo.setText(model.getValueAt(fila, 5).toString());
+				}
+			}
+		});
 
 		// Datos iniciales
 		lista.agregar(new Empleado("E001", "Renzo", "Alvarez", "12345678", "Jefe", 3200.0));
