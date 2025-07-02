@@ -18,6 +18,8 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 	private JTable table;
 	private DefaultTableModel model;
 
+	private boolean modoModificar = false; // bandera para saber si se está editando
+
 	public static void main(String[] args) {
 		try {
 			AdministrarEmpleado dialog = new AdministrarEmpleado();
@@ -116,7 +118,6 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		scrollPane.setBounds(20, 84, 569, 200);
 		contentPanel.add(scrollPane);
 
-		// Evento de selección de fila en tabla
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int fila = table.getSelectedRow();
@@ -127,9 +128,13 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 					txtDNI.setText(model.getValueAt(fila, 3).toString());
 					txtCargo.setText(model.getValueAt(fila, 4).toString());
 					txtSueldo.setText(model.getValueAt(fila, 5).toString());
+					deshabilitarCampos(); // se desactivan por si estaban activos
 				}
 			}
 		});
+
+		// Deshabilitar campos al iniciar
+		deshabilitarCampos();
 
 		// Datos iniciales
 		lista.agregar(new Empleado("E001", "Renzo", "Alvarez", "12345678", "Jefe", 3200.0));
@@ -163,6 +168,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 			lista.agregar(emp);
 			actualizarTabla();
 			limpiarCampos();
+			deshabilitarCampos();
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(this, "Datos inválidos.");
 		}
@@ -173,6 +179,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		if (lista.eliminar(codigo)) {
 			actualizarTabla();
 			limpiarCampos();
+			deshabilitarCampos();
 			JOptionPane.showMessageDialog(this, "Empleado eliminado.");
 		} else {
 			JOptionPane.showMessageDialog(this, "No se encontró el empleado.");
@@ -180,22 +187,30 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 	}
 
 	private void do_btnModificar_actionPerformed(ActionEvent e) {
-		String codigo = txtCodigo.getText().trim();
-		Empleado emp = lista.buscar(codigo);
-		if (emp != null) {
-			try {
-				emp.setNombre(txtNombre.getText().trim());
-				emp.setApellido(txtApellido.getText().trim());
-				emp.setDni(txtDNI.getText().trim());
-				emp.setCargo(txtCargo.getText().trim());
-				emp.setSueldo(Double.parseDouble(txtSueldo.getText().trim()));
-				actualizarTabla();
-				JOptionPane.showMessageDialog(this, "Empleado modificado.");
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(this, "Sueldo inválido.");
-			}
+		if (!modoModificar) {
+			habilitarCampos();
+			modoModificar = true;
+			JOptionPane.showMessageDialog(this, "Ahora puedes modificar los campos.");
 		} else {
-			JOptionPane.showMessageDialog(this, "Empleado no encontrado.");
+			String codigo = txtCodigo.getText().trim();
+			Empleado emp = lista.buscar(codigo);
+			if (emp != null) {
+				try {
+					emp.setNombre(txtNombre.getText().trim());
+					emp.setApellido(txtApellido.getText().trim());
+					emp.setDni(txtDNI.getText().trim());
+					emp.setCargo(txtCargo.getText().trim());
+					emp.setSueldo(Double.parseDouble(txtSueldo.getText().trim()));
+					actualizarTabla();
+					JOptionPane.showMessageDialog(this, "Empleado modificado.");
+					modoModificar = false;
+					deshabilitarCampos();
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(this, "Sueldo inválido.");
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Empleado no encontrado.");
+			}
 		}
 	}
 
@@ -208,6 +223,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 			txtDNI.setText(emp.getDni());
 			txtCargo.setText(emp.getCargo());
 			txtSueldo.setText(String.valueOf(emp.getSueldo()));
+			deshabilitarCampos();
 		} else {
 			JOptionPane.showMessageDialog(this, "Empleado no encontrado.");
 		}
@@ -236,6 +252,22 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		txtDNI.setText("");
 		txtCargo.setText("");
 		txtSueldo.setText("");
+	}
+
+	private void deshabilitarCampos() {
+		txtNombre.setEnabled(false);
+		txtApellido.setEnabled(false);
+		txtDNI.setEnabled(false);
+		txtCargo.setEnabled(false);
+		txtSueldo.setEnabled(false);
+	}
+
+	private void habilitarCampos() {
+		txtNombre.setEnabled(true);
+		txtApellido.setEnabled(true);
+		txtDNI.setEnabled(true);
+		txtCargo.setEnabled(true);
+		txtSueldo.setEnabled(true);
 	}
 }
 
