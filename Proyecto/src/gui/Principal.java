@@ -139,7 +139,7 @@ public class Principal extends JFrame implements ActionListener {
 		ae.setVisible(true);
 	}
 	protected void do_btnListarBoletas_actionPerformed(ActionEvent e) {
-		ListaBoletas l = new ListaBoletas();
+		ListarBoleta l = new ListarBoleta();
 		l.setVisible(true);
 	}
 	protected void do_btnCambiarContra_actionPerformed(ActionEvent e) {

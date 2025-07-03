@@ -2,8 +2,8 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.util.ArrayList;
-
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -15,23 +15,24 @@ import javax.swing.table.DefaultTableModel;
 
 import arrays.ArregloBoletaBD;
 import clases.Boleta;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-public class ListaBoletas extends JDialog{
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+
+public class ListarBoleta extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JScrollPane scrollPane;
 	private JTable tS;
+	private JButton btnConsultar;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			ListaBoletas dialog = new ListaBoletas();
+			ListarBoleta dialog = new ListarBoleta();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -42,14 +43,14 @@ public class ListaBoletas extends JDialog{
 	/**
 	 * Create the dialog.
 	 */
-	public ListaBoletas() {
-		setBounds(100, 100, 450, 300);
+	public ListarBoleta() {
+		setBounds(100, 100, 450, 338);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			scrollPane = new JScrollPane();
+			JScrollPane scrollPane = new JScrollPane();
 			scrollPane.setBounds(10, 11, 414, 239);
 			contentPanel.add(scrollPane);
 			{
@@ -62,21 +63,44 @@ public class ListaBoletas extends JDialog{
 					}
 				));
 				tS.setFillsViewportHeight(true);
-				tS.addMouseListener(new MouseAdapter() {
-					public void mouseClicked(MouseEvent e) {
-						if (e.getClickCount() == 2) {
-							int fila = tS.getSelectedRow();
-							int codBoleta = (int) tS.getValueAt(fila, 0);
-							mostrarDetalleBoleta(codBoleta);
-						}
-					}
-				});
 				scrollPane.setViewportView(tS);
-				cargarBoletas();
+				tS.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				    public void valueChanged(ListSelectionEvent e) {
+				        if (!e.getValueIsAdjusting() && tS.getSelectedRow() != -1) {
+				            btnConsultar.setEnabled(true);
+				        } else {
+				            btnConsultar.setEnabled(false);
+				        }
+				    }
+				});
 			}
 		}
-	
+		{
+			btnConsultar = new JButton("Consultar");
+			btnConsultar.setEnabled(false);
+			btnConsultar.addActionListener(this);
+			btnConsultar.setBounds(169, 265, 89, 23);
+			contentPanel.add(btnConsultar);
+		}
+		cargarBoletas();
 	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnConsultar) {
+			do_btnConsultar_actionPerformed(e);
+		}
+	}
+	protected void do_btnConsultar_actionPerformed(ActionEvent e) {
+		int filaSeleccionada = tS.getSelectedRow();
+	    if (filaSeleccionada == -1) {
+	        JOptionPane.showMessageDialog(this, "Seleccione una boleta.", "Error", JOptionPane.ERROR_MESSAGE);
+	        return;
+	    }
+
+	    int codigoBoleta = (int) tS.getValueAt(filaSeleccionada, 0);
+	    mostrarDetalleBoleta(codigoBoleta);
+	}
+	
 	private void cargarBoletas() {
 	    DefaultTableModel model = (DefaultTableModel) tS.getModel();
 	    model.setRowCount(0);
@@ -85,6 +109,7 @@ public class ListaBoletas extends JDialog{
 	        model.addRow(fila);
 	    }
 	}
+
 	private void mostrarDetalleBoleta(int codigoBoleta) {
 	    ArrayList<Boleta> detalles = ArregloBoletaBD.obtenerDetallesBoleta(codigoBoleta);
 	    if (detalles == null || detalles.isEmpty()) {
