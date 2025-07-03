@@ -23,6 +23,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import arrays.ArregloBoleta;
+import arrays.ArregloBoletaBD;
 import arrays.ArregloProducto;
 import clases.Boleta;
 import clases.Producto;
@@ -104,7 +105,7 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 		}
 		{
 			txtPrecio = new JTextField();
-			txtPrecio.setText("0.20");
+			txtPrecio.setText("0.00");
 			txtPrecio.setEditable(false);
 			txtPrecio.setEnabled(false);
 			txtPrecio.setBounds(405, 8, 86, 20);
@@ -131,6 +132,7 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 		}
 		{
 			btnModificar =new JButton("MODIFICAR");
+			btnModificar.setEnabled(false);
 			btnModificar.addActionListener(this);
 			btnModificar.setBounds(387, 87, 104, 23);
 			contentPanel.add(btnModificar);
@@ -150,11 +152,24 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 				));
 				tS.getColumnModel().getColumn(0).setPreferredWidth(125);
 				tS.getColumnModel().getColumn(1).setPreferredWidth(55);
+				tS.getSelectionModel().addListSelectionListener(e -> {
+				    if (!e.getValueIsAdjusting() && tS.getSelectedRow() != -1) {
+				        int filaSeleccionada = tS.getSelectedRow();
+				        String nombre = tS.getValueAt(filaSeleccionada, 0).toString();
+				        int cantidad = Integer.parseInt(tS.getValueAt(filaSeleccionada, 1).toString());
+
+				        cbProducto.setSelectedItem(nombre);
+				        sCantidad.setValue(cantidad);
+				        btnModificar.setEnabled(true);
+				        btnQuitar.setEnabled(true);
+				    }
+				});
 				scrollPane.setViewportView(tS);
 			}
 		}
 		{
 			btnQuitar = new JButton("QUITAR");
+			btnQuitar.setEnabled(false);
 			btnQuitar.addActionListener(this);
 			btnQuitar.setBounds(387, 121, 104, 23);
 			contentPanel.add(btnQuitar);
@@ -187,180 +202,218 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 	}
 	
 	protected void do_btnAgregar_actionPerformed(ActionEvent e) {
-		
-		/*String nombre = PosicionProducto().getProducto();
-		int cantidad = CantidadProducto();
-		double precio = Double.parseDouble(txtPrecio.getText());
-		boolean repetido = false;
-		
-		DefaultTableModel modelo = (DefaultTableModel) tS.getModel();
-		
-		if (modelo.getRowCount() > 0) {
-			for (int i = 0; i < modelo.getRowCount(); i++) {
-		        String nombreTabla = modelo.getValueAt(i, 0).toString();
-		        if (nombreTabla.equals(nombre)) {
+		String nombre = (String) cbProducto.getSelectedItem();
+	    int cantidad = CantidadProducto();
 
-		            int cantidadTotal = Integer.parseInt(modelo.getValueAt(i, 1).toString()) + CantidadProducto();
-		            double precioTotal = Double.parseDouble(modelo.getValueAt(i, 2).toString()) + Double.parseDouble(txtPrecio.getText());
+	    if (nombre == null || cantidad <= 0) {
+	        JOptionPane.showMessageDialog(this, "Seleccione un producto válido y una cantidad mayor a 0.");
+	        return;
+	    }
 
-		            modelo.setValueAt(cantidadTotal, i, 1);
-		            modelo.setValueAt(String.format("%.2f", precioTotal), i, 2);
-		            repetido = true;
-		            break;
-		        }
-			}
-			if (repetido == false) modelo.addRow(new Object[] {nombre, cantidad, precio});
-		} else modelo.addRow(new Object[] {nombre, cantidad, precio});
-		*/
-		RestaurarPosicion();
-	}
-	
-	protected void do_btnModificar_actionPerformed(ActionEvent e) {
-		String producto = cbProducto.getSelectedItem().toString();
-	    int nuevaCantidad = CantidadProducto();
+	    ArregloProducto ap = new ArregloProducto();
+	    Producto producto = ap.ConsultarPro(nombre);
+	    if (producto == null) {
+	        JOptionPane.showMessageDialog(this, "Producto no encontrado.");
+	        return;
+	    }
+
+	    int stockDisponible = producto.getStock();
+	    int cantidadYaAgregada = 0;
+
 	    DefaultTableModel model = (DefaultTableModel) tS.getModel();
+	    for (int i = 0; i < model.getRowCount(); i++) {
+	        String nombreTabla = model.getValueAt(i, 0).toString();
+	        if (nombreTabla.equals(nombre)) {
+	            cantidadYaAgregada = Integer.parseInt(model.getValueAt(i, 1).toString());
+	            break;
+	        }
+	    }
+
+	    int cantidadTotalSolicitada = cantidadYaAgregada + cantidad;
+	    if (cantidadTotalSolicitada > stockDisponible) {
+	        JOptionPane.showMessageDialog(this,
+	            "Stock insuficiente para: " + nombre + "\nStock disponible: " + stockDisponible +
+	            "\nYa en lista: " + cantidadYaAgregada +
+	            "\nIntentando agregar: " + cantidad,
+	            "Error de stock",
+	            JOptionPane.ERROR_MESSAGE);
+	        return;
+	    }
+
+	    double precioUnitario = producto.getPrecio();
+	    double nuevoPrecioTotal = precioUnitario * cantidadTotalSolicitada;
 	    boolean encontrado = false;
 
-	    /*for (int i = 0; i < model.getRowCount(); i++) {
-	        if (model.getValueAt(i, 0).toString().equals(producto)) {
-	            double precioUnitario = PosicionProducto().getPrecio();
-	            double nuevoPrecio = nuevaCantidad * precioUnitario;
-
-	            model.setValueAt(nuevaCantidad, i, 1);
-	            model.setValueAt(String.format("%.2f", nuevoPrecio), i, 2);
-
+	    for (int i = 0; i < model.getRowCount(); i++) {
+	        String nombreTabla = model.getValueAt(i, 0).toString();
+	        if (nombreTabla.equals(nombre)) {
+	            model.setValueAt(cantidadTotalSolicitada, i, 1);
+	            model.setValueAt(String.format("%.2f", nuevoPrecioTotal), i, 2);
 	            encontrado = true;
 	            break;
 	        }
 	    }
-		*/
+
 	    if (!encontrado) {
-	        JOptionPane.showMessageDialog(this, 
-	            "El producto no está en la lista", 
-	            "Error", 
-	            JOptionPane.ERROR_MESSAGE);
+	        model.addRow(new Object[] {
+	            nombre,
+	            cantidad,
+	            String.format("%.2f", precioUnitario * cantidad)
+	        });
 	    }
 
 	    RestaurarPosicion();
+	    CalcularPrecio();
+	}
+	
+	protected void do_btnModificar_actionPerformed(ActionEvent e) {
+		String nombreSeleccionado = (String) cbProducto.getSelectedItem();
+	    int nuevaCantidad = CantidadProducto();
+
+	    if (nombreSeleccionado == null || nuevaCantidad <= 0) {
+	        JOptionPane.showMessageDialog(this, "Selecciona un producto y cantidad válida", "Error", JOptionPane.ERROR_MESSAGE);
+	        return;
+	    }
+
+	    DefaultTableModel model = (DefaultTableModel) tS.getModel();
+	    boolean encontrado = false;
+
+	    ArregloProducto arregloProducto = new ArregloProducto();
+	    Producto producto = arregloProducto.ConsultarPro(nombreSeleccionado);
+
+	    if (producto == null) {
+	        JOptionPane.showMessageDialog(this, "Producto no encontrado en el sistema", "Error", JOptionPane.ERROR_MESSAGE);
+	        return;
+	    }
+	    
+	    int stockDisponible = producto.getStock();
+
+	    for (int i = 0; i < model.getRowCount(); i++) {
+	        String nombreEnTabla = model.getValueAt(i, 0).toString();
+
+	        if (nombreSeleccionado.equals(nombreEnTabla)) {
+	            int cantidadAnterior = Integer.parseInt(model.getValueAt(i, 1).toString());
+	            int stockDisponibleReal = stockDisponible + cantidadAnterior;
+
+	            if (nuevaCantidad > stockDisponibleReal) {
+	                JOptionPane.showMessageDialog(this,
+	                    "No hay suficiente stock para modificar la cantidad.\nStock disponible: " + stockDisponibleReal,
+	                    "Error de stock", JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+
+	            double nuevoPrecioTotal = nuevaCantidad * producto.getPrecio();
+	            model.setValueAt(nuevaCantidad, i, 1);
+	            model.setValueAt(String.format("%.2f", nuevoPrecioTotal), i, 2);
+	            
+	            encontrado = true;
+	            break;
+	        }
+	    }
+
+	    if (!encontrado) {
+	        JOptionPane.showMessageDialog(this, "El producto no está en la tabla", "Error", JOptionPane.ERROR_MESSAGE);
+	    }
+
+	    RestaurarPosicion();
+		btnModificar.setEnabled(false);
 	}
 	
 	protected void do_btnQuitar_actionPerformed(ActionEvent e) {
-		String producto = cbProducto.getSelectedItem().toString();
-		 DefaultTableModel model = (DefaultTableModel) tS.getModel();
-		 boolean existe = false;
-		 for (int i = 0; i < model.getRowCount(); i++) {
-		     if (model.getValueAt(i, 0).toString().equals(producto)) {
-		         model.removeRow(i);
-		         existe = true;
-		         break;
-		     }
-		 }
-		 if (!existe) {
-		     JOptionPane.showMessageDialog(this, 
-		         "El producto no está en la lista", 
-		         "Error", 
-		         JOptionPane.ERROR_MESSAGE);
-		 }
-		 RestaurarPosicion();
+		int filaSeleccionada = tS.getSelectedRow();
+	    if (filaSeleccionada != -1) {
+	        String nombreProducto = tS.getValueAt(filaSeleccionada, 0).toString();
+
+	        int respuesta = JOptionPane.showConfirmDialog(
+	            this,
+	            "¿Estás seguro de quitar el producto \"" + nombreProducto + "\" de la boleta?",
+	            "Confirmar eliminación",
+	            JOptionPane.YES_NO_OPTION,
+	            JOptionPane.QUESTION_MESSAGE
+	        );
+
+	        if (respuesta == JOptionPane.YES_OPTION) {
+	            DefaultTableModel model = (DefaultTableModel) tS.getModel();
+	            model.removeRow(filaSeleccionada);
+
+	            RestaurarPosicion();
+	            btnModificar.setEnabled(false);
+	            btnQuitar.setEnabled(false);
+	        }
+	    } else {
+	        JOptionPane.showMessageDialog(this, "Selecciona una fila para quitar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+	    }
 	}
 	
 	protected void do_btnGenerar_actionPerformed(ActionEvent e) {
 		DefaultTableModel model = (DefaultTableModel) tS.getModel();
-	    StringBuilder boletaTexto = new StringBuilder();
+	    if (model.getRowCount() == 0) {
+	        JOptionPane.showMessageDialog(this, "No hay productos para generar la boleta", "Advertencia", JOptionPane.WARNING_MESSAGE);
+	        return;
+	    }
+
+	    double total = 0;
 	    ArregloBoleta arregloBoleta = new ArregloBoleta();
-
-	    /*Boleta boleta = new Boleta();
-	    boletaTexto.append("Boleta ").append(boleta.getCodigo()).append("\n");
-	    boletaTexto.append("--------------------\n");
-
-	    boolean stockSuficiente = true;
 	    ArregloProducto ap = new ArregloProducto();
+	    boolean stockSuficiente = true;
 
 	    for (int i = 0; i < model.getRowCount(); i++) {
 	        String nombre = model.getValueAt(i, 0).toString();
-	        int cantidadVendida = Integer.parseInt(model.getValueAt(i, 1).toString());
+	        int cantidad = Integer.parseInt(model.getValueAt(i, 1).toString());
+	        double precio = Double.parseDouble(model.getValueAt(i, 2).toString());
 
-	        Producto producto = ap.ConsultarPro(nombre);
+	        Producto p = ap.ConsultarPro(nombre);
+	        if (p != null && p.getStock() >= cantidad) {
+	            p.setStock(p.getStock() - cantidad);
+	            ap.editar(p);
 
-	        if (producto != null) {
-	            int stockActual = producto.getStock();
-	            int nuevoStock = stockActual - cantidadVendida;
-
-	            if (nuevoStock < 0) {
-	                stockSuficiente = false;
-	                JOptionPane.showMessageDialog(this,
-	                    "No hay suficiente stock para el producto: " + nombre +
-	                    "\nStock disponible: " + stockActual +
-	                    "\nCantidad requerida: " + cantidadVendida,
-	                    "Error de stock",
-	                    JOptionPane.ERROR_MESSAGE);
-	                break;
-	            } else {
-	                double precioUnitario = producto.getPrecio();
-	                double precioTotalItem = precioUnitario * cantidadVendida;
-
-	                Boleta item = new Boleta(nombre, cantidadVendida, precioTotalItem);
-	                boleta.AgregarItem(item);
-
-	                producto.setStock(nuevoStock);
-	                ap.editar(producto);
-
-	                boletaTexto.append(String.format(
-	                    "%s - Cantidad: %d - Precio: %.2f\n",
-	                    nombre, cantidadVendida, precioTotalItem));
-	            }
+	            Boleta item = new Boleta(nombre, cantidad, precio);
+	            arregloBoleta.AgregarItem(item);
+	            total += precio;
 	        } else {
 	            stockSuficiente = false;
-	            JOptionPane.showMessageDialog(this,
-	                "Producto no encontrado: " + nombre,
-	                "Error",
-	                JOptionPane.ERROR_MESSAGE);
+	            JOptionPane.showMessageDialog(this, "Stock insuficiente para: " + nombre);
 	            break;
 	        }
 	    }
 
 	    if (stockSuficiente) {
-	        boletaTexto.append("--------------------\n");
-	        boletaTexto.append(String.format("Total: %.2f", boleta.getTotal()));
+	        int codEmpleado = Integer.parseInt(Principal.getCodigoEmpleadoLog());
+	        int codigoBoleta = ArregloBoletaBD.insertarBoleta(total, codEmpleado);
 
-	        arregloBoleta.add(boleta);
+	        for (Boleta item : arregloBoleta.getItems()) {
+	        	ArregloBoletaBD.insertarDetalle(codigoBoleta, item);
+	        }
 
-	        JOptionPane.showMessageDialog(this,
-	            boletaTexto.toString(),
-	            "Boleta " + boleta.getCodigo(),
-	            JOptionPane.INFORMATION_MESSAGE);
-	    }*/
-	    
-	    model.setRowCount(0);
-	    RestaurarPosicion();
+	        lb.add(arregloBoleta);
+
+	        JOptionPane.showMessageDialog(this, "Boleta generada correctamente.\nCódigo: " + codigoBoleta, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	        model.setRowCount(0);
+	        RestaurarPosicion();
+	    }
 	}
 	
 	protected void do_btnCerrar_actionPerformed(ActionEvent e) {
 		dispose();
 	}
 	
-	/*public Producto PosicionProducto() {
-		ArregloProducto pro = ap;
-		return pro.Obtener(cbProducto.getSelectedIndex());
-	}*/
-	
-	public int CantidadProducto() {
-		return Integer.parseInt(sCantidad.getValue().toString());
-	}
-	
-	public void CalcularPrecio(int x) {
-		/*ArregloProducto pro = ap;
-		int cantidadProducto = Integer.parseInt(sCantidad.getValue().toString());
-		double total = cantidadProducto * pro.Obtener(x).getPrecio();
-		txtPrecio.setText(String.format("%.2f", total));*/
-	}
 	public void CalcularPrecio() {
-		int index = cbProducto.getSelectedIndex();
-		if (index >= 0 && index <1000) {
-			CalcularPrecio(index);
-		} else {
-			txtPrecio.setText("0.00");
-		}
+		String nombreSeleccionado = (String) cbProducto.getSelectedItem();
+	    int cantidad = CantidadProducto();
+
+	    if (nombreSeleccionado != null && cantidad > 0) {
+	        ArregloProducto pro = new ArregloProducto();
+	        Producto producto = pro.ConsultarPro(nombreSeleccionado);
+
+	        if (producto != null) {
+	            double precioTotal = cantidad * producto.getPrecio();
+	            txtPrecio.setText(String.format("%.2f", precioTotal));
+	        } else {
+	            txtPrecio.setText("0.00");
+	        }
+	    } else {
+	        txtPrecio.setText("0.00");
+	    }
 	}
 	
 	public void RestaurarPosicion() {
@@ -378,8 +431,11 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 			Object obj=it.next();
 			Producto p= (Producto)obj;
 			cbProducto.addItem(p.getProducto());
-i++;
+			i++;
 			
 		}
+	}
+	public int CantidadProducto() {
+	    return (int) sCantidad.getValue();
 	}
 }

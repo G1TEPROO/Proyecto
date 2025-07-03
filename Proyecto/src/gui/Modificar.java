@@ -166,7 +166,7 @@ public class Modificar extends JDialog {
 						
 						System.out.println("Se edito correctamente");
 						
-						AdministrarStock as= new AdministrarStock();
+						AdministrarStock as= new AdministrarStock(null);
 							as.setVisible(true);
 						 dispose();
 						 setVisible(false);
@@ -193,7 +193,7 @@ public class Modificar extends JDialog {
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						AdministrarStock as= new AdministrarStock();
+						AdministrarStock as= new AdministrarStock(null);
 						 as.setVisible(true);
 						 dispose();
 						 setVisible(false);

@@ -33,7 +33,7 @@ try {
 		   Producto producto = null;
 		    try {
 		        Connection cnx = ConexionDB.getConexión();
-		        String sql = "SELECT * FROM product_table WHERE producto LIKE ?";
+		        String sql = "SELECT * FROM Producto WHERE producto LIKE ?";
 		        PreparedStatement pst = cnx.prepareStatement(sql);
 		        pst.setString(1, "%" + nom + "%"); // búsqueda parcial
 
@@ -84,7 +84,7 @@ try {
 	    Producto pro = null;
 
 	    try {
-	        String sql = "SELECT * FROM product_table WHERE codigoProducto = ?";
+	        String sql = "SELECT * FROM Producto WHERE codigoProducto = ?";
 	        PreparedStatement ps = ConexionDB.getConexión().prepareStatement(sql);
 	        ps.setInt(1, cod);
 
@@ -109,7 +109,7 @@ try {
 	public void editar (Producto p) {
 		try {
 			Connection cnx=ConexionDB.getConexión();
-			CallableStatement csta=cnx.prepareCall("{call sp_Editar(?,?,?,?)}");
+			CallableStatement csta=cnx.prepareCall("{call sp_Editar_Producto(?,?,?,?)}");
 			csta.setInt(1,p.getCodigoProducto());
 			csta.setString(2, p.getProducto());
 			csta.setDouble(3,p.getPrecio());

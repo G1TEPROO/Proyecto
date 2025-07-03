@@ -42,9 +42,11 @@ public class AdministrarStock extends JDialog implements ActionListener {
 	private boolean modoModificar = false;
 	private JButton btnModificar;
 	private ArregloProducto ap;
-
-	public AdministrarStock() {
+	private String codigoEmpleadoLog;
 	
+	public AdministrarStock(String codigoEmpleadoLog) {
+		this.codigoEmpleadoLog = codigoEmpleadoLog;
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModal(true);
 		setBounds(100, 100, 514, 360);
 		getContentPane().setLayout(new BorderLayout());
@@ -307,9 +309,7 @@ public class AdministrarStock extends JDialog implements ActionListener {
 		}
 		}
 	protected void do_btnCerrar_actionPerformed(ActionEvent e) {
-		Principal mod = new Principal(); // Pasas "this" al constructor
-		mod.setVisible(true);
-		this.setVisible(false);
+		dispose();
 	}
 	public  void Limpiar() {
 		txtProducto.setText("");
