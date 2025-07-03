@@ -387,7 +387,23 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 
 	        lb.add(arregloBoleta);
 
-	        JOptionPane.showMessageDialog(this, "Boleta generada correctamente.\nCódigo: " + codigoBoleta, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	        StringBuilder resumen = new StringBuilder();
+	        resumen.append("BOLETA GENERADA\n");
+	        resumen.append("Código Boleta: ").append(codigoBoleta).append("\n");
+	        resumen.append("Código Empleado: ").append(codEmpleado).append("\n\n");
+	        resumen.append("Detalle:\n");
+
+	        for (Boleta item : arregloBoleta.getItems()) {
+	            resumen.append(String.format("- %s x%d  S/ %.2f\n",
+	                item.getProducto(),
+	                item.getCantidad(),
+	                item.getPrecio()));
+	        }
+
+	        resumen.append("\nTotal: S/ ").append(String.format("%.2f", total));
+
+	        JOptionPane.showMessageDialog(this, resumen.toString(), "Resumen de Boleta", JOptionPane.INFORMATION_MESSAGE);
+
 	        model.setRowCount(0);
 	        RestaurarPosicion();
 	    }

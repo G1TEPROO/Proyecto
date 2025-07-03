@@ -106,6 +106,7 @@ public class Principal extends JFrame implements ActionListener {
 		if ("admin".equals(codigoEmpleadoLog)) {
 			btnEmpleados.setEnabled(true);
 			btnCambiarContra.setEnabled(true);
+			btnBoleta.setEnabled(false);
 		}
 	}
 	public void actionPerformed(ActionEvent e) {
