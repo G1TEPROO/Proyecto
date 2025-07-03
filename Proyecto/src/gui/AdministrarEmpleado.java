@@ -189,9 +189,16 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 	private void do_btnModificar_actionPerformed(ActionEvent e) {
 		if (!modoModificar) {
 			habilitarCampos();
+			btnAgregar.setEnabled(false);
+			btnEliminar.setEnabled(false);
+			btnBuscar.setEnabled(false);
 			modoModificar = true;
 			JOptionPane.showMessageDialog(this, "Ahora puedes modificar los campos.");
 		} else {
+			btnAgregar.setEnabled(true);
+			btnEliminar.setEnabled(true);
+			btnBuscar.setEnabled(true);
+			
 			String codigo = txtCodigo.getText().trim();
 			Empleado emp = lista.buscar(codigo);
 			if (emp != null) {
@@ -270,5 +277,6 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		txtSueldo.setEnabled(true);
 	}
 }
+ 
 
 
