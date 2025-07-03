@@ -1,11 +1,17 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import clases.Empleado;
+
 import javax.swing.table.DefaultTableModel;
-import arrays.ArregloEmpleado;
+import arrays.ArregloEmpleadoBD;
 
 public class AdministrarEmpleado extends JDialog implements ActionListener {
 
@@ -14,8 +20,8 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 	private JTextField txtCodigo, txtDNI, txtNombre, txtApellido, txtCargo, txtSueldo;
 	private JButton btnBuscar, btnModificar, btnEliminar, btnAgregar;
 
-	private ArregloEmpleado lista = new ArregloEmpleado();
-	private JTable table;
+	private ArregloEmpleadoBD lista = new ArregloEmpleadoBD();
+	private JTable ts;
 	private DefaultTableModel model;
 
 	private boolean modoModificar = false; // bandera para saber si se está editando
@@ -110,37 +116,46 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		btnBuscar.setBounds(137, 306, 100, 23);
 		btnBuscar.addActionListener(this);
 		contentPanel.add(btnBuscar);
-
+	
 		String[] columnas = { "Código", "Nombre", "Apellido", "DNI", "Cargo", "Sueldo" };
-		model = new DefaultTableModel(columnas, 0);
-		table = new JTable(model);
-		JScrollPane scrollPane = new JScrollPane(table);
+		model = new DefaultTableModel(columnas, 0) {
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		        return false;
+		    }
+		};
+		ts = new JTable(model);
+
+		// Permitir solo selección de filas (opcional)
+		ts.setRowSelectionAllowed(true);
+		ts.setColumnSelectionAllowed(false);
+		ts.setCellSelectionEnabled(false); 
+
+		JScrollPane scrollPane = new JScrollPane(ts);
 		scrollPane.setBounds(20, 84, 569, 200);
 		contentPanel.add(scrollPane);
-
-		table.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				int fila = table.getSelectedRow();
-				if (fila != -1) {
-					txtCodigo.setText(model.getValueAt(fila, 0).toString());
-					txtNombre.setText(model.getValueAt(fila, 1).toString());
-					txtApellido.setText(model.getValueAt(fila, 2).toString());
-					txtDNI.setText(model.getValueAt(fila, 3).toString());
-					txtCargo.setText(model.getValueAt(fila, 4).toString());
-					txtSueldo.setText(model.getValueAt(fila, 5).toString());
-					deshabilitarCampos(); // se desactivan por si estaban activos
-				}
-			}
+		 deshabilitarCampos();
+		ts.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent e) {
+		        int fila = ts.getSelectedRow();
+		        if (fila != -1) {
+		            txtCodigo.setText(model.getValueAt(fila, 0).toString());
+		            txtNombre.setText(model.getValueAt(fila, 1).toString());
+		            txtApellido.setText(model.getValueAt(fila, 2).toString());
+		            txtDNI.setText(model.getValueAt(fila, 3).toString());
+		            txtCargo.setText(model.getValueAt(fila, 4).toString());
+		            txtSueldo.setText(model.getValueAt(fila, 5).toString());
+	
+		        }
+		    }
 		});
 
-		// Deshabilitar campos al iniciar
-		deshabilitarCampos();
-
-		// Datos iniciales
-		lista.agregar(new Empleado("E001", "Renzo", "Alvarez", "12345678", "Jefe", 3200.0));
-		lista.agregar(new Empleado("E002", "Ariana", "Perez", "87654321", "Asistente", 2500.0));
-		lista.agregar(new Empleado("E003", "Diego", "Canevaro", "11112222", "Analista", 3000.0));
+		// Llamas a tu método que llena la tabla
 		actualizarTabla();
+
+
+	
+
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -157,25 +172,37 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 
 	private void do_btnAgregar_actionPerformed(ActionEvent e) {
 		try {
+			if (!modoModificar) {
+				modoModificar = true;
+				txtCodigo.setText("");
+				habilitarCampos();
+				txtCodigo.setEnabled(false);
+				JOptionPane.showMessageDialog(this, "Ahora puedes modificar los campos.");
+				
+			}else {
+				txtCodigo.setEnabled(true);
+				modoModificar = false;
 			Empleado emp = new Empleado(
 				txtCodigo.getText().trim(),
 				txtNombre.getText().trim(),
 				txtApellido.getText().trim(),
 				txtDNI.getText().trim(),
 				txtCargo.getText().trim(),
-				Double.parseDouble(txtSueldo.getText().trim())
-			);
-			lista.agregar(emp);
+				Double.parseDouble(txtSueldo.getText().trim()));
+			deshabilitarCampos();
+			lista.insertar(emp);
 			actualizarTabla();
 			limpiarCampos();
-			deshabilitarCampos();
+			}
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(this, "Datos inválidos.");
 		}
+		limpiarCampos();
 	}
 
 	private void do_btnEliminar_actionPerformed(ActionEvent e) {
-		String codigo = txtCodigo.getText().trim();
+		try {
+		int codigo = Integer.parseInt( txtCodigo.getText().trim());
 		if (lista.eliminar(codigo)) {
 			actualizarTabla();
 			limpiarCampos();
@@ -184,22 +211,29 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		} else {
 			JOptionPane.showMessageDialog(this, "No se encontró el empleado.");
 		}
+	}catch (Exception e_2) {
+		JOptionPane.showMessageDialog(this, "No se pudo eliminar el empleado");
+	}
+		limpiarCampos();
 	}
 
 	private void do_btnModificar_actionPerformed(ActionEvent e) {
+
 		if (!modoModificar) {
 			habilitarCampos();
 			btnAgregar.setEnabled(false);
 			btnEliminar.setEnabled(false);
 			btnBuscar.setEnabled(false);
 			modoModificar = true;
+			txtCodigo.setEnabled(false);
 			JOptionPane.showMessageDialog(this, "Ahora puedes modificar los campos.");
+			
 		} else {
 			btnAgregar.setEnabled(true);
 			btnEliminar.setEnabled(true);
 			btnBuscar.setEnabled(true);
-			
-			String codigo = txtCodigo.getText().trim();
+			txtCodigo.setEnabled(true);
+			int codigo = Integer.parseInt( txtCodigo.getText().trim());
 			Empleado emp = lista.buscar(codigo);
 			if (emp != null) {
 				try {
@@ -208,10 +242,12 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 					emp.setDni(txtDNI.getText().trim());
 					emp.setCargo(txtCargo.getText().trim());
 					emp.setSueldo(Double.parseDouble(txtSueldo.getText().trim()));
+					lista.editar(emp);
 					actualizarTabla();
 					JOptionPane.showMessageDialog(this, "Empleado modificado.");
 					modoModificar = false;
 					deshabilitarCampos();
+					limpiarCampos();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(this, "Sueldo inválido.");
 				}
@@ -219,10 +255,13 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Empleado no encontrado.");
 			}
 		}
+		
+		
 	}
 
 	private void do_btnBuscar_actionPerformed(ActionEvent e) {
-		String codigo = txtCodigo.getText().trim();
+		try {
+		int codigo = Integer.parseInt( txtCodigo.getText().trim());
 		Empleado emp = lista.buscar(codigo);
 		if (emp != null) {
 			txtNombre.setText(emp.getNombre());
@@ -231,25 +270,32 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 			txtCargo.setText(emp.getCargo());
 			txtSueldo.setText(String.valueOf(emp.getSueldo()));
 			deshabilitarCampos();
+			
 		} else {
 			JOptionPane.showMessageDialog(this, "Empleado no encontrado.");
+			limpiarCampos();
 		}
+		btnAgregar.setEnabled(true);
+		}catch (Exception es) {
+			JOptionPane.showMessageDialog(this, "No se pudo buscar el empleado , ingrese valores correctos");
+			limpiarCampos();
+		}
+		
 	}
 
 	private void actualizarTabla() {
+		ArrayList<Empleado> lista_1 = new ArrayList<Empleado>();
+		DefaultTableModel modelo = (DefaultTableModel)  ts.getModel();
 		model.setRowCount(0);
-		for (int i = 0; i < lista.tamaño(); i++) {
-			Empleado emp = lista.obtener(i);
-			Object[] fila = {
-				emp.getCodigo(),
-				emp.getNombre(),
-				emp.getApellido(),
-				emp.getDni(),
-				emp.getCargo(),
-				emp.getSueldo()
-			};
-			model.addRow(fila);
+		ArregloEmpleadoBD Pro =new ArregloEmpleadoBD();
+		lista_1= Pro.listar();
+		Iterator it=lista_1.iterator();
+		while(it.hasNext()) {
+			Object obj=it.next();
+			Empleado p= (Empleado)obj;
+			model.addRow(new Object[] {p.getCodigo(), p.getNombre(), p.getApellido(), p.getDni(),p.getCargo(),p.getSueldo()});
 		}
+	
 	}
 
 	private void limpiarCampos() {

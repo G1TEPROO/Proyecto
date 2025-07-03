@@ -4,12 +4,12 @@ import clases.Empleado;
 import conexion.ConexionDB;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class ArregloEmpleadoBD {
 
-    public List<Empleado> listar() {
-        List<Empleado> lista = new ArrayList<>();
+    public ArrayList<Empleado> listar() {
+        ArrayList<Empleado> lista = new ArrayList<>();
         String sql = "CALL sp_Listar_Empleado()";
         try (Connection cn = ConexionDB.getConexión();
              CallableStatement cs = cn.prepareCall(sql);

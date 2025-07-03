@@ -39,6 +39,7 @@ public class AdministrarStock extends JDialog implements ActionListener {
 	private JTable tS;
 	private JLabel lblCantidad;
 	private JTextField txtCantidad;
+	private boolean modoModificar = false;
 	private JButton btnModificar;
 	private ArregloProducto ap;
 
@@ -230,77 +231,66 @@ public class AdministrarStock extends JDialog implements ActionListener {
 		
 }
 	protected void do_btnBuscar_actionPerformed(ActionEvent e) {
+	
 		String nombre = txtProducto.getText().trim();
-		
-		ArregloProducto Pro=new ArregloProducto();
-		Producto p= Pro.ConsultarPro(nombre);
-		if(p==null) {
-			
-			JOptionPane.showMessageDialog(this, "Producto no encontrado", "Aviso", JOptionPane.WARNING_MESSAGE);
-		return;
+		Limpiar();
+		if (!modoModificar) {
+		  txtCantidad.setEnabled(false);			
+		  txtPrecio.setEnabled(false);
+		  modoModificar = true;
+			JOptionPane.showMessageDialog(this, "Ingrese el nombre del prodcuto a buscar","Aviso",JOptionPane.INFORMATION_MESSAGE);
 		}else {
-			
-			JOptionPane.showMessageDialog(this, "El prodcuto existe \n Codigo :"+p.getCodigoProducto()+"\n Nombre :"+p.getProducto()+"\n Precio : "+p.getPrecio()+"\n Stock : "+p.getStock()
-			,"Aviso",JOptionPane.INFORMATION_MESSAGE);
-			
+			modoModificar = false;
+			  txtCantidad.setEnabled(true);			
+			  txtPrecio.setEnabled(true);
+				
+				if(nombre == null || nombre.isEmpty()) {
+					
+					
+					JOptionPane.showMessageDialog(this, "Ingrese un valora a buscar", "Aviso", JOptionPane.WARNING_MESSAGE);
+					
+					
+				}else {
+					Limpiar();
+
+					ArregloProducto Pro=new ArregloProducto();
+					Producto p= Pro.ConsultarPro(nombre);
+					if(p==null) {
+						
+						JOptionPane.showMessageDialog(this, "Producto no encontrado", "Aviso", JOptionPane.WARNING_MESSAGE);
+						
+					return;
+					}else {
+						
+						JOptionPane.showMessageDialog(this, "El prodcuto existe \n Codigo :"+p.getCodigoProducto()+"\n Nombre :"+p.getProducto()+"\n Precio : "+p.getPrecio()+"\n Stock : "+p.getStock()
+						,"Aviso",JOptionPane.INFORMATION_MESSAGE);
+						
+					}
+					
+				}
+				
+	
 		}
+	
 		
 	}
+		
+		
+		
+		
 	
-
-	
-	/*
-	  int filaSeleccionada = tS.getSelectedRow();
-
-		if (filaSeleccionada == -1) {
-			JOptionPane.showMessageDialog(this, "Selecciona una fila para modificar");
-			return;
-		}
-
-		try {
-			ArregloProducto M= new ArregloProducto();
-			String nuevoNombre = txtProducto.getText().trim();
-			double nuevoPrecio = Double.parseDouble(txtPrecio.getText().trim());
-			int nuevoStock = Integer.parseInt(txtCantidad.getText().trim());
-
-			DefaultTableModel modelo = (DefaultTableModel) tS.getModel();
-			int codigo = (int) modelo.getValueAt(filaSeleccionada, 0);
-			Producto  p;
-			p= M.buscar(codigo);
-			 
-			if (p != null) {
-				p.setProducto(nuevoNombre);
-				p.setPrecio(nuevoPrecio);
-				p.setStock(nuevoStock);
-				
-				M.editar(p);
-				JOptionPane.showMessageDialog(this, "Producto modificado correctamente");
 			
-			} else {
-				JOptionPane.showMessageDialog(this, "No se encontró el producto");
-			}
-		} catch (NumberFormatException ex) {
-			JOptionPane.showMessageDialog(this, "Datos inválidos. Verifica precio y cantidad");
-		}
-		ActualizarTabla();
-	  
-		if (ap.Eliminar(codigo)) {
-			modelo.removeRow(filaSeleccionada);
-			JOptionPane.showMessageDialog(this, "Producto eliminado correctamente");
-			Limpiar();
-		} else {
-			JOptionPane.showMessageDialog(this, "No se pudo eliminar el producto");
-	 
-	  */
+			
+			
+			
+		
+		
+		
+	
+
 	
 	
-	
-	/*
-	
-	
-	
-	
-	*/private void ActualizarTabla() {
+	private void ActualizarTabla() {
 		ArrayList<Producto>lista =new ArrayList<Producto>();
 		DefaultTableModel modelo = (DefaultTableModel) tS.getModel();
 		modelo.setRowCount(0);
@@ -321,7 +311,7 @@ public class AdministrarStock extends JDialog implements ActionListener {
 		mod.setVisible(true);
 		this.setVisible(false);
 	}
-	private void Limpiar() {
+	public  void Limpiar() {
 		txtProducto.setText("");
 		txtPrecio.setText("");
 		txtCantidad.setText("");

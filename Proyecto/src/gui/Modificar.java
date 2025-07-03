@@ -59,23 +59,25 @@ public class Modificar extends JDialog {
 		contentPanel.setLayout(null);
 		{
 			JLabel lblNewLabel = new JLabel("Nombre_antiguo");
-			lblNewLabel.setBounds(10, 58, 80, 14);
+			lblNewLabel.setBounds(10, 58, 98, 14);
 			contentPanel.add(lblNewLabel);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Nombre nuevo");
-			lblNewLabel_1.setBounds(205, 58, 80, 14);
+			lblNewLabel_1.setBounds(228, 58, 80, 14);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			txt_n_viejo = new JTextField();
-			txt_n_viejo.setBounds(100, 55, 86, 20);
+			txt_n_viejo.setEnabled(false);
+			txt_n_viejo.setEditable(false);
+			txt_n_viejo.setBounds(118, 55, 86, 20);
 			contentPanel.add(txt_n_viejo);
 			txt_n_viejo.setColumns(10);
 		}
 		{
 			JLabel lblPrecioAntiguo = new JLabel("Precio Antiguo");
-			lblPrecioAntiguo.setBounds(10, 90, 69, 14);
+			lblPrecioAntiguo.setBounds(10, 90, 98, 14);
 			contentPanel.add(lblPrecioAntiguo);
 		}
 		{
@@ -85,42 +87,46 @@ public class Modificar extends JDialog {
 		}
 		{
 			txt_p_antiguo = new JTextField();
+			txt_p_antiguo.setEnabled(false);
+			txt_p_antiguo.setEditable(false);
 			txt_p_antiguo.setColumns(10);
-			txt_p_antiguo.setBounds(100, 87, 86, 20);
+			txt_p_antiguo.setBounds(118, 86, 86, 20);
 			contentPanel.add(txt_p_antiguo);
 		}
 		{
 			txt_stock_antiguo = new JTextField();
+			txt_stock_antiguo.setEnabled(false);
+			txt_stock_antiguo.setEditable(false);
 			txt_stock_antiguo.setColumns(10);
-			txt_stock_antiguo.setBounds(100, 126, 86, 20);
+			txt_stock_antiguo.setBounds(118, 126, 86, 20);
 			contentPanel.add(txt_stock_antiguo);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Precio");
-			lblNewLabel_1.setBounds(231, 90, 46, 14);
+			lblNewLabel_1.setBounds(238, 90, 46, 14);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Stock");
-			lblNewLabel_1.setBounds(231, 129, 46, 14);
+			lblNewLabel_1.setBounds(228, 129, 46, 14);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			txt_nombre = new JTextField();
 			txt_nombre.setColumns(10);
-			txt_nombre.setBounds(287, 55, 86, 20);
+			txt_nombre.setBounds(318, 55, 86, 20);
 			contentPanel.add(txt_nombre);
 		}
 		{
 			txt_precio = new JTextField();
 			txt_precio.setColumns(10);
-			txt_precio.setBounds(287, 87, 86, 20);
+			txt_precio.setBounds(318, 87, 86, 20);
 			contentPanel.add(txt_precio);
 		}
 		{
 			txt_stock = new JTextField();
 			txt_stock.setColumns(10);
-			txt_stock.setBounds(287, 126, 86, 20);
+			txt_stock.setBounds(318, 126, 86, 20);
 			contentPanel.add(txt_stock);
 		}
 		{
