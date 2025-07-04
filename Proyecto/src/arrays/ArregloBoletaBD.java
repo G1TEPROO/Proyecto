@@ -48,26 +48,26 @@ public class ArregloBoletaBD {
     }
     
     public static ArrayList<Object[]> listarBoletasConEmpleado() {
-        ArrayList<Object[]> lista = new ArrayList<>();
-        try (Connection con = ConexionDB.getConexión();
-             PreparedStatement ps = con.prepareStatement(
-                 "SELECT b.codigoBoleta, e.dni, b.fecha, b.total " +
-                 "FROM Boleta b JOIN Empleado e ON b.codigoEmpleado = e.codigoEmpleado"
-             );
-             ResultSet rs = ps.executeQuery()) {
+    	ArrayList<Object[]> lista = new ArrayList<>();
+        String sql = "CALL sp_Listar_Boletas()";
+
+        try (Connection cn = ConexionDB.getConexión();
+             CallableStatement cs = cn.prepareCall(sql);
+             ResultSet rs = cs.executeQuery()) {
 
             while (rs.next()) {
-                Object[] fila = {
-                    rs.getInt("codigoBoleta"),
-                    rs.getString("dni"),
-                    rs.getTimestamp("fecha"),
-                    rs.getDouble("total")
-                };
-                lista.add(fila);
+                int codigoBoleta = rs.getInt("codigoBoleta");
+                String empleado = rs.getString("empleado");
+                String fecha = rs.getString("fecha");
+                double total = rs.getDouble("total");
+
+                lista.add(new Object[]{codigoBoleta, empleado, fecha, total});
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return lista;
     }
   
@@ -91,4 +91,5 @@ public class ArregloBoletaBD {
         }
         return lista;
     }
+    
 }

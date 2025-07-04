@@ -54,14 +54,17 @@ public class ListarBoleta extends JDialog implements ActionListener {
 			scrollPane.setBounds(10, 11, 414, 239);
 			contentPanel.add(scrollPane);
 			{
-				tS = new JTable();
-				tS.setModel(new DefaultTableModel(
-					new Object[][] {
-					},
-					new String[] {
-						"Codigo", "Empleado", "Fecha", "Precio Total"
-					}
-				));
+				DefaultTableModel model = new DefaultTableModel(
+						new Object[][] {},
+						new String[] {"Código", "DNI Empleado", "Fecha", "Total"}
+					) {
+						@Override
+						public boolean isCellEditable(int row, int column) {
+							return false;
+						}
+					};
+
+					tS = new JTable(model);
 				tS.setFillsViewportHeight(true);
 				scrollPane.setViewportView(tS);
 				tS.getSelectionModel().addListSelectionListener(new ListSelectionListener() {

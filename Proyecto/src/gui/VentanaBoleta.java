@@ -24,8 +24,10 @@ import javax.swing.table.DefaultTableModel;
 
 import arrays.ArregloBoleta;
 import arrays.ArregloBoletaBD;
+import arrays.ArregloEmpleadoBD;
 import arrays.ArregloProducto;
 import clases.Boleta;
+import clases.Empleado;
 import clases.Producto;
 
 import java.awt.event.ActionListener;
@@ -142,14 +144,18 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 			scrollPane.setBounds(10, 53, 367, 169);
 			contentPanel.add(scrollPane);
 			{
-				tS = new JTable();
-				tS.setModel(new DefaultTableModel(
-					new Object[][] {
-					},
-					new String[] {
-						"Producto", "Cantidad", "Precio"
-					}
-				));
+				DefaultTableModel model = new DefaultTableModel(
+						new Object[][] {},
+						new String[] {"Producto", "Cantidad", "Precio"}
+					) {
+						@Override
+						public boolean isCellEditable(int row, int column) {
+							return false;
+						}
+					};
+
+				tS = new JTable(model);
+				tS.setFillsViewportHeight(true);
 				tS.getColumnModel().getColumn(0).setPreferredWidth(125);
 				tS.getColumnModel().getColumn(1).setPreferredWidth(55);
 				tS.getSelectionModel().addListSelectionListener(e -> {
@@ -316,7 +322,6 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 	    }
 
 	    RestaurarPosicion();
-		btnModificar.setEnabled(false);
 	}
 	
 	protected void do_btnQuitar_actionPerformed(ActionEvent e) {
@@ -379,6 +384,14 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 
 	    if (stockSuficiente) {
 	        int codEmpleado = Integer.parseInt(Principal.getCodigoEmpleadoLog());
+	        ArregloEmpleadoBD empleadosBD = new ArregloEmpleadoBD();
+	        String nombreEmpleado = "Desconocido";
+	        for (Empleado emp : empleadosBD.listar()) {
+	            if (Integer.parseInt(emp.getCodigo()) == codEmpleado) {
+	                nombreEmpleado = emp.getNombre();
+	                break;
+	            }
+	        }
 	        int codigoBoleta = ArregloBoletaBD.insertarBoleta(total, codEmpleado);
 
 	        for (Boleta item : arregloBoleta.getItems()) {
@@ -390,7 +403,7 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 	        StringBuilder resumen = new StringBuilder();
 	        resumen.append("BOLETA GENERADA\n");
 	        resumen.append("Código Boleta: ").append(codigoBoleta).append("\n");
-	        resumen.append("Código Empleado: ").append(codEmpleado).append("\n\n");
+	        resumen.append("Empleado: ").append(nombreEmpleado).append(" (").append(codEmpleado).append(")").append("\n\n");
 	        resumen.append("Detalle:\n");
 
 	        for (Boleta item : arregloBoleta.getItems()) {
