@@ -24,9 +24,11 @@ import javax.swing.table.DefaultTableModel;
 
 import arrays.ArregloBoleta;
 import arrays.ArregloBoletaBD;
+import arrays.ArregloClienteBD;
 import arrays.ArregloEmpleadoBD;
 import arrays.ArregloProducto;
 import clases.Boleta;
+import clases.Cliente;
 import clases.Empleado;
 import clases.Producto;
 
@@ -57,13 +59,18 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 	private JButton btnQuitar;
 	private ArregloProducto ap;
 	private ArrayList<ArregloBoleta> lb = new ArrayList<>();
+	private JLabel lblStock;
+	private JTextField txtStock;
+	private JButton btnBuscarCliente;
+	private JLabel lblNewLabel_2;
+	private JComboBox<Cliente> cbCliente;
 
 	public VentanaBoleta(ArregloProducto ap, ArrayList<ArregloBoleta> lb) {
 		this.ap = ap;
 		this.lb = lb;
 		setTitle("GENERAR BOLETA");
 		setModal(true);
-		setBounds(100, 100, 522, 272);
+		setBounds(100, 100, 580, 360);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -83,7 +90,7 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 		}
 		{
 			lblNewLabel_1 = new JLabel("CANTIDAD");
-			lblNewLabel_1.setBounds(229, 11, 81, 14);
+			lblNewLabel_1.setBounds(240, 11, 81, 14);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
@@ -97,12 +104,12 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 				CalcularPrecio();
 				}
 			});
-			sCantidad.setBounds(293, 8, 36, 20);
+			sCantidad.setBounds(303, 8, 36, 20);
 			contentPanel.add(sCantidad);
 		}
 		{
 			lblPrecio = new JLabel("PRECIO");
-			lblPrecio.setBounds(357, 11, 81, 14);
+			lblPrecio.setBounds(10, 293, 81, 14);
 			contentPanel.add(lblPrecio);
 		}
 		{
@@ -110,38 +117,38 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 			txtPrecio.setText("0.00");
 			txtPrecio.setEditable(false);
 			txtPrecio.setEnabled(false);
-			txtPrecio.setBounds(405, 8, 86, 20);
+			txtPrecio.setBounds(56, 290, 44, 20);
 			contentPanel.add(txtPrecio);
 			txtPrecio.setColumns(10);
 		}
 		{
 			btnAgregar = new JButton("AGREGAR");
 			btnAgregar.addActionListener(this);
-			btnAgregar.setBounds(387, 53, 104, 23);
+			btnAgregar.setBounds(430, 53, 124, 23);
 			contentPanel.add(btnAgregar);
 		}
 		{
 			btnGenerar = new JButton("GENERAR");
 			btnGenerar.addActionListener(this);
-			btnGenerar.setBounds(387, 165, 104, 23);
+			btnGenerar.setBounds(430, 213, 124, 23);
 			contentPanel.add(btnGenerar);
 		}
 		{
 			btnCerrar = new JButton("CERRAR");
 			btnCerrar.addActionListener(this);
-			btnCerrar.setBounds(387, 199, 104, 23);
+			btnCerrar.setBounds(430, 247, 124, 23);
 			contentPanel.add(btnCerrar);
 		}
 		{
 			btnModificar =new JButton("MODIFICAR");
 			btnModificar.setEnabled(false);
 			btnModificar.addActionListener(this);
-			btnModificar.setBounds(387, 87, 104, 23);
+			btnModificar.setBounds(430, 87, 124, 23);
 			contentPanel.add(btnModificar);
 		}
 		{
 			scrollPane = new JScrollPane();
-			scrollPane.setBounds(10, 53, 367, 169);
+			scrollPane.setBounds(10, 53, 410, 217);
 			contentPanel.add(scrollPane);
 			{
 				DefaultTableModel model = new DefaultTableModel(
@@ -177,12 +184,46 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 			btnQuitar = new JButton("QUITAR");
 			btnQuitar.setEnabled(false);
 			btnQuitar.addActionListener(this);
-			btnQuitar.setBounds(387, 121, 104, 23);
+			btnQuitar.setBounds(430, 121, 124, 23);
 			contentPanel.add(btnQuitar);
 		}
+		{
+			lblStock = new JLabel("STOCK");
+			lblStock.setBounds(120, 293, 59, 14);
+			contentPanel.add(lblStock);
+		}
+		{
+			txtStock = new JTextField();
+			txtStock.setText("0");
+			txtStock.setEnabled(false);
+			txtStock.setEditable(false);
+			txtStock.setColumns(10);
+			txtStock.setBounds(165, 290, 50, 20);
+			contentPanel.add(txtStock);
+		}
+		{
+			btnBuscarCliente = new JButton("BUSCAR CLIENTE");
+			btnBuscarCliente.addActionListener(this);
+			btnBuscarCliente.setBounds(430, 155, 124, 23);
+			contentPanel.add(btnBuscarCliente);
+		}
+		{
+			lblNewLabel_2 = new JLabel("CLIENTE");
+			lblNewLabel_2.setBounds(364, 11, 81, 14);
+			contentPanel.add(lblNewLabel_2);
+		}
+		{
+			cbCliente = new JComboBox();
+			cbCliente.setBounds(420, 7, 134, 22);
+			contentPanel.add(cbCliente);
+		}
 		Actualizar();
+		ActualizarClientes();
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnBuscarCliente) {
+			do_btnBuscarCliente_actionPerformed(e);
+		}
 		if (e.getSource() == btnCerrar) {
 			do_btnCerrar_actionPerformed(e);
 		}
@@ -350,6 +391,63 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 	    }
 	}
 	
+	protected void do_btnBuscarCliente_actionPerformed(ActionEvent e) {
+		String dniStr = JOptionPane.showInputDialog(this, "Ingrese el DNI del cliente:");
+
+	    if (dniStr != null && !dniStr.trim().isEmpty()) {
+	        try {
+	            int dni = Integer.parseInt(dniStr.trim());
+
+	            ArregloClienteBD ac = new ArregloClienteBD();
+	            Cliente cliente = ac.buscar(String.valueOf(dni));
+
+	            if (cliente != null) {
+	                for (int i = 0; i < cbCliente.getItemCount(); i++) {
+	                    Cliente c = cbCliente.getItemAt(i);
+	                    if (c.getDni() == dni) {
+	                        cbCliente.setSelectedIndex(i);
+	                        return;
+	                    }
+	                }
+	                cbCliente.addItem(cliente);
+	                cbCliente.setSelectedItem(cliente);
+
+	            } else {
+	                int opcion = JOptionPane.showConfirmDialog(
+	                    this,
+	                    "Cliente no encontrado con DNI: " + dni + "\n¿Desea registrarlo ahora?",
+	                    "Registrar nuevo cliente",
+	                    JOptionPane.YES_NO_OPTION
+	                );
+
+	                if (opcion == JOptionPane.YES_OPTION) {
+	                	VentanaRegistroCliente registro = new VentanaRegistroCliente(this, dni);
+	                	registro.setLocationRelativeTo(this);
+	                	registro.setVisible(true);
+
+	                	if (registro.fueRegistrado()) {
+	                	    ArregloClienteBD acActualizado = new ArregloClienteBD();
+	                	    Cliente nuevoCliente = acActualizado.buscar(String.valueOf(dni));
+	                	    if (nuevoCliente != null) {
+	                	        cbCliente.addItem(nuevoCliente);
+	                	        cbCliente.setSelectedItem(nuevoCliente);
+	                	    }
+	                	} else {
+	                	    JOptionPane.showMessageDialog(this,
+	                	        "El cliente no fue registrado.",
+	                	        "Aviso", JOptionPane.WARNING_MESSAGE);
+	                	}
+	                }
+	            }
+
+	        } catch (NumberFormatException ex) {
+	            JOptionPane.showMessageDialog(this,
+	                "DNI inválido. Debe ser un número.",
+	                "Error", JOptionPane.ERROR_MESSAGE);
+	        }
+	    }
+	}
+	
 	protected void do_btnGenerar_actionPerformed(ActionEvent e) {
 		DefaultTableModel model = (DefaultTableModel) tS.getModel();
 	    if (model.getRowCount() == 0) {
@@ -384,15 +482,23 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 
 	    if (stockSuficiente) {
 	        int codEmpleado = Integer.parseInt(Principal.getCodigoEmpleadoLog());
+	        Cliente clienteSeleccionado = (Cliente) cbCliente.getSelectedItem();
+	        if (clienteSeleccionado == null) {
+	            JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente antes de generar la boleta.", "Error", JOptionPane.ERROR_MESSAGE);
+	            return;
+	        }
+	        int codigoCliente = clienteSeleccionado.getCodigo();
 	        ArregloEmpleadoBD empleadosBD = new ArregloEmpleadoBD();
 	        String nombreEmpleado = "Desconocido";
+	        String dniEmpleado = "Desconocido";
 	        for (Empleado emp : empleadosBD.listar()) {
 	            if (Integer.parseInt(emp.getCodigo()) == codEmpleado) {
 	                nombreEmpleado = emp.getNombre();
+	                dniEmpleado = emp.getDni();
 	                break;
 	            }
 	        }
-	        int codigoBoleta = ArregloBoletaBD.insertarBoleta(total, codEmpleado);
+	        int codigoBoleta = ArregloBoletaBD.insertarBoleta(total, codEmpleado, codigoCliente);
 
 	        for (Boleta item : arregloBoleta.getItems()) {
 	        	ArregloBoletaBD.insertarDetalle(codigoBoleta, item);
@@ -403,7 +509,8 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 	        StringBuilder resumen = new StringBuilder();
 	        resumen.append("BOLETA GENERADA\n");
 	        resumen.append("Código Boleta: ").append(codigoBoleta).append("\n");
-	        resumen.append("Empleado: ").append(nombreEmpleado).append(" (").append(codEmpleado).append(")").append("\n\n");
+	        resumen.append("Empleado: ").append(nombreEmpleado).append(" - ").append(dniEmpleado).append("\n");
+	        resumen.append("Cliente: ").append(clienteSeleccionado.getNombre()).append(" - ").append(clienteSeleccionado.getDni()).append("\n\n");
 	        resumen.append("Detalle:\n");
 
 	        for (Boleta item : arregloBoleta.getItems()) {
@@ -437,11 +544,14 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 	        if (producto != null) {
 	            double precioTotal = cantidad * producto.getPrecio();
 	            txtPrecio.setText(String.format("%.2f", precioTotal));
+	            txtStock.setText(String.valueOf(producto.getStock()));
 	        } else {
 	            txtPrecio.setText("0.00");
+	            txtStock.setText("0");
 	        }
 	    } else {
 	        txtPrecio.setText("0.00");
+	        txtStock.setText("0");
 	    }
 	}
 	
@@ -464,7 +574,16 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 			
 		}
 	}
+	
 	public int CantidadProducto() {
 	    return (int) sCantidad.getValue();
+	}
+	
+	public void ActualizarClientes() {
+		cbCliente.removeAllItems();
+	    ArregloClienteBD ac = new ArregloClienteBD();
+	    for (Cliente c : ac.listar()) {
+	        cbCliente.addItem(c);
+	    }
 	}
 }

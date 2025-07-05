@@ -13,11 +13,13 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
-public class VentanaRegistroCliente extends JFrame implements ActionListener {
+public class VentanaRegistroCliente extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -29,28 +31,16 @@ public class VentanaRegistroCliente extends JFrame implements ActionListener {
 	private JLabel lblTelefono;
 	private JButton btnRegistrarC;
 	private JLabel lblNewLabel_1;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaRegistroCliente frame = new VentanaRegistroCliente();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private VentanaBoleta ventanaBoleta;
+	private boolean registradoConExito = false;
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaRegistroCliente() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public VentanaRegistroCliente(VentanaBoleta ventanaBoleta, int dniInicial) {
+	    this.ventanaBoleta = ventanaBoleta;
+		setModal(true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 510, 269);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -102,6 +92,7 @@ public class VentanaRegistroCliente extends JFrame implements ActionListener {
 			lblNewLabel_1.setBounds(170, 11, 136, 110);
 			contentPane.add(lblNewLabel_1);
 		}
+		txtDniR.setText(String.valueOf(dniInicial));
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -110,14 +101,38 @@ public class VentanaRegistroCliente extends JFrame implements ActionListener {
 		}
 	}
 	protected void do_btnRegistrarC_actionPerformed(ActionEvent e) {
+		try {
+	        String nombre = txtNombreR.getText().trim();
+	        int dni = Integer.parseInt(txtDniR.getText().trim());
+	        int telefono = Integer.parseInt(txtTelefonoR.getText().trim());
 
-		String nombre = txtNombreR.getText();
-		int dni = Integer.parseInt(txtDniR.getText());
-		int telefono =Integer.parseInt(txtTelefonoR.getText());
-   ArregloClienteBD Erick=new ArregloClienteBD();
-   Cliente a=new Cliente(nombre,dni,telefono);
-   Erick.insertar(a);
-		JOptionPane.showMessageDialog(null, "Cliente registrado:\nNombre: " + nombre + "\nDNI: " + dni + "\nTeléfono: " + telefono);
+	        if (nombre.isEmpty()) {
+	            JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío.");
+	            return;
+	        }
+
+	        ArregloClienteBD ac = new ArregloClienteBD();
+	        Cliente a = new Cliente(nombre, dni, telefono);
+
+	        if (ac.insertar(a)) {
+	            JOptionPane.showMessageDialog(this, "Cliente registrado:\nNombre: " + nombre + "\nDNI: " + dni + "\nTeléfono: " + telefono);
+	            
+	            if (ventanaBoleta != null) {
+	                ventanaBoleta.ActualizarClientes();
+	            }
+	            registradoConExito = true;
+	            dispose();
+	        } else {
+	            JOptionPane.showMessageDialog(this, "Error al registrar el cliente.");
+	        }
+
+	    } catch (NumberFormatException ex) {
+	        JOptionPane.showMessageDialog(this, "DNI y Teléfono deben ser números válidos.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+	    }
 		
+	}
+	
+	public boolean fueRegistrado() {
+	    return registradoConExito;
 	}
 }

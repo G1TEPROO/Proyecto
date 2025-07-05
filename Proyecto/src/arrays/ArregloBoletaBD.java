@@ -11,22 +11,23 @@ import clases.Boleta;
 import conexion.ConexionDB;
 
 public class ArregloBoletaBD {
-	public static int insertarBoleta(double total, int codEmpleado) {
-        int nuevoCodigo = -1;
-        try (Connection cn = ConexionDB.getConexión();
-             CallableStatement cs = cn.prepareCall("{ call sp_Insertar_Boleta(?, ?, ?) }")) {
+	public static int insertarBoleta(double total, int codEmpleado, int codCliente) {
+		int nuevoCodigo = -1;
+	    try (Connection cn = ConexionDB.getConexión();
+	         CallableStatement cs = cn.prepareCall("{ call sp_Insertar_Boleta(?, ?, ?, ?) }")) {
 
-            cs.setDouble(1, total);
-            cs.setInt(2, codEmpleado);
-            cs.registerOutParameter(3, java.sql.Types.INTEGER);
-            cs.execute();
+	        cs.setDouble(1, total);
+	        cs.setInt(2, codEmpleado);
+	        cs.setInt(3, codCliente);
+	        cs.registerOutParameter(4, java.sql.Types.INTEGER);
+	        cs.execute();
 
-            nuevoCodigo = cs.getInt(3);
+	        nuevoCodigo = cs.getInt(4);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return nuevoCodigo;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return nuevoCodigo;
     }
 
     public static boolean insertarDetalle(int codigoBoleta, Boleta item) {
@@ -58,10 +59,11 @@ public class ArregloBoletaBD {
             while (rs.next()) {
                 int codigoBoleta = rs.getInt("codigoBoleta");
                 String empleado = rs.getString("empleado");
+                String cliente = rs.getString("cliente");
                 String fecha = rs.getString("fecha");
                 double total = rs.getDouble("total");
 
-                lista.add(new Object[]{codigoBoleta, empleado, fecha, total});
+                lista.add(new Object[]{codigoBoleta, empleado, cliente, fecha, total});
             }
 
         } catch (Exception e) {

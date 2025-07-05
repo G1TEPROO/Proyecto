@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class ArregloClienteBD {
 
     public ArrayList<Cliente> listar() {
-        ArrayList<Cliente> lista = new ArrayList<>();
+    	ArrayList<Cliente> lista = new ArrayList<>();
         String sql = "CALL sp_Listar_Cliente()";
         try (Connection cn = ConexionDB.getConexión();
              CallableStatement cs = cn.prepareCall(sql);
@@ -15,6 +15,7 @@ public class ArregloClienteBD {
 
             while (rs.next()) {
                 Cliente c = new Cliente(
+                    rs.getInt("codigoCliente"),
                     rs.getString("nombre"),
                     rs.getInt("dni"),
                     rs.getInt("telefono")
@@ -26,6 +27,7 @@ public class ArregloClienteBD {
         }
         return lista;
     }
+    
     public boolean insertar(Cliente c) {
         String sql = "CALL sp_Insertar_Cliente(?, ?, ?)";
         try (Connection cn = ConexionDB.getConexión();
@@ -74,7 +76,7 @@ public class ArregloClienteBD {
     }
 
     public Cliente buscar(String dni) {
-        String sql = "CALL sp_ConsultarCod_Cliente(?)";
+    	String sql = "CALL sp_ConsultarCod_Cliente(?)";
         try (Connection cn = ConexionDB.getConexión();
              CallableStatement cs = cn.prepareCall(sql)) {
 
@@ -82,6 +84,7 @@ public class ArregloClienteBD {
             ResultSet rs = cs.executeQuery();
             if (rs.next()) {
                 return new Cliente(
+                    rs.getInt("codigoCliente"),
                     rs.getString("nombre"),
                     rs.getInt("dni"),
                     rs.getInt("telefono")

@@ -12,7 +12,7 @@ public class ConexionDB {
 			System.out.println("Driver correcto");
 			//conexión BD
 			cnx=DriverManager.getConnection
-					("jdbc:mysql://localhost:3306/Panaderia","root","erruck3834");
+					("jdbc:mysql://localhost:3306/Panaderia","root","nose");
 			System.out.println("conexión correcta");
 		} catch (Exception e) {
 			System.out.println("Error: "+e);
