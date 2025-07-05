@@ -19,6 +19,7 @@ import javax.swing.JDialog;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class Principal extends JFrame implements ActionListener {
 
@@ -33,6 +34,7 @@ public class Principal extends JFrame implements ActionListener {
 	private ArrayList<ArregloBoleta> lb = new ArrayList<>();
 	private static String codigoEmpleadoLog;
 	private JButton btnCambiarContra;
+	private JLabel lblNewLabel_1;
 
 	/**
 	 * Launch the application.
@@ -68,8 +70,8 @@ public class Principal extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 		{
 			lblNewLabel = new JLabel("PANADERIA LUCHO'S");
-			lblNewLabel.setBounds(217, 41, 249, 59);
-			lblNewLabel.setFont(new Font("Yu Gothic Medium", Font.BOLD, 22));
+			lblNewLabel.setBounds(201, 50, 274, 59);
+			lblNewLabel.setFont(new Font("Britannic Bold", Font.BOLD | Font.ITALIC, 27));
 			contentPane.add(lblNewLabel);
 		}
 		{
@@ -102,6 +104,12 @@ public class Principal extends JFrame implements ActionListener {
 			btnCambiarContra.setEnabled(false);
 			btnCambiarContra.setBounds(358, 312, 249, 28);
 			contentPane.add(btnCambiarContra);
+		}
+		{
+			lblNewLabel_1 = new JLabel("");
+			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\sebastian\\Desktop\\newrpoyecto\\Proyecto\\Proyecto\\src\\imagenes\\fondo.png"));
+			lblNewLabel_1.setBounds(1, 0, 673, 353);
+			contentPane.add(lblNewLabel_1);
 		}
 		if ("admin".equals(codigoEmpleadoLog)) {
 			btnEmpleados.setEnabled(true);

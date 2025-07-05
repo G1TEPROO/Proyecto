@@ -51,7 +51,7 @@ public class VentanaRegistroCliente extends JFrame implements ActionListener {
 	 */
 	public VentanaRegistroCliente() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 510, 231);
+		setBounds(100, 100, 510, 269);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -59,46 +59,47 @@ public class VentanaRegistroCliente extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 		{
 			txtNombreR = new JTextField();
-			txtNombreR.setBounds(66, 30, 86, 20);
+			txtNombreR.setBounds(69, 134, 86, 20);
 			contentPane.add(txtNombreR);
 			txtNombreR.setColumns(10);
 		}
 		{
 			txtDniR = new JTextField();
 			txtDniR.setColumns(10);
-			txtDniR.setBounds(217, 30, 86, 20);
+			txtDniR.setBounds(220, 134, 86, 20);
 			contentPane.add(txtDniR);
 		}
 		{
 			txtTelefonoR = new JTextField();
 			txtTelefonoR.setColumns(10);
-			txtTelefonoR.setBounds(383, 30, 86, 20);
+			txtTelefonoR.setBounds(386, 134, 86, 20);
 			contentPane.add(txtTelefonoR);
 		}
 		{
 			lblNewLabel = new JLabel("Nombre");
-			lblNewLabel.setBounds(10, 33, 46, 14);
+			lblNewLabel.setBounds(13, 137, 46, 14);
 			contentPane.add(lblNewLabel);
 		}
 		{
 			lblDni = new JLabel("DNI");
-			lblDni.setBounds(181, 33, 46, 14);
+			lblDni.setBounds(184, 137, 46, 14);
 			contentPane.add(lblDni);
 		}
 		{
 			lblTelefono = new JLabel("telefono");
-			lblTelefono.setBounds(327, 33, 46, 14);
+			lblTelefono.setBounds(330, 137, 46, 14);
 			contentPane.add(lblTelefono);
 		}
 		{
 			btnRegistrarC = new JButton("Registrar Cliente");
 			btnRegistrarC.addActionListener(this);
-			btnRegistrarC.setBounds(269, 96, 155, 50);
+			btnRegistrarC.setBounds(170, 165, 155, 50);
 			contentPane.add(btnRegistrarC);
 		}
 		{
 			lblNewLabel_1 = new JLabel("");
-			lblNewLabel_1.setBounds(46, 71, 128, 110);
+			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\sebastian\\Desktop\\newrpoyecto\\Proyecto\\Proyecto\\src\\imagenes\\userlogo.png"));
+			lblNewLabel_1.setBounds(170, 11, 136, 110);
 			contentPane.add(lblNewLabel_1);
 		}
 	}
