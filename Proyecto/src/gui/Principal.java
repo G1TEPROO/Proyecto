@@ -35,6 +35,8 @@ public class Principal extends JFrame implements ActionListener {
 	private static String codigoEmpleadoLog;
 	private JButton btnCambiarContra;
 	private JLabel lblNewLabel_1;
+	private JButton btnEstadisticas;
+	private JButton btnClientes;
 
 	/**
 	 * Launch the application.
@@ -62,7 +64,7 @@ public class Principal extends JFrame implements ActionListener {
 	public Principal(String codigoEmpleadoLog) {
 		this.codigoEmpleadoLog = codigoEmpleadoLog;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 690, 392);
+		setBounds(100, 100, 690, 398);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -76,48 +78,68 @@ public class Principal extends JFrame implements ActionListener {
 		}
 		{
 			btnBoleta = new JButton("GENERAR BOLETA");
-			btnBoleta.setBounds(64, 234, 249, 28);
+			btnBoleta.setBounds(64, 178, 249, 28);
 			btnBoleta.addActionListener(this);
 			contentPane.add(btnBoleta);
 		}
 		{
 			btnAdministrarStock = new JButton("ADMINISTRAR PRODUCTOS");
-			btnAdministrarStock.setBounds(358, 234, 249, 28);
+			btnAdministrarStock.setBounds(64, 293, 249, 28);
 			btnAdministrarStock.addActionListener(this);
 			contentPane.add(btnAdministrarStock);
 		}
 		
 		btnEmpleados = new JButton("ADMINISTRAR EMPLEADOS");
 		btnEmpleados.setEnabled(false);
-		btnEmpleados.setBounds(358, 273, 249, 28);
+		btnEmpleados.setBounds(358, 217, 249, 28);
 		btnEmpleados.addActionListener(this);
 		contentPane.add(btnEmpleados);
 		{
 			btnListarBoletas = new JButton("LISTAR BOLETAS");
 			btnListarBoletas.addActionListener(this);
-			btnListarBoletas.setBounds(64, 273, 249, 28);
+			btnListarBoletas.setBounds(64, 217, 249, 28);
 			contentPane.add(btnListarBoletas);
 		}
 		{
 			btnCambiarContra = new JButton("CAMBIAR CONTRASEÑA");
 			btnCambiarContra.addActionListener(this);
 			btnCambiarContra.setEnabled(false);
-			btnCambiarContra.setBounds(358, 312, 249, 28);
+			btnCambiarContra.setBounds(358, 256, 249, 28);
 			contentPane.add(btnCambiarContra);
+		}
+		{
+			btnEstadisticas = new JButton("ESTADISTICAS");
+			btnEstadisticas.setEnabled(false);
+			btnEstadisticas.addActionListener(this);
+			btnEstadisticas.setBounds(358, 181, 249, 23);
+			contentPane.add(btnEstadisticas);
+		}
+		{
+			btnClientes = new JButton("ADMINISTRAR CLIENTES");
+			btnClientes.addActionListener(this);
+			btnClientes.setBounds(64, 256, 249, 28);
+			contentPane.add(btnClientes);
 		}
 		{
 			lblNewLabel_1 = new JLabel("");
 			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\sebastian\\Desktop\\newrpoyecto\\Proyecto\\Proyecto\\src\\imagenes\\fondo.png"));
-			lblNewLabel_1.setBounds(1, 0, 673, 353);
+			lblNewLabel_1.setBounds(1, 0, 673, 356);
 			contentPane.add(lblNewLabel_1);
 		}
 		if ("admin".equals(codigoEmpleadoLog)) {
 			btnEmpleados.setEnabled(true);
 			btnCambiarContra.setEnabled(true);
 			btnBoleta.setEnabled(false);
+			btnEstadisticas.setEnabled(true);
 		}
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnClientes) {
+			do_btnClientes_actionPerformed(e);
+		}
+		if (e.getSource() == btnEstadisticas) {
+			do_btnEstadisticas_actionPerformed(e);
+		}
 		if (e.getSource() == btnCambiarContra) {
 			do_btnCambiarContra_actionPerformed(e);
 		}
@@ -147,6 +169,10 @@ public class Principal extends JFrame implements ActionListener {
 		AdministrarEmpleado ae = new AdministrarEmpleado();
 		ae.setVisible(true);
 	}
+	protected void do_btnClientes_actionPerformed(ActionEvent e) {
+		AdministrarCliente ac = new AdministrarCliente();
+		ac.setVisible(true);
+	}
 	protected void do_btnListarBoletas_actionPerformed(ActionEvent e) {
 		ListarBoletas l = new ListarBoletas();
 		l.setVisible(true);
@@ -154,6 +180,10 @@ public class Principal extends JFrame implements ActionListener {
 	protected void do_btnCambiarContra_actionPerformed(ActionEvent e) {
 		CambiarContra cc = new CambiarContra();
 		cc.setVisible(true);
+	}
+	protected void do_btnEstadisticas_actionPerformed(ActionEvent e) {
+		Estadistica est = new Estadistica();
+		est.setVisible(true);
 	}
 	public static String getCodigoEmpleadoLog() {
 	    return codigoEmpleadoLog;

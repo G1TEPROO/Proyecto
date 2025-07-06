@@ -96,4 +96,35 @@ public class ArregloClienteBD {
         }
         return null;
     }
+    
+    public boolean eliminar(int dni) {
+        String sql = "CALL sp_Eliminar_Cliente(?)";
+        try (Connection cn = ConexionDB.getConexión();
+             CallableStatement cs = cn.prepareCall(sql)) {
+
+            cs.setInt(1, dni);
+            cs.execute();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean editarPorCodigo(Cliente c) {
+        String sql = "CALL sp_Editar_Cliente_PorCodigo(?, ?, ?, ?)";
+        try (Connection cn = ConexionDB.getConexión();
+             CallableStatement cs = cn.prepareCall(sql)) {
+            cs.setInt(1, c.getCodigo());
+            cs.setString(2, c.getNombre());
+            cs.setInt(3, c.getDni());
+            cs.setInt(4, c.getTelefono());
+            cs.execute();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

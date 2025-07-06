@@ -42,6 +42,8 @@ public class CambiarContra extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public CambiarContra() {
+		setTitle("CAMBIAR CONTRASEÑA");
+		setModal(true);
 		setBounds(100, 100, 381, 160);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -66,17 +66,17 @@ public class VentanaRegistroCliente extends JDialog implements ActionListener {
 			contentPane.add(txtTelefonoR);
 		}
 		{
-			lblNewLabel = new JLabel("Nombre");
+			lblNewLabel = new JLabel("Nombre:");
 			lblNewLabel.setBounds(13, 137, 46, 14);
 			contentPane.add(lblNewLabel);
 		}
 		{
-			lblDni = new JLabel("DNI");
+			lblDni = new JLabel("DNI:");
 			lblDni.setBounds(184, 137, 46, 14);
 			contentPane.add(lblDni);
 		}
 		{
-			lblTelefono = new JLabel("telefono");
+			lblTelefono = new JLabel("Telefono:");
 			lblTelefono.setBounds(330, 137, 46, 14);
 			contentPane.add(lblTelefono);
 		}
