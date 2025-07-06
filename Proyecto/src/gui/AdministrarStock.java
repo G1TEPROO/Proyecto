@@ -25,6 +25,9 @@ import javax.swing.table.DefaultTableModel;
 
 import arrays.ArregloProducto;
 import clases.Producto;
+import javax.swing.ImageIcon;
+import java.awt.Font;
+import java.awt.Color;
 
 public class AdministrarStock extends JDialog implements ActionListener {
 
@@ -43,6 +46,7 @@ public class AdministrarStock extends JDialog implements ActionListener {
 	private JButton btnModificar;
 	private ArregloProducto ap;
 	private String codigoEmpleadoLog;
+	private JLabel lblNewLabel_2;
 	
 	public AdministrarStock(String codigoEmpleadoLog) {
 		this.codigoEmpleadoLog = codigoEmpleadoLog;
@@ -55,10 +59,13 @@ public class AdministrarStock extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Nombre Producto:");
+		lblNewLabel.setForeground(new Color(78, 52, 46));
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel.setBounds(10, 11, 107, 14);
 		contentPanel.add(lblNewLabel);
 		
 		txtProducto = new JTextField();
+		txtProducto.setForeground(new Color(78, 52, 46));
 		txtProducto.setBounds(127, 8, 207, 20);
 		contentPanel.add(txtProducto);
 		txtProducto.setColumns(10);
@@ -111,53 +118,75 @@ public class AdministrarStock extends JDialog implements ActionListener {
 		}
 		{
 			btnAnadir = new JButton("AÑADIR");
+			btnAnadir.setForeground(new Color(255, 255, 255));
+			btnAnadir.setBackground(new Color(169, 116, 88));
 			btnAnadir.addActionListener(this);
 			btnAnadir.setBounds(379, 32, 108, 23);
 			contentPanel.add(btnAnadir);
 		}
 		{
 			btnEliminar = new JButton("ELIMINAR");
+			btnEliminar.setForeground(new Color(255, 255, 255));
+			btnEliminar.setBackground(new Color(169, 116, 88));
 			btnEliminar.addActionListener(this);
 			btnEliminar.setBounds(379, 102, 109, 23);
 			contentPanel.add(btnEliminar);
 		}
 		{
 			btnCerrar = new JButton("VOLVER");
+			btnCerrar.setForeground(new Color(255, 255, 255));
+			btnCerrar.setBackground(new Color(169, 116, 88));
 			btnCerrar.addActionListener(this);
 			btnCerrar.setBounds(380, 287, 108, 23);
 			contentPanel.add(btnCerrar);
 		}
 		{
 			btnBuscar = new JButton("BUSCAR");
+			btnBuscar.setForeground(new Color(255, 255, 255));
+			btnBuscar.setBackground(new Color(169, 116, 88));
 			btnBuscar.addActionListener(this);
 			btnBuscar.setBounds(380, 216, 108, 23);
 			contentPanel.add(btnBuscar);
 		}
 		
 		txtPrecio = new JTextField();
+		txtPrecio.setForeground(new Color(78, 52, 46));
 		txtPrecio.setColumns(10);
 		txtPrecio.setBounds(215, 33, 119, 20);
 		contentPanel.add(txtPrecio);
 		
 		JLabel lblNewLabel_1 = new JLabel("Precio Unitario:");
+		lblNewLabel_1.setForeground(new Color(78, 52, 46));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_1.setBounds(10, 36, 93, 14);
 		contentPanel.add(lblNewLabel_1);
 		{
 			lblCantidad = new JLabel("Cantidad:");
+			lblCantidad.setForeground(new Color(78, 52, 46));
+			lblCantidad.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblCantidad.setBounds(10, 61, 107, 14);
 			contentPanel.add(lblCantidad);
 		}
 		{
 			txtCantidad = new JTextField();
+			txtCantidad.setForeground(new Color(78, 52, 46));
 			txtCantidad.setColumns(10);
 			txtCantidad.setBounds(215, 58, 119, 20);
 			contentPanel.add(txtCantidad);
 		}
 		{
 			btnModificar = new JButton("MODIFICAR");
+			btnModificar.setForeground(new Color(255, 255, 255));
+			btnModificar.setBackground(new Color(169, 116, 88));
 			btnModificar.addActionListener(this);
 			btnModificar.setBounds(380, 247, 108, 23);
 			contentPanel.add(btnModificar);
+		}
+		{
+			lblNewLabel_2 = new JLabel("New label");
+			lblNewLabel_2.setIcon(new ImageIcon(AdministrarStock.class.getResource("/imagenes/hand-drawn-seamless-pattern-of-bread-and-bakery-products-baked-goods-background-illustration-vector.jpg")));
+			lblNewLabel_2.setBounds(0, 0, 498, 321);
+			contentPanel.add(lblNewLabel_2);
 		}
 		
 		ActualizarTabla();
@@ -183,12 +212,21 @@ public class AdministrarStock extends JDialog implements ActionListener {
 	}
 	protected void do_btnAnadir_actionPerformed(ActionEvent e) {
 		try {
+			ArregloProducto M= new ArregloProducto();
 			String nombre = txtProducto.getText().trim();
+			
+			if (M.Verificar_nombre(nombre)) {
+				
+				JOptionPane.showMessageDialog(this, "El nombre del producto ya existe ");
+				return ;
+			}
+			
+			
 			double precio = Double.parseDouble(txtPrecio.getText().trim());
 			int stock = Integer.parseInt(txtCantidad.getText().trim());
 			int codigo = 00;
 			Producto pro= new Producto(codigo, nombre, precio, stock);
-			ArregloProducto M= new ArregloProducto();
+			
 		 M.Agregar(pro);
 			
 			ActualizarTabla();

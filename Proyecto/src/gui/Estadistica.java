@@ -20,6 +20,9 @@ import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+import java.awt.Font;
 
 public class Estadistica extends JDialog implements ActionListener {
 
@@ -47,6 +50,7 @@ public class Estadistica extends JDialog implements ActionListener {
 	private JRadioButton rdbtnMes;
 	private JButton btnCerrar;
 	private JTextField txtTotal;
+	private JLabel lblNewLabel_7;
 
 	/**
 	 * Launch the application.
@@ -74,21 +78,29 @@ public class Estadistica extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 		{
 			lblNewLabel = new JLabel("PRODUCTO MÁS VENDIDO: ");
+			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			lblNewLabel.setForeground(new Color(78, 52, 46));
+			lblNewLabel.setBackground(new Color(78, 52, 46));
 			lblNewLabel.setBounds(10, 14, 162, 14);
 			contentPanel.add(lblNewLabel);
 		}
 		{
 			lblNewLabel_1 = new JLabel("CLIENTE QUE MÁS GASTÓ:");
+			lblNewLabel_1.setForeground(new Color(78, 52, 46));
+			lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblNewLabel_1.setBounds(10, 67, 162, 14);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			lblNewLabel_2 = new JLabel("EMPLEADO QUE MAS VENDIO:");
+			lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			lblNewLabel_2.setForeground(new Color(78, 52, 46));
 			lblNewLabel_2.setBounds(10, 92, 175, 14);
 			contentPanel.add(lblNewLabel_2);
 		}
 		{
 			txtProductoMV = new JTextField();
+			txtProductoMV.setForeground(new Color(78, 52, 46));
 			txtProductoMV.setEditable(false);
 			txtProductoMV.setBounds(182, 11, 100, 20);
 			contentPanel.add(txtProductoMV);
@@ -96,11 +108,14 @@ public class Estadistica extends JDialog implements ActionListener {
 		}
 		{
 			lblNewLabel_3 = new JLabel("CANTIDAD VENDIDA:");
+			lblNewLabel_3.setForeground(new Color(78, 52, 46));
+			lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblNewLabel_3.setBounds(320, 14, 124, 14);
 			contentPanel.add(lblNewLabel_3);
 		}
 		{
 			txtProductoCV = new JTextField();
+			txtProductoCV.setForeground(new Color(78, 52, 46));
 			txtProductoCV.setEditable(false);
 			txtProductoCV.setBounds(454, 11, 70, 20);
 			contentPanel.add(txtProductoCV);
@@ -108,6 +123,7 @@ public class Estadistica extends JDialog implements ActionListener {
 		}
 		{
 			txtClienteG = new JTextField();
+			txtClienteG.setForeground(new Color(78, 52, 46));
 			txtClienteG.setEditable(false);
 			txtClienteG.setBounds(182, 64, 100, 20);
 			contentPanel.add(txtClienteG);
@@ -115,6 +131,7 @@ public class Estadistica extends JDialog implements ActionListener {
 		}
 		{
 			txtEmpleadoC = new JTextField();
+			txtEmpleadoC.setForeground(new Color(78, 52, 46));
 			txtEmpleadoC.setEditable(false);
 			txtEmpleadoC.setColumns(10);
 			txtEmpleadoC.setBounds(182, 89, 100, 20);
@@ -122,16 +139,21 @@ public class Estadistica extends JDialog implements ActionListener {
 		}
 		{
 			lblNewLabel_4 = new JLabel("CANTIDAD GASTADA:");
+			lblNewLabel_4.setForeground(new Color(78, 52, 46));
+			lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblNewLabel_4.setBounds(320, 67, 124, 14);
 			contentPanel.add(lblNewLabel_4);
 		}
 		{
 			lblNewLabel_5 = new JLabel("BOLETAS GENERADAS:");
+			lblNewLabel_5.setForeground(new Color(78, 52, 46));
+			lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblNewLabel_5.setBounds(320, 92, 138, 14);
 			contentPanel.add(lblNewLabel_5);
 		}
 		{
 			txtClienteCG = new JTextField();
+			txtClienteCG.setForeground(new Color(78, 52, 46));
 			txtClienteCG.setEditable(false);
 			txtClienteCG.setColumns(10);
 			txtClienteCG.setBounds(454, 64, 70, 20);
@@ -139,6 +161,7 @@ public class Estadistica extends JDialog implements ActionListener {
 		}
 		{
 			txtEmpleadoCC = new JTextField();
+			txtEmpleadoCC.setForeground(new Color(78, 52, 46));
 			txtEmpleadoCC.setEditable(false);
 			txtEmpleadoCC.setColumns(10);
 			txtEmpleadoCC.setBounds(454, 89, 70, 20);
@@ -165,11 +188,14 @@ public class Estadistica extends JDialog implements ActionListener {
 		}
 		{
 			lblProductoMenosVendido = new JLabel("PRODUCTO MENOS VENDIDO: ");
+			lblProductoMenosVendido.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			lblProductoMenosVendido.setForeground(new Color(78, 52, 46));
 			lblProductoMenosVendido.setBounds(10, 39, 175, 14);
 			contentPanel.add(lblProductoMenosVendido);
 		}
 		{
 			txtProductoLV = new JTextField();
+			txtProductoLV.setForeground(new Color(78, 52, 46));
 			txtProductoLV.setEditable(false);
 			txtProductoLV.setColumns(10);
 			txtProductoLV.setBounds(182, 36, 100, 20);
@@ -177,11 +203,14 @@ public class Estadistica extends JDialog implements ActionListener {
 		}
 		{
 			lblNewLabel_6 = new JLabel("CANTIDAD VENDIDA:");
+			lblNewLabel_6.setForeground(new Color(78, 52, 46));
+			lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblNewLabel_6.setBounds(320, 39, 124, 14);
 			contentPanel.add(lblNewLabel_6);
 		}
 		{
 			txtProductoCLV = new JTextField();
+			txtProductoCLV.setForeground(new Color(78, 52, 46));
 			txtProductoCLV.setEditable(false);
 			txtProductoCLV.setColumns(10);
 			txtProductoCLV.setBounds(454, 36, 70, 20);
@@ -189,6 +218,8 @@ public class Estadistica extends JDialog implements ActionListener {
 		}
 		{
 			rdbtnDiario = new JRadioButton("DATOS DEL DIA");
+			rdbtnDiario.setForeground(new Color(255, 255, 255));
+			rdbtnDiario.setBackground(new Color(169, 116, 88));
 			rdbtnDiario.addActionListener(this);
 			rdbtnDiario.setSelected(true);
 			rdbtnDiario.setBounds(381, 172, 131, 23);
@@ -196,6 +227,8 @@ public class Estadistica extends JDialog implements ActionListener {
 		}
 		{
 			rdbtnMes = new JRadioButton("DATOS DEL MES");
+			rdbtnMes.setBackground(new Color(169, 116, 88));
+			rdbtnMes.setForeground(new Color(255, 255, 255));
 			rdbtnMes.addActionListener(this);
 			rdbtnMes.setBounds(381, 219, 131, 23);
 			contentPanel.add(rdbtnMes);
@@ -203,16 +236,26 @@ public class Estadistica extends JDialog implements ActionListener {
 		
 		{
 			btnCerrar = new JButton("CERRAR");
+			btnCerrar.setBackground(new Color(169, 116, 88));
+			btnCerrar.setForeground(new Color(255, 255, 255));
 			btnCerrar.addActionListener(this);
 			btnCerrar.setBounds(391, 297, 89, 23);
 			contentPanel.add(btnCerrar);
 		}
 		{
 			txtTotal = new JTextField();
+			txtTotal.setForeground(new Color(78, 52, 46));
+			txtTotal.setBackground(new Color(255, 255, 255));
 			txtTotal.setEditable(false);
 			txtTotal.setBounds(391, 266, 89, 20);
 			contentPanel.add(txtTotal);
 			txtTotal.setColumns(10);
+		}
+		{
+			lblNewLabel_7 = new JLabel("New label");
+			lblNewLabel_7.setIcon(new ImageIcon(Estadistica.class.getResource("/imagenes/hand-drawn-seamless-pattern-of-bread-and-bakery-products-baked-goods-background-illustration-vector.jpg")));
+			lblNewLabel_7.setBounds(0, 0, 534, 331);
+			contentPanel.add(lblNewLabel_7);
 		}
 		cargarResumenDiario();
 	}

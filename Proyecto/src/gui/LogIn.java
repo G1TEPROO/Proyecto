@@ -19,6 +19,7 @@ import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class LogIn extends JDialog implements ActionListener {
 
@@ -45,38 +46,54 @@ public class LogIn extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 		{
 			lblNewLabel = new JLabel("Usuario:");
-			lblNewLabel.setBounds(108, 155, 83, 14);
+			lblNewLabel.setForeground(new Color(78, 52, 46));
+			lblNewLabel.setBackground(new Color(78, 52, 46));
+			lblNewLabel.setBounds(122, 149, 83, 14);
 			contentPanel.add(lblNewLabel);
 		}
 		{
 			lblNewLabel_1 = new JLabel("Contraseña:");
-			lblNewLabel_1.setBounds(108, 196, 83, 14);
+			lblNewLabel_1.setForeground(new Color(78, 52, 46));
+			lblNewLabel_1.setBounds(107, 186, 83, 14);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			txtUsuario = new JTextField();
-			txtUsuario.setBounds(181, 152, 161, 20);
+			txtUsuario.setForeground(new Color(78, 52, 46));
+			txtUsuario.setBounds(186, 146, 162, 20);
 			contentPanel.add(txtUsuario);
 			txtUsuario.setColumns(10);
 		}
 		{
 			pswContra = new JPasswordField();
-			pswContra.setBounds(181, 193, 162, 20);
+			pswContra.setForeground(new Color(78, 52, 46));
+			pswContra.setBounds(186, 183, 162, 20);
 			contentPanel.add(pswContra);
 		}
 		{
 			btnIngresar = new JButton("ingresar");
+			btnIngresar.setForeground(new Color(255, 255, 255));
+			btnIngresar.setBackground(new Color(169, 116, 88));
 			btnIngresar.addActionListener(this);
-			btnIngresar.setBounds(219, 224, 95, 32);
+			btnIngresar.setBounds(216, 217, 93, 32);
 			contentPanel.add(btnIngresar);
 		}
 		{
 			lblNewLabel_2 = new JLabel("");
+			lblNewLabel_2.setBackground(new Color(255, 222, 173));
 			lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\sebastian\\Desktop\\newrpoyecto\\Proyecto\\Proyecto\\src\\imagenes\\loginfondo.png"));
-			lblNewLabel_2.setBounds(0, 0, 512, 361);
+			lblNewLabel_2.setBounds(10, 0, 572, 516);
 			contentPanel.add(lblNewLabel_2);
 		}
+		
+		JLabel lblNewLabel_3 = new JLabel("Usuario:");
+		lblNewLabel_3.setIcon(new ImageIcon(LogIn.class.getResource("/imagenes/loginfondo.png")));
+		lblNewLabel_3.setForeground(new Color(78, 52, 46));
+		lblNewLabel_3.setBackground(new Color(78, 52, 46));
+		lblNewLabel_3.setBounds(0, 0, 512, 343);
+		contentPanel.add(lblNewLabel_3);
 	}
+	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnIngresar) {
 			do_btnIngresar_actionPerformed(e);

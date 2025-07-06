@@ -40,6 +40,9 @@ import java.util.Iterator;
 
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+import javax.swing.ImageIcon;
+import java.awt.Font;
+import java.awt.Color;
 
 public class VentanaBoleta extends JDialog implements ActionListener {
 
@@ -64,6 +67,7 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 	private JButton btnBuscarCliente;
 	private JLabel lblNewLabel_2;
 	private JComboBox<Cliente> cbCliente;
+	private JLabel lblNewLabel_3;
 
 	public VentanaBoleta(ArregloProducto ap, ArrayList<ArregloBoleta> lb) {
 		this.ap = ap;
@@ -77,12 +81,15 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 		{
 			JLabel lblNewLabel = new JLabel("PRODUCTO");
+			lblNewLabel.setForeground(new Color(78, 52, 46));
+			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblNewLabel.setBounds(10, 11, 81, 14);
 			contentPanel.add(lblNewLabel);
 		}
 		{
 			ArregloProducto pro = ap;
 			cbProducto = new JComboBox();
+			cbProducto.setForeground(new Color(78, 52, 46));
 			cbProducto.addActionListener(this);
 			
 			cbProducto.setBounds(81, 7, 138, 22);
@@ -90,6 +97,8 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 		}
 		{
 			lblNewLabel_1 = new JLabel("CANTIDAD");
+			lblNewLabel_1.setForeground(new Color(78, 52, 46));
+			lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblNewLabel_1.setBounds(240, 11, 81, 14);
 			contentPanel.add(lblNewLabel_1);
 		}
@@ -109,6 +118,7 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 		}
 		{
 			lblPrecio = new JLabel("PRECIO");
+			lblPrecio.setForeground(new Color(78, 52, 46));
 			lblPrecio.setBounds(10, 293, 81, 14);
 			contentPanel.add(lblPrecio);
 		}
@@ -123,24 +133,32 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 		}
 		{
 			btnAgregar = new JButton("AGREGAR");
+			btnAgregar.setBackground(new Color(169, 116, 88));
+			btnAgregar.setForeground(new Color(255, 255, 255));
 			btnAgregar.addActionListener(this);
 			btnAgregar.setBounds(430, 53, 124, 23);
 			contentPanel.add(btnAgregar);
 		}
 		{
 			btnGenerar = new JButton("GENERAR");
+			btnGenerar.setForeground(new Color(255, 255, 255));
+			btnGenerar.setBackground(new Color(169, 116, 88));
 			btnGenerar.addActionListener(this);
 			btnGenerar.setBounds(430, 213, 124, 23);
 			contentPanel.add(btnGenerar);
 		}
 		{
 			btnCerrar = new JButton("CERRAR");
+			btnCerrar.setForeground(new Color(255, 255, 255));
+			btnCerrar.setBackground(new Color(169, 116, 88));
 			btnCerrar.addActionListener(this);
 			btnCerrar.setBounds(430, 247, 124, 23);
 			contentPanel.add(btnCerrar);
 		}
 		{
 			btnModificar =new JButton("MODIFICAR");
+			btnModificar.setForeground(new Color(255, 255, 255));
+			btnModificar.setBackground(new Color(169, 116, 88));
 			btnModificar.setEnabled(false);
 			btnModificar.addActionListener(this);
 			btnModificar.setBounds(430, 87, 124, 23);
@@ -154,6 +172,7 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 				DefaultTableModel model = new DefaultTableModel(
 						new Object[][] {},
 						new String[] {"Producto", "Cantidad", "Precio"}
+						
 					) {
 						@Override
 						public boolean isCellEditable(int row, int column) {
@@ -182,6 +201,8 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 		}
 		{
 			btnQuitar = new JButton("QUITAR");
+			btnQuitar.setForeground(new Color(255, 255, 255));
+			btnQuitar.setBackground(new Color(169, 116, 88));
 			btnQuitar.setEnabled(false);
 			btnQuitar.addActionListener(this);
 			btnQuitar.setBounds(430, 121, 124, 23);
@@ -189,6 +210,7 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 		}
 		{
 			lblStock = new JLabel("STOCK");
+			lblStock.setForeground(new Color(78, 52, 46));
 			lblStock.setBounds(120, 293, 59, 14);
 			contentPanel.add(lblStock);
 		}
@@ -203,19 +225,30 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 		}
 		{
 			btnBuscarCliente = new JButton("BUSCAR CLIENTE");
+			btnBuscarCliente.setForeground(new Color(255, 255, 255));
+			btnBuscarCliente.setBackground(new Color(169, 116, 88));
 			btnBuscarCliente.addActionListener(this);
 			btnBuscarCliente.setBounds(430, 155, 124, 23);
 			contentPanel.add(btnBuscarCliente);
 		}
 		{
 			lblNewLabel_2 = new JLabel("CLIENTE");
+			lblNewLabel_2.setForeground(new Color(78, 52, 46));
+			lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblNewLabel_2.setBounds(364, 11, 81, 14);
 			contentPanel.add(lblNewLabel_2);
 		}
 		{
 			cbCliente = new JComboBox();
+			cbCliente.setForeground(new Color(78, 52, 46));
 			cbCliente.setBounds(420, 7, 134, 22);
 			contentPanel.add(cbCliente);
+		}
+		{
+			lblNewLabel_3 = new JLabel("New label");
+			lblNewLabel_3.setIcon(new ImageIcon(VentanaBoleta.class.getResource("/imagenes/hand-drawn-seamless-pattern-of-bread-and-bakery-products-baked-goods-background-illustration-vector.jpg")));
+			lblNewLabel_3.setBounds(0, 0, 564, 321);
+			contentPanel.add(lblNewLabel_3);
 		}
 		Actualizar();
 		ActualizarClientes();

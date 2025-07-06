@@ -20,6 +20,9 @@ import clases.Cliente;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class AdministrarCliente extends JDialog implements ActionListener {
 
@@ -30,6 +33,7 @@ public class AdministrarCliente extends JDialog implements ActionListener {
 	private JButton btnModificar;
 	private JButton btnEliminar;
 	private JButton btnCerrar;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -90,12 +94,16 @@ public class AdministrarCliente extends JDialog implements ActionListener {
 		}
 		{
 			btnAgregar = new JButton("AGREGAR");
+			btnAgregar.setForeground(new Color(255, 255, 255));
+			btnAgregar.setBackground(new Color(169, 116, 88));
 			btnAgregar.addActionListener(this);
 			btnAgregar.setBounds(423, 14, 122, 23);
 			contentPanel.add(btnAgregar);
 		}
 		{
 			btnModificar = new JButton("MODIFICAR");
+			btnModificar.setForeground(new Color(255, 255, 255));
+			btnModificar.setBackground(new Color(169, 116, 88));
 			btnModificar.setEnabled(false);
 			btnModificar.addActionListener(this);
 			btnModificar.setBounds(423, 48, 122, 23);
@@ -103,6 +111,8 @@ public class AdministrarCliente extends JDialog implements ActionListener {
 		}
 		{
 			btnEliminar = new JButton("ELIMINAR");
+			btnEliminar.setForeground(new Color(255, 255, 255));
+			btnEliminar.setBackground(new Color(169, 116, 88));
 			btnEliminar.setEnabled(false);
 			btnEliminar.addActionListener(this);
 			btnEliminar.setBounds(423, 82, 122, 23);
@@ -110,9 +120,17 @@ public class AdministrarCliente extends JDialog implements ActionListener {
 		}
 		{
 			btnCerrar = new JButton("CERRAR");
+			btnCerrar.setForeground(new Color(255, 255, 255));
+			btnCerrar.setBackground(new Color(169, 116, 88));
 			btnCerrar.addActionListener(this);
 			btnCerrar.setBounds(423, 227, 122, 23);
 			contentPanel.add(btnCerrar);
+		}
+		{
+			lblNewLabel = new JLabel("New label");
+			lblNewLabel.setIcon(new ImageIcon(AdministrarCliente.class.getResource("/imagenes/hand-drawn-seamless-pattern-of-bread-and-bakery-products-baked-goods-background-illustration-vector.jpg")));
+			lblNewLabel.setBounds(0, 0, 545, 261);
+			contentPanel.add(lblNewLabel);
 		}
 		cargarTabla();
 	}
@@ -138,10 +156,18 @@ public class AdministrarCliente extends JDialog implements ActionListener {
 
 		if (nombre != null && dniStr != null && telefonoStr != null) {
 			try {
+				
 				int dni = Integer.parseInt(dniStr);
 				int telefono = Integer.parseInt(telefonoStr);
 				Cliente c = new Cliente(nombre, dni, telefono);
 				ArregloClienteBD ac = new ArregloClienteBD();
+				 if (ac.Verificar_dni(dni)|| ac.Verificar_telefono(telefonoStr)) {
+			        	JOptionPane.showMessageDialog(this, "El dni o telefono no puede ser igual al de un cliente registrado.");
+			            return;
+			        	}
+				 
+				 
+				
 				if (ac.insertar(c)) {
 					cargarTabla();
 					javax.swing.JOptionPane.showMessageDialog(this, "Cliente agregado correctamente.");

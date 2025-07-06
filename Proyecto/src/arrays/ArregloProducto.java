@@ -29,6 +29,7 @@ try {
 	
 	}
 	
+	
 	public  Producto ConsultarPro(String nom){
 		   Producto producto = null;
 		    try {
@@ -79,6 +80,30 @@ try {
 		
 	
 		}
+	public boolean Verificar_nombre(String producto) {
+	  
+	    producto = producto.replaceAll(" ", "");
+
+	    String sql = "SELECT * FROM Producto WHERE REPLACE(producto, ' ', '') = ?";
+	    
+	    try (Connection cn = ConexionDB.getConexión();
+	         PreparedStatement ps = cn.prepareStatement(sql)) {
+	        
+	        ps.setString(1, producto);
+	        ResultSet rs = ps.executeQuery();
+	        
+	        return rs.next();
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
+	
+	
+	
+	
 	
 	public Producto buscar(int cod) {
 	    Producto pro = null;

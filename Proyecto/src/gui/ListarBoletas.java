@@ -21,6 +21,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class ListarBoletas extends JDialog implements ActionListener {
 
@@ -34,6 +37,7 @@ public class ListarBoletas extends JDialog implements ActionListener {
 	private JButton btnConsultar_1;
 	private JButton btnRestablecer;
 	private JTextField txtTotal;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -89,6 +93,8 @@ public class ListarBoletas extends JDialog implements ActionListener {
 		}
 		{
 			btnConsultar = new JButton("CONSULTAR");
+			btnConsultar.setForeground(new Color(255, 255, 255));
+			btnConsultar.setBackground(new Color(169, 116, 88));
 			btnConsultar.addActionListener(this);
 			btnConsultar.setEnabled(false);
 			btnConsultar.setBounds(212, 331, 110, 23);
@@ -96,34 +102,50 @@ public class ListarBoletas extends JDialog implements ActionListener {
 		}
 		{
 			btnListaEmp = new JButton("LISTA DE EMPLEADO");
+			btnListaEmp.setBackground(new Color(169, 116, 88));
+			btnListaEmp.setForeground(new Color(255, 255, 255));
 			btnListaEmp.addActionListener(this);
 			btnListaEmp.setBounds(10, 331, 148, 23);
 			contentPanel.add(btnListaEmp);
 		}
 		{
 			btnListaClie = new JButton("LISTA DE CLIENTE");
+			btnListaClie.setForeground(new Color(255, 255, 255));
+			btnListaClie.setBackground(new Color(169, 116, 88));
 			btnListaClie.addActionListener(this);
 			btnListaClie.setBounds(10, 365, 148, 23);
 			contentPanel.add(btnListaClie);
 		}
 		{
 			btnConsultar_1 = new JButton("CERRAR");
+			btnConsultar_1.setForeground(new Color(255, 255, 255));
+			btnConsultar_1.setBackground(new Color(169, 116, 88));
 			btnConsultar_1.addActionListener(this);
 			btnConsultar_1.setBounds(371, 365, 148, 23);
 			contentPanel.add(btnConsultar_1);
 		}
 		{
 			btnRestablecer = new JButton("RESTABLECER");
+			btnRestablecer.setForeground(new Color(255, 255, 255));
+			btnRestablecer.setBackground(new Color(169, 116, 88));
 			btnRestablecer.addActionListener(this);
 			btnRestablecer.setBounds(371, 331, 148, 23);
 			contentPanel.add(btnRestablecer);
 		}
 		{
 			txtTotal = new JTextField();
+			txtTotal.setForeground(new Color(255, 255, 255));
+			txtTotal.setBackground(new Color(169, 116, 88));
 			txtTotal.setEditable(false);
 			txtTotal.setBounds(222, 365, 86, 20);
 			contentPanel.add(txtTotal);
 			txtTotal.setColumns(10);
+		}
+		{
+			lblNewLabel = new JLabel("New label");
+			lblNewLabel.setIcon(new ImageIcon(ListarBoletas.class.getResource("/imagenes/hand-drawn-seamless-pattern-of-bread-and-bakery-products-baked-goods-background-illustration-vector.jpg")));
+			lblNewLabel.setBounds(0, 0, 529, 401);
+			contentPanel.add(lblNewLabel);
 		}
 		cargarBoletas();
 	}

@@ -12,6 +12,7 @@ import clases.Empleado;
 
 import javax.swing.table.DefaultTableModel;
 import arrays.ArregloEmpleadoBD;
+import java.awt.Font;
 
 public class AdministrarEmpleado extends JDialog implements ActionListener {
 
@@ -25,6 +26,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 	private DefaultTableModel model;
 
 	private boolean modoModificar = false; // bandera para saber si se está editando
+	private JLabel lblNewLabel_6;
 
 	public static void main(String[] args) {
 		try {
@@ -37,6 +39,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 	}
 
 	public AdministrarEmpleado() {
+		
 		setTitle("ADMINISTRAR EMPLEADO");
 		setBounds(100, 100, 650, 400);
 		getContentPane().setLayout(new BorderLayout());
@@ -44,75 +47,101 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
 		JLabel lblNewLabel = new JLabel("Código:");
+		lblNewLabel.setForeground(new Color(78, 52, 46));
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel.setBounds(27, 24, 46, 14);
 		contentPanel.add(lblNewLabel);
 
 		txtCodigo = new JTextField();
+		txtCodigo.setForeground(new Color(78, 52, 46));
 		txtCodigo.setBounds(85, 21, 101, 20);
 		contentPanel.add(txtCodigo);
 		txtCodigo.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("DNI:");
+		lblNewLabel_1.setForeground(new Color(78, 52, 46));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_1.setBounds(201, 24, 46, 14);
 		contentPanel.add(lblNewLabel_1);
 
 		txtDNI = new JTextField();
+		txtDNI.setForeground(new Color(78, 52, 46));
 		txtDNI.setBounds(257, 21, 101, 20);
 		contentPanel.add(txtDNI);
 		txtDNI.setColumns(10);
 
 		JLabel lblNewLabel_2 = new JLabel("Nombre:");
+		lblNewLabel_2.setForeground(new Color(78, 52, 46));
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_2.setBounds(27, 59, 72, 14);
 		contentPanel.add(lblNewLabel_2);
 
 		txtNombre = new JTextField();
+		txtNombre.setForeground(new Color(78, 52, 46));
 		txtNombre.setBounds(85, 56, 101, 20);
 		contentPanel.add(txtNombre);
 		txtNombre.setColumns(10);
 
 		JLabel lblNewLabel_3 = new JLabel("Apellido:");
+		lblNewLabel_3.setForeground(new Color(78, 52, 46));
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_3.setBounds(196, 59, 60, 14);
 		contentPanel.add(lblNewLabel_3);
 
 		txtApellido = new JTextField();
+		txtApellido.setForeground(new Color(78, 52, 46));
 		txtApellido.setBounds(257, 56, 101, 20);
 		contentPanel.add(txtApellido);
 		txtApellido.setColumns(10);
 
 		JLabel lblNewLabel_4 = new JLabel("Cargo:");
+		lblNewLabel_4.setForeground(new Color(78, 52, 46));
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_4.setBounds(388, 24, 46, 14);
 		contentPanel.add(lblNewLabel_4);
 
 		txtCargo = new JTextField();
+		txtCargo.setForeground(new Color(78, 52, 46));
 		txtCargo.setBounds(434, 21, 101, 20);
 		contentPanel.add(txtCargo);
 		txtCargo.setColumns(10);
 
 		JLabel lblNewLabel_5 = new JLabel("Sueldo:");
+		lblNewLabel_5.setForeground(new Color(78, 52, 46));
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_5.setBounds(388, 59, 46, 14);
 		contentPanel.add(lblNewLabel_5);
 
 		txtSueldo = new JTextField();
+		txtSueldo.setForeground(new Color(78, 52, 46));
 		txtSueldo.setBounds(434, 56, 101, 20);
 		contentPanel.add(txtSueldo);
 		txtSueldo.setColumns(10);
 
 		btnAgregar = new JButton("AGREGAR");
+		btnAgregar.setForeground(new Color(255, 255, 255));
+		btnAgregar.setBackground(new Color(169, 116, 88));
 		btnAgregar.setBounds(27, 306, 100, 23);
 		btnAgregar.addActionListener(this);
 		contentPanel.add(btnAgregar);
 
 		btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.setForeground(new Color(255, 255, 255));
+		btnEliminar.setBackground(new Color(169, 116, 88));
 		btnEliminar.setBounds(257, 306, 100, 23);
 		btnEliminar.addActionListener(this);
 		contentPanel.add(btnEliminar);
 
 		btnModificar = new JButton("MODIFICAR");
+		btnModificar.setForeground(new Color(255, 255, 255));
+		btnModificar.setBackground(new Color(169, 116, 88));
 		btnModificar.setBounds(383, 306, 110, 23);
 		btnModificar.addActionListener(this);
 		contentPanel.add(btnModificar);
 
 		btnBuscar = new JButton("BUSCAR");
+		btnBuscar.setForeground(new Color(255, 255, 255));
+		btnBuscar.setBackground(new Color(169, 116, 88));
 		btnBuscar.setBounds(137, 306, 100, 23);
 		btnBuscar.addActionListener(this);
 		contentPanel.add(btnBuscar);
@@ -134,6 +163,11 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane(ts);
 		scrollPane.setBounds(20, 84, 569, 200);
 		contentPanel.add(scrollPane);
+		
+		lblNewLabel_6 = new JLabel("New label");
+		lblNewLabel_6.setIcon(new ImageIcon(AdministrarEmpleado.class.getResource("/imagenes/hand-drawn-seamless-pattern-of-bread-and-bakery-products-baked-goods-background-illustration-vector.jpg")));
+		lblNewLabel_6.setBounds(0, 0, 634, 361);
+		contentPanel.add(lblNewLabel_6);
 		 deshabilitarCampos();
 		ts.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent e) {
@@ -180,8 +214,16 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Ahora puedes modificar los campos.");
 				
 			}else {
+				if(lista.Verificar_dni(txtDNI.getText().trim())) {
+					
+					JOptionPane.showMessageDialog(this, "El dni esta duplicado.");
+					return ;
+				}
+				
+				
 				txtCodigo.setEnabled(true);
 				modoModificar = false;
+				
 			Empleado emp = new Empleado(
 				txtCodigo.getText().trim(),
 				txtNombre.getText().trim(),
@@ -193,6 +235,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 			lista.insertar(emp);
 			actualizarTabla();
 			limpiarCampos();
+				
 			}
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(this, "Datos inválidos.");

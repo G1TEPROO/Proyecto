@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class Principal extends JFrame implements ActionListener {
 
@@ -37,6 +38,7 @@ public class Principal extends JFrame implements ActionListener {
 	private JLabel lblNewLabel_1;
 	private JButton btnEstadisticas;
 	private JButton btnClientes;
+	private JLabel lblNewLabel_2;
 
 	/**
 	 * Launch the application.
@@ -72,36 +74,48 @@ public class Principal extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 		{
 			lblNewLabel = new JLabel("PANADERIA LUCHO'S");
+			lblNewLabel.setBackground(new Color(192, 192, 192));
+			lblNewLabel.setForeground(new Color(78, 52, 46));
 			lblNewLabel.setBounds(201, 50, 274, 59);
 			lblNewLabel.setFont(new Font("Britannic Bold", Font.BOLD | Font.ITALIC, 27));
 			contentPane.add(lblNewLabel);
 		}
 		{
 			btnBoleta = new JButton("GENERAR BOLETA");
+			btnBoleta.setForeground(new Color(255, 255, 255));
+			btnBoleta.setBackground(new Color(169, 116, 88));
 			btnBoleta.setBounds(64, 178, 249, 28);
 			btnBoleta.addActionListener(this);
 			contentPane.add(btnBoleta);
 		}
 		{
 			btnAdministrarStock = new JButton("ADMINISTRAR PRODUCTOS");
+			btnAdministrarStock.setForeground(new Color(255, 255, 255));
+			btnAdministrarStock.setBackground(new Color(169, 116, 88));
 			btnAdministrarStock.setBounds(64, 293, 249, 28);
 			btnAdministrarStock.addActionListener(this);
 			contentPane.add(btnAdministrarStock);
 		}
 		
 		btnEmpleados = new JButton("ADMINISTRAR EMPLEADOS");
+		btnEmpleados.setForeground(new Color(255, 255, 255));
+		btnEmpleados.setBackground(new Color(169, 116, 88));
 		btnEmpleados.setEnabled(false);
 		btnEmpleados.setBounds(358, 217, 249, 28);
 		btnEmpleados.addActionListener(this);
 		contentPane.add(btnEmpleados);
 		{
 			btnListarBoletas = new JButton("LISTAR BOLETAS");
+			btnListarBoletas.setForeground(new Color(255, 255, 255));
+			btnListarBoletas.setBackground(new Color(169, 116, 88));
 			btnListarBoletas.addActionListener(this);
 			btnListarBoletas.setBounds(64, 217, 249, 28);
 			contentPane.add(btnListarBoletas);
 		}
 		{
 			btnCambiarContra = new JButton("CAMBIAR CONTRASEÑA");
+			btnCambiarContra.setForeground(new Color(255, 255, 255));
+			btnCambiarContra.setBackground(new Color(169, 116, 88));
 			btnCambiarContra.addActionListener(this);
 			btnCambiarContra.setEnabled(false);
 			btnCambiarContra.setBounds(358, 256, 249, 28);
@@ -109,6 +123,8 @@ public class Principal extends JFrame implements ActionListener {
 		}
 		{
 			btnEstadisticas = new JButton("ESTADISTICAS");
+			btnEstadisticas.setForeground(new Color(255, 255, 255));
+			btnEstadisticas.setBackground(new Color(169, 116, 88));
 			btnEstadisticas.setEnabled(false);
 			btnEstadisticas.addActionListener(this);
 			btnEstadisticas.setBounds(358, 181, 249, 23);
@@ -116,15 +132,23 @@ public class Principal extends JFrame implements ActionListener {
 		}
 		{
 			btnClientes = new JButton("ADMINISTRAR CLIENTES");
+			btnClientes.setForeground(new Color(255, 255, 255));
+			btnClientes.setBackground(new Color(169, 116, 88));
 			btnClientes.addActionListener(this);
 			btnClientes.setBounds(64, 256, 249, 28);
 			contentPane.add(btnClientes);
 		}
 		{
 			lblNewLabel_1 = new JLabel("");
-			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\sebastian\\Desktop\\newrpoyecto\\Proyecto\\Proyecto\\src\\imagenes\\fondo.png"));
+			lblNewLabel_1.setIcon(new ImageIcon(Principal.class.getResource("/imagenes/hand-drawn-seamless-pattern-of-bread-and-bakery-products-baked-goods-background-illustration-vector.jpg")));
 			lblNewLabel_1.setBounds(1, 0, 673, 356);
 			contentPane.add(lblNewLabel_1);
+		}
+		{
+			lblNewLabel_2 = new JLabel("New label");
+			lblNewLabel_2.setIcon(new ImageIcon(Principal.class.getResource("/imagenes/hand-drawn-seamless-pattern-of-bread-and-bakery-products-baked-goods-background-illustration-vector.jpg")));
+			lblNewLabel_2.setBounds(1, 0, 673, 356);
+			contentPane.add(lblNewLabel_2);
 		}
 		if ("admin".equals(codigoEmpleadoLog)) {
 			btnEmpleados.setEnabled(true);

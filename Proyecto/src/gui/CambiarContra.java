@@ -16,6 +16,9 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+import java.awt.Font;
 
 public class CambiarContra extends JDialog implements ActionListener {
 
@@ -24,6 +27,7 @@ public class CambiarContra extends JDialog implements ActionListener {
 	private JButton btnAceptar;
 	private JPasswordField pswC;
 	private JButton btnCancelar;
+	private JLabel lblNewLabel_1;
 
 	/**
 	 * Launch the application.
@@ -51,24 +55,38 @@ public class CambiarContra extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 		{
 			JLabel lblNewLabel = new JLabel("NUEVA CONTRASEÑA:");
+			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			lblNewLabel.setForeground(new Color(78, 52, 46));
 			lblNewLabel.setBounds(29, 44, 126, 14);
 			contentPanel.add(lblNewLabel);
 		}
 		{
 			btnAceptar = new JButton("Aceptar");
+			btnAceptar.setBackground(new Color(169, 116, 88));
+			btnAceptar.setForeground(new Color(255, 255, 255));
 			btnAceptar.addActionListener(this);
 			btnAceptar.setBounds(66, 69, 89, 23);
 			contentPanel.add(btnAceptar);
 		}
 		{
 			pswC = new JPasswordField();
+			pswC.setForeground(new Color(78, 52, 46));
+			pswC.setBackground(new Color(255, 255, 255));
 			pswC.setBounds(165, 41, 154, 17);
 			contentPanel.add(pswC);
 		}
 		{
 			btnCancelar = new JButton("Cancelar");
+			btnCancelar.setBackground(new Color(169, 116, 88));
+			btnCancelar.setForeground(new Color(255, 255, 255));
 			btnCancelar.setBounds(175, 69, 89, 23);
 			contentPanel.add(btnCancelar);
+		}
+		{
+			lblNewLabel_1 = new JLabel("New label");
+			lblNewLabel_1.setIcon(new ImageIcon(CambiarContra.class.getResource("/imagenes/hand-drawn-seamless-pattern-of-bread-and-bakery-products-baked-goods-background-illustration-vector.jpg")));
+			lblNewLabel_1.setBounds(0, 0, 365, 121);
+			contentPanel.add(lblNewLabel_1);
 		}
 	}
 

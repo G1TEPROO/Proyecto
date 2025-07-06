@@ -52,6 +52,24 @@ public class ArregloEmpleadoBD {
             return false;
         }
     }
+    public boolean Verificar_dni(String dni) {
+    	
+	    String sql = "SELECT * FROM Empleado WHERE dni = ?";
+	    try (Connection cn = ConexionDB.getConexión();
+	         PreparedStatement ps = cn.prepareStatement(sql)) {
+	        
+	        ps.setString(1, dni);
+	        ResultSet rs = ps.executeQuery();
+	        
+	        return rs.next(); // Devuelve true si se encontró al menos un resultado
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	
+}
+
 
     public boolean editar(Empleado emp) {
         String sql = "CALL sp_Editar_Empleado(?, ?, ?, ?, ?, ?)";

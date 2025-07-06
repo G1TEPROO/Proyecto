@@ -21,6 +21,7 @@ public class ContrasenaBD {
                 clave = rs.getString("clave");
             }
 
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

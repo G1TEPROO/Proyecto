@@ -4,6 +4,9 @@ import conexion.ConexionDB;
 import java.sql.*;
 import java.util.ArrayList;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 public class ArregloClienteBD {
 
     public ArrayList<Cliente> listar() {
@@ -29,7 +32,9 @@ public class ArregloClienteBD {
     }
     
     public boolean insertar(Cliente c) {
-        String sql = "CALL sp_Insertar_Cliente(?, ?, ?)";
+       
+    	
+    	String sql = "CALL sp_Insertar_Cliente(?, ?, ?)";
         try (Connection cn = ConexionDB.getConexión();
              CallableStatement cs = cn.prepareCall(sql)) {
 
@@ -39,10 +44,54 @@ public class ArregloClienteBD {
             cs.execute();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+           
+
+    	}
             return false;
-        }
+            
+        
     }
+    
+    
+    public boolean Verificar_dni(int dni) {
+    	
+    	    String sql = "SELECT * FROM Cliente WHERE dni = ?";
+    	    try (Connection cn = ConexionDB.getConexión();
+    	         PreparedStatement ps = cn.prepareStatement(sql)) {
+    	        
+    	        ps.setInt(1, dni);
+    	        ResultSet rs = ps.executeQuery();
+    	        
+    	        return rs.next(); // Devuelve true si se encontró al menos un resultado
+    	        
+    	    } catch (Exception e) {
+    	        e.printStackTrace();
+    	        return false;
+    	    }
+    	
+    }
+    public boolean Verificar_telefono(String telefono) {
+    	
+	    String sql = "SELECT * FROM Cliente WHERE telefono = ?";
+	    try (Connection cn = ConexionDB.getConexión();
+	         PreparedStatement ps = cn.prepareStatement(sql)) {
+	        
+	        ps.setString(1, telefono);
+	        ResultSet rs = ps.executeQuery();
+	        
+	        return rs.next(); // Devuelve true si se encontró al menos un resultado
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	
+}
+    
+    
+    
+    
+    
     public boolean editar(Cliente c) {
         String sql = "CALL sp_Editar_Cliente(?, ?, ?, ?)";
         try (Connection cn = ConexionDB.getConexión();
