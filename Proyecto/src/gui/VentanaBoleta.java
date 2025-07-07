@@ -68,6 +68,7 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 	private JLabel lblNewLabel_2;
 	private JComboBox<Cliente> cbCliente;
 	private JLabel lblNewLabel_3;
+	private JPanel panel;
 
 	public VentanaBoleta(ArregloProducto ap, ArrayList<ArregloBoleta> lb) {
 		this.ap = ap;
@@ -243,6 +244,11 @@ public class VentanaBoleta extends JDialog implements ActionListener {
 			cbCliente.setForeground(new Color(78, 52, 46));
 			cbCliente.setBounds(420, 7, 134, 22);
 			contentPanel.add(cbCliente);
+		}
+		{
+			panel = new JPanel();
+			panel.setBounds(10, 0, 410, 42);
+			contentPanel.add(panel);
 		}
 		{
 			lblNewLabel_3 = new JLabel("New label");

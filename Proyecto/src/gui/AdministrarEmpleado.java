@@ -27,6 +27,7 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 
 	private boolean modoModificar = false; // bandera para saber si se está editando
 	private JLabel lblNewLabel_6;
+	private JPanel panel;
 
 	public static void main(String[] args) {
 		try {
@@ -163,6 +164,11 @@ public class AdministrarEmpleado extends JDialog implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane(ts);
 		scrollPane.setBounds(20, 84, 569, 200);
 		contentPanel.add(scrollPane);
+		{
+			panel = new JPanel();
+			panel.setBounds(20, 11, 569, 70);
+			contentPanel.add(panel);
+		}
 		
 		lblNewLabel_6 = new JLabel("New label");
 		lblNewLabel_6.setIcon(new ImageIcon(AdministrarEmpleado.class.getResource("/imagenes/hand-drawn-seamless-pattern-of-bread-and-bakery-products-baked-goods-background-illustration-vector.jpg")));
